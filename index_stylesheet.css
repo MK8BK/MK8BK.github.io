@@ -12,8 +12,8 @@ html {
 body {
 	background-size: 25px 25px;
 	background-image:
-	linear-gradient(to right, rgb(200, 200, 200) 1px, transparent 1px),
-	linear-gradient(to bottom, rgb(200, 200, 200) 1px, transparent 1px);
+	linear-gradient(to right, rgb(240, 240, 240) 1px, transparent 1px),
+	linear-gradient(to bottom, rgb(240, 240, 240) 1px, transparent 1px);
 	height: 100%;
 	width: 100%;
 	margin: 0;
@@ -135,15 +135,116 @@ a {
  */
 
 #profile {
-	width: 15%;
-	border: solid 4px black;
 	float: left;
+	width: 15%;
 	margin-left: 2%;
-	margin-right: 2%;
-	min-width: 200px;
-	max-width: 300px;
-	min-height: 200px;
-	max-height: 600px;
+	margin-right: 1%;
+	max-width: 200px;
+	min-width: 100px;
+	border: solid 4px black;
+	border-radius: 4px;
+}
+
+#skills-content {
+	clear: both;
+	margin-left: 2%;
+	padding-top: 20px;
+}
+
+.container {
+	width: 90%;
+	background-color: rgb(200, 200, 200);
+	border-radius: 4px;
+}
+
+.skills {
+	text-align: right;
+	color: rgb(256, 256, 256);
+	margin-top: 20px;
+}
+
+#skills-content p {
+	margin-left: 0%;
+}
+
+.communication {
+	width: 100%;
+	background-color: rgb(248, 32, 32);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.english {
+	width: 100%;
+	background-color: rgb(82, 195, 247);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.french {
+	width: 100%;
+	background-color: rgb(133, 32, 248);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.arabic {
+	width: 95%;
+	background-color: rgb(68, 248, 32);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.python {
+	width: 80%;
+	background-color: #3776ab;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.html {
+	width: 90%;
+	background-color: rgb(241, 74, 41);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.css {
+	width: 70%;
+	background-color: rgb(41, 101, 241);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.js {
+	width: 50%;
+	background-color: rgb(240, 219, 79);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	border-radius: 4px;
+}
+
+.java {
+	width: 20%;
+	background-color: rgb(248, 152, 32);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
 	border-radius: 4px;
 }
 
