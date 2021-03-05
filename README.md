@@ -1,2 +1,2 @@
 # Ma page de présentation
-<b>note importante: </b> cette page n'est pas optimisé our mobile
+<b>Note importante:</b>cette page n'est pas optimisée pour mobile.
