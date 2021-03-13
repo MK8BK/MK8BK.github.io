@@ -9,19 +9,22 @@
 	<title>MK8BK</title>
 </head>
 
-<body>
+<body id="body">
 
 	<div class="tab">
 		<img id="logo" src="data/logos/icons/mk8bkred/out.png" alt="logo">
-		<button class="tablinks" tabindex="1" onclick="openTab(event, 'Presentation')" id="defaultOpen">Présentation</button>
-		<button class="tablinks" tabindex="2" onclick="openTab(event, 'Education')">Éducation</button>
-		<button class="tablinks" tabindex="3" onclick="openTab(event, 'Programmation')">Programmation</button>
-		<button class="tablinks" tabindex="4" onclick="openTab(event, 'Musique')">Musique</button>
-		<button class="tablinks" tabindex="5" onclick="openTab(event, 'Contact')">Contact</button>
+		<a href="#english" class="lang" tabindex="7" onclick="toEnglish()">En</a>
+		<a href="#french" class="lang" tabindex="8" onclick="toFrench()">Fr</a>
+		<button class="tab-button" tabindex="1" onclick="openTab(event, 'Presentation')" id="defaultOpen">Présentation</button>
+		<button class="tab-button" tabindex="2" onclick="openTab(event, 'Education')">Éducation</button>
+		<button class="tab-button" tabindex="3" onclick="openTab(event, 'Engagement')">Engagement</button>
+		<button class="tab-button" tabindex="4" onclick="openTab(event, 'Programmation')">Programmation</button>
+		<button class="tab-button" tabindex="5" onclick="openTab(event, 'Musique')">Musique</button>
+		<button class="tab-button" tabindex="6" onclick="openTab(event, 'Contact')">Contact</button>
 	</div>
 
 	<div id="Presentation" class="tabcontent" style="display:block">
-		<h1>Présentation</h1>
+		<h1 id="titre1">Présentation</h1>
 		<div>
 			<img src="data/logos/selfies/profilecropped.jpg" alt="Profile picture" id="profile">
 			<p>
@@ -128,6 +131,12 @@
 			Cette compétition m'a ouvert les yeux sur le potentiel de l'apprentissage motivé et autonome.	Je tiens sincèrement à remercier les chercheurs à l'origine de cette merveilleuse initiative, notamment Mme Nacima Zedek, Mme Kasdali Sihem, Mr Rachid Bebbouchi et Mr Jannik Trunkenwald.
 
 		</p>
+	</div>
+
+	<div id="Engagement" class="tabcontent">
+		<h1>Engagement</h1>
+		<h2>Leadership:</h2>
+		<h2>Benevolat:</h2>
 	</div>
 
 	<div id="Programmation" class="tabcontent">
