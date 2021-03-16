@@ -13,36 +13,36 @@
 
 	<div class="tab">
 		<img id="logo" src="data/logos/icons/mk8bkred/out.png" alt="logo">
-		<a href="#english" class="lang" tabindex="7" onclick="toEnglish()">En</a>
-		<a href="#french" class="lang" tabindex="8" onclick="toFrench()">Fr</a>
-		<button class="tab-button" tabindex="1" onclick="openTab(event, 'Presentation')" id="defaultOpen">Présentation</button>
-		<button class="tab-button" tabindex="2" onclick="openTab(event, 'Education')">Éducation</button>
-		<button class="tab-button" tabindex="3" onclick="openTab(event, 'Engagement')">Engagement</button>
-		<button class="tab-button" tabindex="4" onclick="openTab(event, 'Programmation')">Programmation</button>
-		<button class="tab-button" tabindex="5" onclick="openTab(event, 'Musique')">Musique</button>
-		<button class="tab-button" tabindex="6" onclick="openTab(event, 'Contact')">Contact</button>
+<!-- 		<a href="#english" class="lang" tabindex="1" onclick="toEnglish()">En</a>
+		<a href="#french" class="lang" tabindex="2" onclick="toFrench()">Fr</a> -->
+		<button class="tab-button" tabindex="3" onclick="openTab(event, 'Presentation')" id="defaultOpen">Présentation</button>
+		<button class="tab-button" tabindex="4" onclick="openTab(event, 'Education')">Éducation</button>
+<!--	<button class="tab-button" tabindex="5" onclick="openTab(event, 'Communeauté')">Communeauté</button>-->
+		<button class="tab-button" tabindex="6" onclick="openTab(event, 'Programmation')">Programmation</button>
+		<button class="tab-button" tabindex="7" onclick="openTab(event, 'Musique')">Musique</button>
+		<button class="tab-button" tabindex="8" onclick="openTab(event, 'Contact')">Contact</button>
 	</div>
 
 	<div id="Presentation" class="tabcontent" style="display:block">
 		<h1 id="titre1">Présentation</h1>
 		<div>
 			<img src="data/logos/selfies/profilecropped.jpg" alt="Profile picture" id="profile">
-			<p>
+			<p id="welcome-text">
 				Bonjour, Je m'appelle Moncef Karim AIT BELKACEM.<br>
 				Je suis lycéen, guitariste et programmeur.<br>
 				Je souhaite poursuivre des études en science de l'ordinateur.<br>
 			</p><br>
 		</div>
 		<div id="skills-content">
-			<p>Compétences:</p>
+			<p id="skills">Compétences:</p>
 			<div class="container">
-				<div class="skills communication">Communication/travail de groupe&nbsp;&nbsp;&nbsp;100%</div>
+				<div class="skills communication" id="communication">Communication/travail de groupe&nbsp;&nbsp;&nbsp;100%</div>
 			</div>
 			<div class="container">
-				<div class="skills french">Français&nbsp;&nbsp;&nbsp;100%</div>
+				<div class="skills french" id="french">Français&nbsp;&nbsp;&nbsp;100%</div>
 			</div>
 			<div class="container">
-				<div class="skills english">Anglais&nbsp;&nbsp;&nbsp;100%</div>
+				<div class="skills english" id="english">Anglais&nbsp;&nbsp;&nbsp;100%</div>
 			</div>
 			<div class="container">
 				<div class="skills arabic">Arabe&nbsp;&nbsp;&nbsp;95%</div>
@@ -133,11 +133,29 @@
 		</p>
 	</div>
 
-	<div id="Engagement" class="tabcontent">
-		<h1>Engagement</h1>
+	<!-- <div id="Communeauté" class="tabcontent">
+		<h1>Communeauté</h1>
 		<h2>Leadership:</h2>
+		<p>
+			Au lycée, j'aide mes camarades à progresser en mathématiques et en programmation. <br>
+			<img src="data/Community/imene.JPG" alt="" class="community-image">
+			<img src="data/Community/nils.JPG" alt="" class="community-image">
+			<img src="data/Community/nadine.JPG" alt="" class="community-image"><br><br>
+			Je prepare aussi des éleves de seconde au rythme attendu en Terminale<br>
+			<img src="data/Community/ramzi.JPG" alt="" class="community-image">
+		</p>
 		<h2>Benevolat:</h2>
-	</div>
+		<p>
+			En première, j'ai participé à une collecte de bouchons.<br>
+			Avec un groupe d'éleves trés investis, je nettoie les plages d'alger.
+		</p>
+		<h2>Influences:</h2>
+		<p>
+			- FOSS (free and opensource software)<br>
+			- FreeCodeCamp<br>
+			- Kurzgesagt<br>
+		</p>
+	</div> -->
 
 	<div id="Programmation" class="tabcontent">
 		<h1>Programmation</h1><br>
@@ -174,7 +192,7 @@
 			<a href="https://www.coursera.org/account/accomplishments/certificate/3HXEDUCTU7B9" target="_blank"><img src="data/Programmation/coursera_certificates/images/Linear_Algebra.jpg" class="mediaToDisplay" alt=""></a>
 			<a href="https://www.coursera.org/account/accomplishments/certificate/BL8NYSYEVNXL" target="_blank"><img src="data/Programmation/coursera_certificates/images/CommandLine.jpg" class="mediaToDisplay" alt=""></a>
 		</p><br>
-		<h2>Terminale: je m'améliores</h2>
+		<h2>Terminale: je m'améliore</h2>
 		<p>
 			En prévision de la dure année de Terminale, je me suis efforcé de mettre à bon usage mon temps et mes nouvelles capacités de programmation.<br><br>
 			C'est pour cela que le 10 août 2020, j'ai entrepris un projet en langage Python qui joint musique et fonctions mathématiques.<br>
@@ -183,14 +201,14 @@
 			<a href="https://github.com/MK8BK/musi-math" target="_blank"><button class="link-button">Visiter le Repositoire</button></a><br><br>
 			En Terminale, je m'intéresse aux systèmes d'exploitation Linux.<br>J'utilise actuellement Fedora 32&nbsp;&nbsp;<a href="https://getfedora.org/" target="_blank"><img src="data/logos/icons/other/fedora.png" class="icon" alt=""></a>.<br>
 			J'ai acquis ainsi un certain confort avec le terminal (Commandes Bash), mais aussi avec de nombreux outils de développement (Git, Vim).<br>
-			J’ai aussi réalisé mon CV site en ligne (que vous voyez à l’instant), aucune librairie n’a été utilisée (pas de Bootstrap !!!).<br>
+			J’ai aussi réalisé mon CV site en ligne, aucune librairie n’a été utilisée (pas de Bootstrap !!!).<br>
 			Pendant ces vacances d'été, je m'attellerais au langage de programmation C&nbsp;&nbsp;<img src="data/logos/icons/other/C.png" class="small-icon" alt="">&nbsp;&nbsp;.
 		</p>
 	</div>
 
 	<div id="Musique" class="tabcontent">
 		<h1>Musique</h1><br>
-		<h2>Mon education musicale</h2>
+		<h2>Mon education musicale:</h2>
 		<div class="document">
 			<p>J'ai commencé à faire de la guitare en classe de seconde (2018/2019) à l'école d'Harmonisation des Arts de Dely Brahim (Alger)&nbsp;&nbsp;<a href="https://www.facebook.com/Ecole-dharmonisation-des-arts-et-danimation-artistique-693295930728313/" target="_blank"><img src="data/logos/icons/other/facebook.png" alt="facebook icon" id="facebook"></a>&nbsp;.
 				<br>
@@ -200,7 +218,7 @@
 				<br>J'ai été musicalement influencé par le compositeur paraguayen Agustin Barrios Mangoré.
 			</p>
 		</div>
-		<h2>Mes interprétations</h2>
+		<h2>Mes interprétations:</h2>
 		<div id="gallery">
 			<div>
 				<h3>La Catedral - Allegro Solemne - Agustin Barrios Mangoré</h3>
@@ -215,13 +233,13 @@
 				</video>
 			</div>
 			<div>
-				<h3>Las abejas - Agustin Barrios Mangoré</h3>
+				<h3>Las abejas (extrait) - Agustin Barrios Mangoré</h3>
 				<video class="video-recording" poster="data/logos/thumbnails/lasabejasthumb.JPG" controls>
 					<source src="data/Musique/Enregistrements/lasabejas.mp4" type="video/mp4">
 				</video>
 			</div>
 			<div>
-				<h3>Asturias - Isaac Albéniz</h3>
+				<h3>Asturias (extrait) - Isaac Albéniz</h3>
 				<video class="video-recording" poster="data/logos/thumbnails/asturiasthumb.JPG" controls>
 					<source src="data/Musique/Enregistrements/asturias.mp4" type="video/mp4">
 				</video>
@@ -233,7 +251,7 @@
 				</video>
 			</div>
 			<div>
-				<h3>Canarios - Gaspar Sanz</h3>
+				<h3>Canarios (extrait) - Gaspar Sanz</h3>
 				<video class="video-recording" poster="data/logos/thumbnails/canariosthumb.JPG" controls>
 					<source src="data/Musique/Enregistrements/canarios.mp4" type="video/mp4">
 				</video>
@@ -257,7 +275,7 @@
 				</video>
 			</div>
 			<div>
-				<h3>la boda de luis alonso</h3>
+				<h3>la boda de luis alonso (extrait) - Geronimo Jimenez</h3>
 				<video class="video-recording" poster="data/logos/thumbnails/luisalonsothumb.JPG" controls>
 					<source src="data/Musique/Enregistrements/labodadeluisalonso.mp4" type="video/mp4">
 				</video>
@@ -269,7 +287,7 @@
 				</video>
 			</div>
 			<div>
-				<h3>Cadence Andalouse</h3>
+				<h3>Cadence Andalouse - Anonyme</h3>
 				<video class="video-recording" poster="data/logos/thumbnails/cadanzathumb.JPG" controls>
 					<source src="data/Musique/Enregistrements/cadence_andalouse.mp4" type="video/mp4">
 				</video>

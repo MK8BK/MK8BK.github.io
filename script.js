@@ -1,11 +1,11 @@
-function toEnglish() {
-	document.getElementById("body").innerHTML = "Frontpage";
+/* function toEnglish() {
+	document.getElementById("body").innerHTML = ``;
 }
 
 function toFrench() {
-	document.getElementById("body").innerHTML = "Présentation";
+	document.getElementById("body").innerHTML = ``;
 }
-
+ */
 function openTab(evt, tabName) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
