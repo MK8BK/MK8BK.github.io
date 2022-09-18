@@ -16,12 +16,12 @@
 } */
 
 :root {
-	/* --color-primary: rgb(255,255,255);
-	--color-secondary: rgb(10, 10, 35); */
+	/* --color-primary: rgb(240,240,240);
+	--color-secondary: rgb(45, 45, 45); */
 	--color-primary: rgb(240,240,240);
-	--color-secondary: rgb(45,45,45);
+	--color-secondary: rgb(15,15,50);
 	--color-primary-alpha: rgb(240,240,240, .3);
-	--color-secondary-alpha: rgb(45,45,45, .3);
+	--color-secondary-alpha: rgb(15,15,50, .3);
 	--br-sm-2: 14px;
 	/* --box-shadow-1: 0 3px 15px rgba(0,0,0,.3); */
 }
@@ -29,9 +29,9 @@
 .dark-mode {
 /* 	--color-primary: rgb(10, 10, 35);
 	--color-secondary: rgb(255,255,255); */
-	--color-primary: rgb(45,45,45);
+	--color-primary: rgb(15,15,50);
 	--color-secondary: rgb(240,240,240);
-	--color-primary-alpha: rgba(45,45,45, .3);
+	--color-primary-alpha: rgba(15,15,50, .3);
 	--color-secondary-alpha: rgba(240,240,240, .3);
 }
 
