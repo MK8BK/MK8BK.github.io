@@ -1,366 +1,363 @@
 <!DOCTYPE html>
-
-<html lang="fr-FR">
-
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="index_stylesheet.css">
-    <link rel="shortcut icon" type="image/png" href="data/logos/icons/mk8bkred/out.png">
-    <script src="script.js"></script>
-    <title>MK8BK</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=JetBrains Mono">
+    <script src="https://kit.fontawesome.com/5def0a287f.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script type="text/javascript"
+        src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
 </head>
-
-<body id="body">
-
-    <div class="tab">
-        <img id="logo" src="data/logos/icons/mk8bkred/out.png" alt="logo">
-        <!-- 		<a href="#english" class="lang" tabindex="1" onclick="toEnglish()">En</a>
-		<a href="#french" class="lang" tabindex="2" onclick="toFrench()">Fr</a> -->
-        <button class="tab-button" tabindex="3" onclick="openTab(event, 'Presentation')" id="defaultOpen">Présentation</button>
-        <button class="tab-button" tabindex="4" onclick="openTab(event, 'Education')">Éducation</button>
-        <!--	<button class="tab-button" tabindex="5" onclick="openTab(event, 'Communeauté')">Communeauté</button>-->
-        <button class="tab-button" tabindex="6" onclick="openTab(event, 'Programmation')">Programmation</button>
-        <button class="tab-button" tabindex="7" onclick="openTab(event, 'Musique')">Musique</button>
-        <button class="tab-button" tabindex="8" onclick="openTab(event, 'Contact')">Contact</button>
-    </div>
-
-    <div id="Presentation" class="tabcontent" style="display:block">
-        <em style="color: red">##Cette page sera mise a jour en juin 2022</em>
-        <h1 id="titre1">Présentation</h1>
-        <div>
-            <img src="data/logos/selfies/pic.jpg" alt="Profile picture" id="profile">
-            <p id="welcome-text">
-                Bonjour, Je m'appelle Moncef Karim AIT BELKACEM.<br> Je suis lycéen, guitariste et programmeur.<br> Je souhaite poursuivre des études en science des données<br>
-            </p><br>
-        </div>
-        <div id="skills-content">
-            <p id="skills">Compétences:</p>
-            <div class="container">
-                <div class="skills communication" id="communication">Communication/travail de groupe&nbsp;&nbsp;&nbsp;100%</div>
+<body class="main-content">
+    <main>
+        <section class="container active" id="home">
+            <div class="main-title">
+                <h2>Hi, I'm Moncef</h2>
+                <p>an aspiring data scientist</p>
             </div>
-            <div class="container">
-                <div class="skills french" id="french">Français&nbsp;&nbsp;&nbsp;100%</div>
+            <br><br>
+            <br><br>
+            <p>This Portfolio is currently undergoing maintenance</p>
+        </section>
+        <section class="container" id="projects">
+            <div class="main-title">
+                <h2>Projects</h2>
             </div>
-            <div class="container">
-                <div class="skills english" id="english">Anglais&nbsp;&nbsp;&nbsp;100%</div>
+            <div class="project">
+                <h3>Deep_Learning_ISD</h3>
+                <p class="description">
+                    This Project was one of my most enriching data science endeavours.
+                    <br><br>
+                    It is a custom made Neural Network trained on an extended MNIST dataset (Hexadecimal characters).
+                    <br>
+                    Using only numpy and standard python, I was able to achieve a mean accuracy of 93% over the whole dataset (38400 images, 16 classes).
+                    <br>
+                    The most interesting part (and most challenging) was the mathematical foundations of such a classifier.
+                    <br>
+                    Through Latex, I tried to convey the structure and theory as rigourously as a freshman math major could.
+                    <br><br>
+                    I submitted the notebook to my professors as part of an Introductory course to Data Science.
+                    <br>
+                    The Project was graded a 23/25, with an observation of "Excellent Work".
+                    <br>
+                    The class average was 13.5/25.
+                    <br>
+                </p><br>
+                <a href="https://github.com/MK8BK/Deep_Learning_ISD" target="_blank" class="sublink">View the project on GitHub</a>
+                <a href="https://nbviewer.org/github/MK8BK/Deep_Learning_ISD/blob/master/Details.ipynb" target="_blank" class="sublink">View the project on nbviewer</a>
             </div>
-            <div class="container">
-                <div class="skills arabic">Arabe&nbsp;&nbsp;&nbsp;95%</div>
+            <div class="project last">
+                <h3>musi-math</h3>
+                <p class="description">
+                    This project was one of my first. 
+                    <br><br>
+                    The idea is to use standard methematical functions (polynomials, sin, cos) to produce melodies.
+                    <br>
+                    First we choose a certain combination and/or composition of standard functions; named f(x).
+                    <br> 
+                    We then graph it to see wether or not it would be interesting to hear.
+                    <br>
+                    We select a musical scale (ex: D minor Pentatonic).
+                    <br>
+                    A discretization process is then applied; we round the outputs of f(x) to the nearest note on the selected scale.
+                    <br>
+                    Using the pyaudio module, this project is able to produce beautiful melodies, imagination is the limit.
+                    <br><br>
+                    The following links point to the repository and notebook respectively.
+                    <br>
+                    To hear the melodies outright, click on the nbviewer link, 
+                    <br>
+                    then scroll down past the explanations and software construction to the <mark>7-Playing a scale</mark> heading.
+                    <br>
+                    Multiple graphs and audio files are displayed, ranging from the simple sine() function to fairly complex, fourier-like patterns.
+                </p><br>
+                <a href="https://github.com/MK8BK/musi-math" target="_blank" class="sublink">View the project on GitHub</a>
+                <a href="https://nbviewer.org/github/MK8BK/musi-math/blob/main/Music_Production.ipynb" target="_blank" class="sublink">View the project on nbviewer</a>
             </div>
-            <div class="container">
-                <div class="skills guitar">Guitare&nbsp;&nbsp;&nbsp;90%</div>
+            <!-- <div class="project last">
+                <h3>Evaluating bubblesort complexity with numpy</h3>
+                <p class="description">
+                </p><br>
+                <a href="" target="_blank" class="sublink">View the project on GitHub</a>
+            </div> -->
+        </section>
+        <section class="container" id="self-study">
+            <div class="main-title">
+                <h2>A journey through self study</h2>
             </div>
-            <div class="container">
-                <div class="skills python">Python&nbsp;&nbsp;&nbsp;90%</div>
+        </section>
+        <section class="container" id="university">
+            <div class="main-title">
+                <h2>University Curriculum</h2>
+                <p>Double major in Math and Computer Science at University Paris-Saclay</p>
             </div>
-            <div class="container">
-                <div class="skills html">HTML5&nbsp;&nbsp;&nbsp;90%</div>
+            <div class="licence-3"></div>
+            <div class="licence-2"></div>
+            <h3>Courses Taken: Freshman Year (L1)</h3>
+            <div class="licence-1">
+                <h4><u>Semester One</u></h4>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-real-analysis-1" class="toggle" type="checkbox">
+                    <label for="collapsible-real-analysis-1" class="lbl-toggle">Introductory Real Analysis</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Real numbers, field axioms, properties of the real line</li>
+                                <li>Real functions review</li>
+                                <li>Functional limits</li>
+                                <li>Sequences</li>
+                                <li>Continuity</li>
+                                <li>differentiability</li>
+                                <li>Axiomatic construction of the real numbers </li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-algebra-geometry-1" class="toggle" type="checkbox">
+                    <label for="collapsible-algebra-geometry-1" class="lbl-toggle">Algebra and Geometry</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Logic and Proofs </li>
+                                <li>Set theory </li>
+                                <li>equivalence relations </li>
+                                <li>Arithmetic and congruences </li>
+                                <li>Polynomials in $\mathbb{C}$ </li>
+                                <li>Complex numbers </li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-intro-compsci-1" class="toggle" type="checkbox">
+                    <label for="collapsible-intro-compsci-1" class="lbl-toggle">Introduction to Computer Science (Python)</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Basic Bash Commands </li>
+                                <li>Unix Operating system, file permissions.</li>
+                                <li>Introduction to computer networks </li>
+                                <li>Python data types </li>
+                                <li>Python control flow and loops </li>
+                                <li>General Web concepts, HTML-CSS</li>
+                                <li>Python functions </li>
+                                <li>Python files and IO </li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-imperative-programming" class="toggle" type="checkbox">
+                    <label for="collapsible-imperative-programming" class="lbl-toggle">Imperative Programming (C++)</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>C++ data types</li>
+                                <li>C++ loops and control statements </li>
+                                <li>C++ functions </li>
+                                <li>C++ Arrays </li>
+                                <li>C++ structures and overflow safety </li>
+                                <li>C++ 2D arrays </li>
+                                <li>C++ Files </li>
+                                <li>C++ debugging, tests </li>
+                                <li>C++ modularity, compilation </li>
+                                <li>Final Project : Terminal based 2048 game. </li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <h4><u>Semester Two</u></h4>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-integral-calculus-1" class="toggle" type="checkbox">
+                    <label for="collapsible-integral-calculus-1" class="lbl-toggle">Integral Calculus</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Bijections and inverse functions</li>
+                                <li>Integration</li>
+                                <li>Taylor series</li>
+                                <li>Approximation of functions by Taylor series</li>
+                                <li>Linear Differential Equations</li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-linear-algebra-1" class="toggle" type="checkbox">
+                    <label for="collapsible-linear-algebra-1" class="lbl-toggle">Linear Algebra</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Linear Systems</li>
+                                <li>Vector Spaces </li>
+                                <li>Matrices</li>
+                                <li>Linear Maps</li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-algorithms-and-ds-1" class="toggle" type="checkbox">
+                    <label for="collapsible-algorithms-and-ds-1" class="lbl-toggle">Algorithms and Data Structures (C++)</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Memory architecture </li>
+                                <li>Error types and compilation </li>
+                                <li>Stack </li>
+                                <li>Adresses and Pointers </li>
+                                <li>Linked lists </li>
+                                <li>Recursive Functions: GCD, MergeSort and QuickSort </li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-modular-programming" class="toggle" type="checkbox">
+                    <label for="collapsible-modular-programming" class="lbl-toggle">Modular Programming (C++)</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>C++ structs </li>
+                                <li>C++ operator overloading </li>
+                                <li>C++ tests infrastructure (doctest) </li>
+                                <li>C++ objects and classes </li>
+                                <li>C++ Multiple compilation, makefiles </li>
+                                <li>Introduction to software engineering: modularity, encapsulation. </li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-scientific-computing-python" class="toggle" type="checkbox">
+                    <label for="collapsible-scientific-computing-python" class="lbl-toggle">Scientific Computing with Python</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Python data collections </li>
+                                <li>Python documentation - scientific formatting</li>
+                                <li>Python functions - Geometry</li>
+                                <li>Numpy - Gaussian Elimination and Linear Algebra</li>
+                                <li>Matplotlib - Numerical solutions of Differential Equations</li>
+                                <li>Numerical Integration </li>
+                                <li>Object Oriented Programming with python - Polynomials/Rational Functions</li>
+                            </ul>
+                        </p>
+                      </div>
+                    </div>
+                </div>
+                <div class="wrap-collabsible">
+                    <input id="collapsible-introduction-to-data-science" class="toggle" type="checkbox">
+                    <label for="collapsible-introduction-to-data-science" class="lbl-toggle">Introduction to Data Science</label>
+                    <div class="collapsible-content">
+                      <div class="content-inner">
+                        <p>
+                            <ul>
+                                <li>Basic Statistical quantities</li>
+                                <li>Visualisation and descriptive statistics</li>
+                                <li>Data science pipeline and standard pratices</li>
+                                <li>Feature extraction</li>
+                                <li>Classifiers: Linear Regression, knn, tree based methods</li>
+                                <li>Image Processing</li>
+                                <li>Bias, error rate</li>
+                                <li>Percepton</li>
+                                <li>Introduction to deep neural networks </li>
+                                <li>Final: <a href="#isd" id="sl-isd">project</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="container">
-                <div class="skills css">CSS3&nbsp;&nbsp;&nbsp;70%</div>
-            </div>
-            <div class="container">
-                <div class="skills js">Javascript&nbsp;&nbsp;&nbsp;50%</div>
-            </div>
-            <div class="container">
-                <div class="skills java">Java&nbsp;&nbsp;&nbsp;20%</div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id="Education" class="tabcontent">
-        <h1>Éducation:</h1>
-        <h2>Baccalauréat:</h2>
-        <p>
-            En 2021, j’obtiens mon baccalauréat général spécialité mathématiques, physique-chimie, sciences de la vie et de la terre mention très bien (17.83). Je décroche la note complète lors de mon grand oral.<br>
-            <a href="data/Education/cyclades/194866288200002_Releve_de_Notes_V2_20210702.PDF" target="_blank"><button class="link-button">Relevé de notes</button></a>
-        </p>
-        <h2>Terminale:</h2>
-        <p>
-            En Terminale, je suis lycéen au CNED reglementé.<br>
-            <a href="data/Education/cned/Relevé de notes inscrit.pdf" target="_blank"><button class="link-button">Relevé de Notes</button></a>
-            <a href="data/Education/cned/Liste_enseignements_suivis.pdf" target="_blank"><button class="link-button">Liste d'enseignements suivis</button></a>
-            <a href="data/Education/cned/Attestation_inscription.pdf" target="_blank"><button class="link-button">Attestation d'inscription</button></a>
-            <a href="data/Education/cned/Certificat_de_scolarité.pdf" target="_blank"><button class="link-button">Certificat de scolarité</button></a>
-            <a href="https://openbadgepassport.com/app/badge/info/288086" target="_blank"><button class="link-button">Open Badge</button></a>
-            <br>J'ai fait partie d'une expérience d'enseignement des mathématiques menée par le laboratoire Maurice-AUDIN.
-            <p>J'ai aussi passé le test IELTS en anglais (7.5/9):&nbsp;&nbsp;&nbsp;
-                <a href="data/Education/ielts/ielts-certificate.pdf" target="_blank"><button class="link-button">Certificat IELTS</button></a>
+            <h3>Grades</h3>
+            <p class="description">
+                I got an average grade of <mark>15.19/20</mark> in computer science
+                and <mark>17.56/20</mark> in mathematics. <br>
+                You can view my L1 grade-book <a href="data/saclay/grades_l1.pdf" class="data-link" target="_blank">Here</a>
             </p>
-            <p>Je continue à m'instruire en mathématiques sur &nbsp;<a href="https://www.coursera.org/" target="_blank">Coursera</a>&nbsp;.</p>
-            <p>Mon projet du grand oral de mathématiques: <em>Comment évaluer la complexité d'un algorithme ?</em><br>
-                <a href="https://nbviewer.jupyter.org/github/MK8BK/grand-oral-math/blob/master/grand_oral_math.ipynb" target="_blank"><button class="link-button">Projet en Ligne</button></a>
-            </p>
-        </p>
-        <h2>Première:</h2>
-        <p>
-            En Première, j'étais inscrit au lycée privé "El Malak" situé à Dely Brahim, Alger.<br>
-            <a href="https://www.labelfranceducation.fr/fr/etablissements/lyc%C3%A9e-el-malak" target="_blank"><button class="link-button">Label AEFE</button></a>
-            <a href="https://www.dkdart.com/lycee-malek/" target="_blank"><button class="link-button">Local d'El Malak</button></a><br> Pendant cette année de première, j'ai pu bénéficier d'un enseignement de qualité qui m'a permis de bien me préparer
-            aux epreuves anticipées de Français.<br>
-            <a href="data/Education/cyclades/relevé de notes 1ere.PDF" target="_blank"><button class="link-button">Bulletin des anticipées</button></a><br> Le cadre scolaire a fortement favorisé les activités artistiques: Journées à thème, Nuit des idées,
-            groupes de musique et pièces de théâtre.<br>
-            <img src="data/Education/lycée/lycee_building.jpg" class="mediaToDisplay" alt="">
-            <img src="data/Education/lycée/theme-noel.JPG" class="mediaToDisplay" alt=""><br>
-            <video class="mediaToDisplay" poster="data/Education/lycée/thumb.JPG" controls>
-				<source src="data/Education/lycée/groupe.mp4" type="video/mp4">
-			</video>
-            <a href="data/Education/francais/Manuela.pdf" target="_blank">
-                <img src="data/Education/francais/manuela.JPG" class="mediaToDisplay" alt="">
-            </a>
-        </p>
-        <h2>Seconde:</h2>
-        <p>
-            En seconde, j'étais aussi à El Malak. Cette année fut très enrichissante, avec beaucoup de découvertes.<br>
-            <br>La compétition mathématique "mathenjelaba" organisée par la SMA (Société des Mathématiques d'Algérie) en partenariat avec l'<a href="https://www.univ-irem.fr/spip.php?rubrique455">IREM</a>, est un projet de recherche s'étalant sur toute
-            une année.<br> Pendant cette année 2018/2019, j'ai eu l'opportunité de rencontrer de nombreux éleves, professeurs, chercheurs et ainsi de collaborer avec eux.<br> J'y ai développé mes capacités de communication et de résolution de problèmes,
-            tout en ayant un aperçu fort positif du monde de la recherche.<br> La diversité des outils à ma disposition et l'aspect pratique du projet m'ont fait comprendre l'importance des mathématiques dans le monde d'aujourd'hui.<br><br>
-            <img src="data/Education/tous_chercheurs/photos_tous_chercheurs/finale.jpg" class="touschercheurs" alt="">
-            <img src="data/Education/tous_chercheurs/photos_tous_chercheurs/powerpoint_thumbnail.JPG" class="touschercheurs" alt="">
-            <img src="data/Education/tous_chercheurs/photos_tous_chercheurs/trophée.jpg" class="touschercheurs" alt="">
-            <img src="data/Education/tous_chercheurs/photos_tous_chercheurs/groupe_chercheur.jpg" class="touschercheurs" alt="">
-            <a href="data/Education/tous_chercheurs/diplome.pdf" target="_blank"><img src="data/Education/tous_chercheurs/diplome.JPG" class="touschercheurs" alt=""></a>
-            <video class="mediaToDisplay" poster="data/Education/tous_chercheurs/photos_tous_chercheurs/miniature.JPG" controls>
-				<source src="data/Education/tous_chercheurs/photos_tous_chercheurs/Moncef2.mp4" type="video/mp4">
-			</video><br><br> A l'issue de ce projet, un document et une présentation devaient être rendus:<br>
-            <a href="data/Education/tous_chercheurs/projet/Sujet1.pdf" target="_blank"><button class="link-button">Document</button></a>
-            <a href="data/Education/tous_chercheurs/projet/le powerpoint finale.pptx" target="_blank"><button class="link-button">Présentation</button></a><br>
-            <br>Le rapport de cette compétition mathématique s'est fait dans un séminaire international de l'IREM.<br>
-            <a href="https://bigbluebutton3.imj-prg.fr/playback/presentation/2.0/playback.html?meetingId=625375aaa9f062701019cacc5fd8014ae8a1c18b-1607081161292" target="_blank"><button class="link-button">Séminaire international des IREM</button></a><br><br>            23:11 <em>"...Le groupe gagnant, c’est celui qui a choisi la chasse à l’ours.<br>
-			Alors là c'était extraordinaire. Nous, en tant que chercheurs mathématiciens, on était séduits.
-			<br>C'était une recherche; on pouvait même éventuellement faire passer ça comme étant une thèse de master,
-			 tellement c’était bienfait et bien argumenté.<br>
-			Les élèves étaient à l’aise, ils parlaient chacun son tour.
-			Ils ont utilisé des techniques informatiques performantes..."</em>- Mr Rachid Bebbouchi - président de la SMA.
-            <br><br>40:45 <em>"Ils nous ont vraiment épaté, notamment l'expérience de l'ours...Ce Moncef qui était le chef de groupe ... a appris très vite et nous a vraiment ébahi"</em> - Mme Nacima Zedek - enseignante de mathématiques et membre du laboratoire
-            Maurice-AUDIN.
-            <br><br> Cette compétition m'a ouvert les yeux sur le potentiel de l'apprentissage motivé et autonome. Je tiens sincèrement à remercier les chercheurs à l'origine de cette merveilleuse initiative, notamment Mme Nacima Zedek, Mme Kasdali Sihem,
-            Mr Rachid Bebbouchi et Mr Jannik Trunkenwald.
+            </div>
+            <h3>Baccalaureat Exam</h3>
+            <div id="bac" class="last">
+                <p class="description">
+                    You can view my Baccalaureat grade-book
+                    <a href="data/bac/194866288200002_Releve_de_Notes_V2_20210702.PDF" class="data-link" target="_blank">Here</a>
+                    <br>
+                    Similarly, you can view my <mark>IELTS</mark> test result (<mark>7.5</mark>~C1)
+                    <a href="data/ielts/ielts-certificate.pdf" class="data-link" target="_blank">Here</a>
+                </p>
+            </div>
+        </section>
+        <section class="container" id="contact">
+            <div class="main-title">
+                <h2>Contact</h2>
+            </div>
+            <div class="contact-type email">
+                <p class="type-detail">Email:</p>
+                <u id="email-address">moncef.aitbelkacem@gmail.com</u>
+                <button onclick="copyToClipboard('#email-address')" class="copy"><i class="fa-solid fa-copy"></i></button>
+            </div><br>
+            <div class="contact-type">
+                <p class="type-detail">LinkedIn:</p>
+                <u id="linkedin">Moncef Karim AIT BELKACEM</u> 
+                <a href="https://www.linkedin.com/in/moncef-karim-ait-belkacem-a31b75191/" target="_blank" class="contact-a"><button class="copy"><i class="fa-brands fa-linkedin-in"></i></button></a>
+            </div><br>
+            <div class="contact-type">
+                <p class="type-detail">GitHub:</p> 
+                <u>mk8bk</u>
+                <a href="https://github.com/MK8BK" target="_blank" class="contact-a"><button class="copy"><i class="fa-brands fa-github"></i></i></button></a>
+            </div>
+        </section>
+    </main>
 
-        </p>
-    </div>
-
-    <!-- <div id="Communeauté" class="tabcontent">
-		<h1>Communeauté</h1>
-		<h2>Leadership:</h2>
-		<p>
-			Au lycée, j'aide mes camarades à progresser en mathématiques et en programmation. <br>
-			<img src="data/Community/imene.JPG" alt="" class="community-image">
-			<img src="data/Community/nils.JPG" alt="" class="community-image">
-			<img src="data/Community/nadine.JPG" alt="" class="community-image"><br><br>
-			Je prepare aussi des éleves de seconde au rythme attendu en Terminale<br>
-			<img src="data/Community/ramzi.JPG" alt="" class="community-image">
-		</p>
-		<h2>Benevolat:</h2>
-		<p>
-			En première, j'ai participé à une collecte de bouchons.<br>
-			Avec un groupe d'éleves trés investis, je nettoie les plages d'alger.
-		</p>
-		<h2>Influences:</h2>
-		<p>
-			- FOSS (free and opensource software)<br>
-			- FreeCodeCamp<br>
-			- Kurzgesagt<br>
-		</p>
-	</div> -->
-
-    <div id="Programmation" class="tabcontent">
-        <h1>Programmation</h1><br>
-        <h2>Seconde: mes débuts en programmation</h2>
-        <p>J'ai découvert la programmation en seconde, à l'aide du langage TI-Basic utilisé dans les calculatrices graphiques TI-83 premium ce.
-        </p>
-        <p>
-            Pendant cette première année, j'ai acquis les bases de l'algorithmique (conditions, boucles et logique).
-        </p>
-        <p>
-            Ces bases seront mises en pratique lors de la compétition mathématique "mathenjelaba" (voir l'onglet Education section seconde).
-        </p><br>
-        <h2>Première: la découverte</h2>
-        <p>
-            En Première, j'ai eu l'opportunité d'être financé par le programme de bourse de "Algerian Learners".<br>
-        </p>
-        <p>
-            Cet organisme basé à l'université de Constantine m'a permis de m'inscrire sur
-            <a href="https://www.coursera.org/" target="_blank">Coursera</a>&nbsp;,<br> et ainsi de poursuivre des enseignements de qualité internationale dans les mathématiques, le développement web et les sciences de l'informatique.
-        </p>
-        <p>
-            De Mai 2020 à Juillet 2020, je suivais un rythme draconien.<br>Le réveil à 8h, le sommeil à 22h et 14h de travail assidu.
-            <br>Les fruits de cette rigueur sont de nombreux certificats d'excellence (36 disponibles sur mon profil <a href="https://www.linkedin.com/in/moncef-karim-ait-belkacem-a31b75191" target="_blank">Linkedin</a>), mais surtout des bases solides
-            en programmation.
-            <br>Je suis actuellement au stade intermédiaire du langage Python&nbsp;
-            <a href="https://www.python.org/" target="_blank"><img src="data/logos/icons/other/python.png" class="small-icon" alt=""></a>&nbsp;. Je me suis aussi initié en programmation orienté objet avec Java&nbsp;
-            <a href="https://java.com/" target="_blank"><img src="data/logos/icons/other/java.png" class="small-icon" alt=""></a>&nbsp;.<br>
-            <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/EEKNBG952AM8" target="_blank"><img src="data/Programmation/coursera_certificates/images/spec.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/ACF433JAPUPE" target="_blank"><img src="data/Programmation/coursera_certificates/images/spec2.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/specialization/certificate/QRGVASSSQW7N" target="_blank"><img src="data/Programmation/coursera_certificates/images/spec3.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/certificate/FPZTJBW8KN3B" target="_blank"><img src="data/Programmation/coursera_certificates/images/Interactivity_with_Javascript.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/certificate/KQAGNR59RDWX" target="_blank"><img src="data/Programmation/coursera_certificates/images/Java_programming__Arrays_lists_and_Structured_Data.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/certificate/ZYEGJJXC9FUE" target="_blank"><img src="data/Programmation/coursera_certificates/images/Java_programming_Solving_Problems_with_Software.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/certificate/3HXEDUCTU7B9" target="_blank"><img src="data/Programmation/coursera_certificates/images/Linear_Algebra.jpg" class="mediaToDisplay" alt=""></a>
-            <a href="https://www.coursera.org/account/accomplishments/certificate/BL8NYSYEVNXL" target="_blank"><img src="data/Programmation/coursera_certificates/images/CommandLine.jpg" class="mediaToDisplay" alt=""></a>
-        </p><br>
-        <h2>Terminale: je m'améliore</h2>
-        <p>
-            En prévision de la dure année de Terminale, je me suis efforcé de mettre à bon usage mon temps et mes nouvelles capacités de programmation.<br><br> C'est pour cela que le 10 août 2020, j'ai entrepris un projet en langage Python qui joint musique
-            et fonctions mathématiques.<br> Dans ce projet, j'utilise des fonctions mathématiques diverses afin de générer des séries de valeurs (y), que je convertis en mélodies (à l'aide de gammes musicales).<br>
-            <a href="https://nbviewer.jupyter.org/github/MK8BK/musi-math/blob/main/Music_Production.ipynb" target="_blank"><button class="link-button">Visualiser le projet avec nbviewer</button></a>
-            <a href="https://github.com/MK8BK/musi-math" target="_blank"><button class="link-button">Visiter le Repositoire</button></a><br><br> En Terminale, je m'intéresse aux systèmes d'exploitation Linux.<br>J'utilise actuellement Fedora 32&nbsp;&nbsp;
-            <a href="https://getfedora.org/" target="_blank"><img src="data/logos/icons/other/fedora.png" class="icon" alt=""></a>.<br> J'ai acquis ainsi un certain confort avec le terminal (Commandes Bash), mais aussi avec de nombreux outils de développement (Git, Vim).<br> J’ai aussi réalisé mon CV
-            site en ligne, aucune librairie n’a été utilisée (pas de Bootstrap !!!).<br> Pendant ces vacances d'été, je m'attellerais au langage de programmation C&nbsp;&nbsp;<img src="data/logos/icons/other/C.png" class="small-icon" alt="">&nbsp;&nbsp;.
-        </p>
-    </div>
-
-    <div id="Musique" class="tabcontent">
-        <h1>Musique</h1><br>
-        <h2>Mon education musicale:</h2>
-        <div class="document">
-            <p>J'ai commencé à faire de la guitare en classe de seconde (2018/2019) à l'école d'Harmonisation des Arts de Dely Brahim (Alger)&nbsp;&nbsp;
-                <a href="https://www.facebook.com/Ecole-dharmonisation-des-arts-et-danimation-artistique-693295930728313/" target="_blank"><img src="data/logos/icons/other/facebook.png" alt="facebook icon" id="facebook"></a>&nbsp;.
-                <br> Grâce aux enseignements et conseils de mon professeur Mr Khazem Mustafa, j'ai pu rapidement progresser.(niveau 3).<br>
-                <a href="data/Musique/bulletins_zouba/2019.pdf" target="_blank"><button class="link-button">Bulletin 2019</button></a>
-                <a href="data/Musique/bulletins_zouba/2020.pdf" target="_blank"><button class="link-button">Bulletin 2020</button></a>
-                <br>J'ai été musicalement influencé par le compositeur paraguayen Agustin Barrios Mangoré.
-            </p>
+    <div class="controls">
+        <div class="control active-btn" data-id="home" title="Home">
+            <i class="fas fa-home"></i>
         </div>
-        <h2>Mes interprétations:</h2>
-        <div id="gallery">
-            <div>
-                <h3>La Catedral - Allegro Solemne - Agustin Barrios Mangoré</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/lacatedralthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/La_catedral.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Recuerdos de la Alhambra - Francisco Tárrega</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/recuerdosthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/recuerdos-de-la-alhambra.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Las abejas (extrait) - Agustin Barrios Mangoré</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/lasabejasthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/lasabejas.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Asturias (extrait) - Isaac Albéniz</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/asturiasthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/asturias.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Mariage d'Amour - Richard Clayderman</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/mariagethumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/mariage-damour-claydermann.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Canarios (extrait) - Gaspar Sanz</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/canariosthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/canarios.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Jésus, joie du desir de l'homme - Johann Sébastien Bach</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/jesusthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/jesus-joy-of-mans-desiring.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Lagrima - Francisco Tárrega</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/lagrimathumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/lagrima.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Tango Populaire</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/tangothumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/tango.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>la boda de luis alonso (extrait) - Geronimo Jimenez</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/luisalonsothumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/labodadeluisalonso.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Malagueña - Anonyme</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/malaguenathumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/malaguena.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Cadence Andalouse - Anonyme</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/cadanzathumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/cadence_andalouse.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Tormenta de Fuego - Anonyme</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/tormentathumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/tormenta_de_fuego.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Cascabel - Hector Ayala</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/cascabelthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/cascabel.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Andante - Ferdinand Carulli</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/andantethumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/andante.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Etude n°1 en La mineur - Dionisio Aguado</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/aguadothumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/aguado.mp4" type="video/mp4">
-				</video>
-            </div>
-            <div>
-                <h3>Divertissement - Antonio Cano-Curriela</h3>
-                <video class="video-recording" poster="data/logos/thumbnails/divertissementthumb.JPG" controls>
-					<source src="data/Musique/Enregistrements/divertissement.mp4" type="video/mp4">
-				</video>
-            </div>
+        <div class="control" data-id="self-study" title="Self Study">
+          <i class="fa-solid fa-book-open"></i>
         </div>
-
+        <div class="control" data-id="university" title="University">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="control" data-id="projects" title="Projects" id="isd">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+        </div>
+        <div class="control" data-id="contact" title="Contact">
+          <i class="fas fa-envelope"></i>
+        </div>
     </div>
-
-    <div id="Contact" class="tabcontent">
-        <h1>Contact</h1>
-        <p>Profil Linkedin: <mark class="highlight-text">Moncef Karim AIT BELKACEM</mark>&nbsp;&nbsp;&nbsp;
-            <a href="https://www.linkedin.com/in/moncef-karim-ait-belkacem-a31b75191" target="_blank">
-                <img src="data/logos/icons/other/Linkedin.png" alt="link linkedin" class="icon">
-            </a>
-        </p>
-        <p>Profil GitHub: <mark class="highlight-text">MK8BK</mark>&nbsp;&nbsp;&nbsp;
-            <a href="https://github.com/MK8BK" target="_blank">
-                <img src="data/logos/icons/other/GitHub-Logo.png" alt="link github" class="icon">
-            </a>
-        </p>
-        <p>Adresse e-mail scolaire (cned, parcoursup):
-            <mark class="highlight-text">moncef.aitbelkacem.1ere.s@gmail.com</mark> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="mailto:moncef.aitbelkacem.1ere.s@gmail.com">
-                <img src="data/logos/icons/other/emailicon.png" alt="email icon" class="emailicon">
-            </a>
-        </p>
-        <p>Adresse e-mail principale:
-            <mark class="highlight-text">moncef.aitbelkacem@gmail.com</mark> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="mailto:moncef.aitbelkacem@gmail.com">
-                <img src="data/logos/icons/other/emailicon.png" alt="email icon" class="emailicon">
-            </a>
-        </p>
-        <p>Telephone:&nbsp;<mark class="highlight-text">+213-783351830 </mark> &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="tel:+213-783351830">
-                <img src="data/logos/icons/other/phoneicon.png" alt="phone icon" id="phoneicon">
-            </a>
-        </p>
+    <div class="theme-btn">
+        <i class="fas fa-adjust"></i>
     </div>
-
+    <script src="app.js"></script>
 </body>
-
 </html>
