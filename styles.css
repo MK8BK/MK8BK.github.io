@@ -385,6 +385,15 @@ li{
 	margin-left: 10%;
 }
 
+.img-container {
+	justify-content: center;
+}
+
+.img-container img{
+	width: 31%;
+}
+
+
 @media screen and (max-width: 650px) {
 	body{
 		font-size: 0.8rem;
@@ -480,6 +489,14 @@ li{
 		text-align:left;
 		max-width: 100%;
 		width: 100%;
+	}
+
+}
+
+@media screen and (max-width: 410px) {
+	.img-container img{
+		width: 80%;
+		margin: 10px auto;
 	}
 }
 
