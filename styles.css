@@ -417,12 +417,13 @@ li{
 		transform: translateX(-50%);
 		width: 100%;
 		background-color: var(--color-primary);
+		border-top: 2px solid var(--color-secondary);
 	}
 	.controls .control {
-		margin: 0.7rem 0.3rem;
+		/* margin: 0.7rem 0.3rem; */
 		padding-top:0;
 		padding-bottom: 0;
-		margin-top: 0;
+		margin: 10px auto;
 	}
 	.container {
 		transition: all 0.2s ease-in-out;
