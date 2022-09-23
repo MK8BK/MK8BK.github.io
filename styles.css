@@ -39,6 +39,7 @@
 html {
 	font-size: 100%;
 	overflow: auto;
+	overflow-x: hidden;
 	/* overflow-x: hidden; */
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
 	scrollbar-width: none; /* for Firefox */
@@ -397,6 +398,13 @@ li{
 	max-width: 500px;
 }
 
+.book img {
+	width:60%;
+	max-width:200px;
+	float: right;
+	position: relative;
+}
+
 .author {
 	font-style: italic;
 }
@@ -501,6 +509,14 @@ li{
 		text-align:left;
 		max-width: 100%;
 		width: 100%;
+	}
+	.book img {
+		width:80%;
+		max-width:100%;
+		min-width: 60%;
+		display: block;
+		float: center;
+		margin-right: 5px auto;
 	}
 
 }
