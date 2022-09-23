@@ -397,6 +397,9 @@ li{
 	max-width: 500px;
 }
 
+.author {
+	font-style: italic;
+}
 
 @media screen and (max-width: 650px) {
 	body{
