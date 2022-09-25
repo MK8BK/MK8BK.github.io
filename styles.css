@@ -418,6 +418,10 @@ li{
 	text-align: center;
 }
 
+#nah {
+	float:none;
+}
+
 @media screen and (max-width: 650px) {
 	body{
 		font-size: 0.8rem;
