@@ -414,6 +414,10 @@ li{
 	width: 100%;
 }
 
+#older-version {
+	text-align: center;
+}
+
 @media screen and (max-width: 650px) {
 	body{
 		font-size: 0.8rem;
