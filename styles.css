@@ -419,7 +419,8 @@ li{
 }
 
 #nah {
-	float:none;
+	float: none;
+	text-decoration: none;
 }
 
 @media screen and (max-width: 650px) {
