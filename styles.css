@@ -298,6 +298,18 @@ h4 {
 	padding-bottom: 1%;
 }
 
+.sample{
+	margin-left: 5%;
+	width: 80%;
+	max-width: 800px;
+}
+
+.pdf {
+	margin-left: 5%;
+	width: 100%;
+	max-width: 800px;
+}
+
 mark {
 	background-color: var(--color-secondary-alpha);
 	color: var(--color-secondary);
