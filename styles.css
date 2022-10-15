@@ -19,9 +19,9 @@
 	/* --color-primary: rgb(240,240,240);
 	--color-secondary: rgb(45, 45, 45); */
 	--color-primary: rgb(240,240,240);
-	--color-secondary: rgb(35,35,35);
+	--color-secondary: rgb(13, 9, 85);
 	--color-primary-alpha: rgb(240,240,240, .3);
-	--color-secondary-alpha: rgb(35,35,35, .3);
+	--color-secondary-alpha: rgb(13, 9, 85, .3);
 	--br-sm-2: 14px;
 	/* --box-shadow-1: 0 3px 15px rgba(0,0,0,.3); */
 }
@@ -30,9 +30,9 @@
 /* 	--color-primary: rgb(10, 10, 35);
 	--color-primary: rgb(15,15,50);
 	--color-secondary: rgb(255,255,255); */
-	--color-primary: rgb(35,35,35);
+	--color-primary: rgb(13, 9, 85);
 	--color-secondary: rgb(240,240,240);
-	--color-primary-alpha: rgba(35,35,35, .3);
+	--color-primary-alpha: rgba(13, 9, 85, .3);
 	--color-secondary-alpha: rgba(240,240,240, .3);
 }
 
