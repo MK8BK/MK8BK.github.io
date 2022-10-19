@@ -16,12 +16,13 @@
 } */
 
 :root {
+	/* 13 9 85 bleu*/
 	/* --color-primary: rgb(240,240,240);
 	--color-secondary: rgb(45, 45, 45); */
 	--color-primary: rgb(240,240,240);
-	--color-secondary: rgb(13, 9, 85);
+	--color-secondary: rgb(60, 60, 60);
 	--color-primary-alpha: rgb(240,240,240, .3);
-	--color-secondary-alpha: rgb(13, 9, 85, .3);
+	--color-secondary-alpha: rgb(60, 60, 60, .3);
 	--br-sm-2: 14px;
 	/* --box-shadow-1: 0 3px 15px rgba(0,0,0,.3); */
 }
@@ -30,9 +31,9 @@
 /* 	--color-primary: rgb(10, 10, 35);
 	--color-primary: rgb(15,15,50);
 	--color-secondary: rgb(255,255,255); */
-	--color-primary: rgb(13, 9, 85);
+	--color-primary: rgb(60, 60, 60);
 	--color-secondary: rgb(240,240,240);
-	--color-primary-alpha: rgba(13, 9, 85, .3);
+	--color-primary-alpha: rgba(60, 60, 60, .3);
 	--color-secondary-alpha: rgba(240,240,240, .3);
 }
 
@@ -44,6 +45,7 @@ html {
 	-ms-overflow-style: none; /* for Internet Explorer, Edge */
 	scrollbar-width: none; /* for Firefox */
 	overflow-y: scroll;
+
 }
 
 
@@ -53,9 +55,9 @@ html::-webkit-scrollbar {
 
 body {
 	background-color: var(--color-primary);
+	color: var(--color-secondary);
 	font-family: "JetBrains Mono" , Helvetica , Verdana , "Poppins", sans-serif;
 	font-size: 1.0rem;
-	color: var(--color-secondary);
 	transition: all 0.2s ease-in-out;
 	overflow-y: scroll;
 }
@@ -64,6 +66,11 @@ button {
 	border: solid 2px var(--color-secondary);
 	border-radius: 2px;
 }
+
+/* main{
+	background: var(--color-primary-alpha);
+	background: linear-gradient(90deg, var(--color-primary) 35%, var(--color-secondary) 100%);
+} */
 
 
 a {
@@ -433,6 +440,11 @@ li{
 #nah {
 	float: none;
 	text-decoration: none;
+}
+
+.ocaml img{
+	width: 60px;
+	border:none;
 }
 
 @media screen and (max-width: 650px) {
