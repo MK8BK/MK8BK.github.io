@@ -8,7 +8,7 @@
     --overlay-bg-color-light: rgba(205,205,205);
     --main-text-color-light: rgb(40,40,40);
 
-    --red-text-color: rgb(240,40,40);
+    --highlight-text-color: rgb(100,100,100);
     --standard-border-radius: 4px;
     --standard-border: 1px;
 }
@@ -91,7 +91,8 @@ a{
 }
 
 a:hover, a:focus{
-    color: var(--red-text-color);
+    /*background-color: var(--overlay-bg-color);*/
+    color: var(--highlight-text-color);
 }
 
 .toggle-nav-links{
@@ -110,14 +111,24 @@ a:hover, a:focus{
     padding-bottom: 4rem;
 }
 
+.nav-link:focus{
+    outline: none;
+    border: none;
+}
+
+.nav-link:hover, .nav-link.active, .nav-link:focus{
+    /*border-bottom: solid 3px var(--highlight-text-color);*/
+    /*padding-bottom: 0.1rem;*/
+}
+
 .hamburger-button, .theme-button{
     /*border: var(--standard-border) solid var(--main-text-color);*/
     border: none;
     height: 2.4rem;
     width: 2.4rem;
-    background-size: cover;
     vertical-align: center;
     margin-top: 0.2rem;
+    cursor: pointer;
 }
 
 
@@ -125,6 +136,7 @@ a:hover, a:focus{
 .theme-button{
     margin-right: 2rem;
     background: transparent url("data/icons/theme-dark.png");
+    background-size: cover;
 }
 
 
@@ -132,6 +144,7 @@ a:hover, a:focus{
     display: none;
     background: transparent url("data/icons/menu-dark.png");
     margin-left: 2rem;
+    background-size: cover;
 }
 
 
@@ -139,7 +152,7 @@ footer{
     /*display: block;*/
     background-color: var(--overlay-bg-color);
     margin-top: -3rem;
-    height: 3rem;
+    min-height: 3rem;
     text-align: center;
     word-spacing: 4rem;
 }
@@ -148,7 +161,21 @@ footer address{
     width: 100%;
 }
 
-@media (max-width: 1050px) {
+@media(max-width: 1050px){
+    .nav-link{
+        font-size: 1.0rem;
+    }
+}
+
+@media (max-width: 750px) {
+
+    h1{
+        font-size: 1.6rem;
+    }
+    nav{
+        font-size: 1.2rem;
+    }
+
     .nav-menu{
         position: fixed;
         top: -100%;
@@ -166,18 +193,26 @@ footer address{
         top: 3rem;
     }
 
+    .hamburger-button{
+        display: block;
+    }
+
 
     .nav-link{
+        border-top: var(--standard-border) solid var(--main-bg-color);
+        width: 100%;
         display: block;
-        font-size: 1.8rem;
+        font-size: 1.3rem;
         padding-top: 1rem;
         padding-bottom: 1rem;
-
+        backdrop-filter: opacity(10%);
     }
 
     .toggle-nav-links{
         display: inline-block;
     }
+
+
 }
 
 
