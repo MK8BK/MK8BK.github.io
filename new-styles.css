@@ -115,18 +115,21 @@ a:hover, a:focus{
     border: none;
     height: 2.4rem;
     width: 2.4rem;
-    background: transparent url("data/icons/menu-dark.png");
     background-size: cover;
     vertical-align: center;
     margin-top: 0.2rem;
 }
 
+
+
 .theme-button{
     margin-right: 2rem;
+    background: transparent url("data/icons/theme-dark.png");
 }
 
 
 .hamburger-button{
+    background: transparent url("data/icons/menu-dark.png");
     margin-left: 2rem;
 }
 
