@@ -129,6 +129,7 @@ a:hover, a:focus{
 
 
 .hamburger-button{
+    display: none;
     background: transparent url("data/icons/menu-dark.png");
     margin-left: 2rem;
 }
