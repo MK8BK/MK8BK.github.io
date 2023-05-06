@@ -11,64 +11,63 @@
     <title>Moncef AIT BELKACEM</title>
 </head>
 <body class="light-body-theme">
-    <header>
-        <nav>
-            <div>
-                <i class="fa-solid fa-bars toggle-nav-links" onclick="toggleDropDown()"></i>
-            </div>
-            <ol class="nav-menu">
-                <li class="nav-link"><a href="">Blog</a></li>
-                <li class="nav-link"><a href="">Data Science and AI</a></li>
-                <li class="nav-link"><a href="">Web Development</a></li>
-                <li class="nav-link"><a href="">Mathematics</a></li>
-            </ol>
-            <div>
-                <i onclick="flipTheme()" class="toggle-theme fa-duotone fa-moon fa theme-btn"></i>
-            </div>
-        </nav>
-
-        <h1>Hi, I'm moncef.</h1>
-        <p>Text content</p>
-    </header>
-    <main>
-        <section aria-labelledby="recent-articles-label">
+    <div class="portfolio-content">
+        <header>
+            <nav>
+                <button class="hamburger-button" onclick="toggleDropDown()"></button>
+                <ol class="nav-menu">
+                    <li class="nav-link"><a href="">Blog</a></li>
+                    <li class="nav-link"><a href="">Data Science and AI</a></li>
+                    <li class="nav-link"><a href="">Web Development</a></li>
+                    <li class="nav-link"><a href="">Mathematics</a></li>
+                </ol>
+                <button class="theme-button" onclick="flipTheme()"></button>
+            </nav>
+            <h1>Hi, I'm moncef. <br> A Data Scientist, Web Developer and Blogger</h1>
+        </header>
+        <main>
+        <section class="content-section" aria-labelledby="recent-articles-label">
             <h2 id="recent-articles-label">Recent Articles</h2>
-            <p>You can read my articles here.</p>
-            <a href="#">Article 1 link</a>
-            <a href="#">Article 2 link</a>
-            <a href="#">Article 3 link</a>
+            <p>You can consult my articles and blog posts here.</p>
+            <a href="#">Article 1 link</a><br>
+            <a href="#">Article 2 link</a><br>
+            <a href="#">Article 3 link</a><br>
             <a href="#">Article 4 link</a>
         </section>
-        <section aria-labelledby="data-science-projects-label">
+        <section aria-labelledby="data-science-projects-label" class="content-section">
             <h2 id="data-science-projects-label">Data Science Projects</h2>
-            <a href="#">Data Science Project 1</a>
-            <a href="#">Data Science Project 2</a>
-            <a href="#">Data Science Project 3</a>
+            <p>You can view my data science notebooks and projects here.</p>
+            <a href="#">Data Science Project 1</a><br>
+            <a href="#">Data Science Project 2</a><br>
+            <a href="#">Data Science Project 3</a><br>
             <a href="#">Data Science Project 4</a>
         </section>
-        <section aria-labelledby="web-development-projects-label">
+        <section aria-labelledby="web-development-projects-label" class="content-section">
             <h2 id="web-development-projects-label">Web Development Projects</h2>
-            <a href="#">Web Development Project 1</a>
-            <a href="#">Web Development Project 1</a>
-            <a href="#">Web Development Project 1</a>
-            <a href="#">Web Development Project 1</a>
+            <p>You can see my web development projects here.</p>
+            <a href="#">Web Development Project 1</a><br>
+            <a href="#">Web Development Project 2</a><br>
+            <a href="#">Web Development Project 3</a><br>
+            <a href="#">Web Development Project 4</a>
         </section>
-        <section aria-labelledby="other-projects-label">
+        <section aria-labelledby="other-projects-label" class="content-section last">
             <h2 id="other-projects-label">Other Projects</h2>
-            <a href="#">Data Science Project 1</a>
-            <a href="#">Data Science Project 1</a>
-            <a href="#">Data Science Project 1</a>
-            <a href="#">Data Science Project 1</a>
+            <p>You can view other projects i've worked on.</p>
+            <a href="#">Other Project 1</a><br>
+            <a href="#">Other Project 2</a><br>
+            <a href="#">Other Project 3</a><br>
+            <a href="#">Other Project 4</a>
         </section>
     </main>
+    </div>
     <footer>
         <address>
-            <p>Visit my GitHub profile at: <strong>MK8BK</strong></p>
-            <p>Visit my Kaggle profile at: <strong>MK8BK</strong></p>
-            <p>Visit my Medium profile at: <strong>MK8BK</strong></p>
-            <p>Visit my UpWork profile at: <strong>MK8BK</strong></p>
-            <p>Visit my LinkedIn profile at: <strong>MK8BK</strong></p>
-            <p>Contact me at: <strong>moncef.aitbelkacem@gmail.com</strong></p>
+            <span>GitHub</span>
+            <span>Kaggle</span>
+            <span>Medium</span>
+            <span>UpWork</span>
+            <span>Linkedin</span>
+            <span>moncef.aitbelkacem@gmail.com</span>
         </address>
     </footer>
 </body>

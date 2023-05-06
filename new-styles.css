@@ -34,38 +34,45 @@
     color: var(--main-text-color);
 }
 
+html,
 body{
     background-color: var(--main-bg-color);
+    height: 100%;
+}
+
+.portfolio-content{
+    min-height: 100%;
 }
 
 
 h1{
     font-size: 2.0rem;
     margin: 1rem;
+    text-align: left;
+    padding-left: 2rem;
+
 }
 
-body > header {
+body > div > header {
     padding: 0;
+
 }
 
 
-body > header > nav {
+body > div > header > nav{
     background-color: var(--overlay-bg-color);
-    padding: 0.5rem 1rem;
-}
-
-body > header > nav{
+    padding: 0.5rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-height: 3rem;
-    /*flex-direction: row;*/
-    /*justify-content: space-evenly;*/
+    max-height: 3.5rem;
+    font-size: 1.5rem;
 }
 
 
 
-body > header > nav > ol li{
+
+body > div > header > nav > ol li{
     list-style: none;
     display: inline-block;
     margin: auto;
@@ -73,6 +80,11 @@ body > header > nav > ol li{
 }
 
 
+.nav-menu{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
 
 a{
     text-decoration: none;
@@ -82,21 +94,7 @@ a:hover, a:focus{
     color: var(--red-text-color);
 }
 
-i{
-    all: unset;
-    background-color: var(--overlay-bg-color);
-    border-radius: var(--standard-border-radius);
-    color: var(--main-text-color);
-}
-
-i:hover, i:focus{
-    background-color: var(--main-text-color);
-    color: var(--main-bg-color);
-    opacity: 0.8;
-}
-
-
-.toggle-theme, .toggle-nav-links{
+.toggle-nav-links{
     padding: 0.5rem 0.7rem;
 }
 
@@ -104,18 +102,49 @@ i:hover, i:focus{
     display: none;
 }
 
-
-p {
-    padding: 1rem;
+.content-section{
+    padding: 0.5rem 2rem;
 }
 
-.abstract-card{
-    border-radius: var(--standard-border-radius);
+.last{
+    padding-bottom: 4rem;
+}
+
+.hamburger-button, .theme-button{
+    /*border: var(--standard-border) solid var(--main-text-color);*/
+    border: none;
+    height: 2.4rem;
+    width: 2.4rem;
+    background: transparent url("data/icons/menu-dark.png");
+    background-size: cover;
+    vertical-align: center;
+    margin-top: 0.2rem;
+}
+
+.theme-button{
+    margin-right: 2rem;
 }
 
 
+.hamburger-button{
+    margin-left: 2rem;
+}
 
-@media (max-width: 750px) {
+
+footer{
+    /*display: block;*/
+    background-color: var(--overlay-bg-color);
+    margin-top: -3rem;
+    height: 3rem;
+    text-align: center;
+    word-spacing: 4rem;
+}
+
+footer address{
+    width: 100%;
+}
+
+@media (max-width: 1050px) {
     .nav-menu{
         position: fixed;
         top: -100%;
@@ -123,8 +152,8 @@ p {
         flex-direction: column;
         background-color: var(--overlay-bg-color);
         opacity: 100%;
-        width: 80%;
-        margin: 0 10%;
+        width: 100vw;
+        /*margin: 0 10%;*/
         text-align: center;
         border-radius: 0 0 var(--standard-border-radius) var(--standard-border-radius);
     }
@@ -136,7 +165,10 @@ p {
 
     .nav-link{
         display: block;
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
     }
 
     .toggle-nav-links{
