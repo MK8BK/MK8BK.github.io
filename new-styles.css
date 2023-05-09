@@ -68,8 +68,14 @@ body{
     float: left;
 }
 
-.hamburger-button:hover{
+.hamburger-button:active{
     background-color: var(--main-bg-color);
+}
+
+@media (hover: hover) {
+    .hamburger-button:hover {
+        background-color: var(--main-bg-color);
+    }
 }
 
 
@@ -91,9 +97,17 @@ body{
     background-color: var(--overlay-bg-color);
 }
 
-.theme-button:hover{
+.theme-button:active{
     background-color: var(--main-bg-color);
 }
+
+@media (hover: hover) {
+    .theme-button:hover {
+        background-color: var(--main-bg-color);
+    }
+}
+
+
 
 .moon-icon{
     display: block;
