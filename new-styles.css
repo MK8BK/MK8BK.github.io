@@ -14,7 +14,7 @@
     --standard-border-radius: 4px;
     --standard-border: 1px;
 
-    --nav-bar-height: 9vh;
+    --nav-bar-height: 8vh;
 }
 
 .dark-body-theme {
@@ -47,6 +47,7 @@ body{
     margin-top: 8rem;
     margin-bottom: 4rem;
 }
+
 
 .navbar{
     position: fixed;
@@ -131,15 +132,17 @@ li{
 
 .nav-link{
     font-size: 1.5em;
-    text-align: center;
     background-color: var(--overlay-bg-color);
     border-top: var(--main-bg-color) solid 1px;
     height: var(--nav-bar-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .nav-link a{
+    display: block;
     text-decoration: none;
-    margin: auto;
 }
 
 
@@ -151,10 +154,60 @@ li{
 
 .content-section{
     min-height: 100vh;
+    margin-bottom: 3rem;
 }
 
-footer{
+.content-section h2, .content-section>p{
+    text-align: center;
+}
+
+.content-section > p{
+    margin-bottom: 1rem;
+}
+
+.page-footer{
     position: sticky;
     background-color: var(--overlay-bg-color);
-    height: var(--nav-bar-height);
+    min-height: var(--nav-bar-height);
 }
+
+.page-footer > address{
+    height: 100%;
+    width: 100%;
+    font-size: 1.2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.page-footer > address > p{
+    margin: 0 2em;
+}
+
+
+.card-container{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    max-width: 900px;
+}
+
+
+
+
+.card{
+    margin: 0.5rem 0;
+    width: 100%;
+    border: var(--overlay-bg-color) 2px solid;
+    border-radius: var(--standard-border-radius);
+    background-color: rgba(127, 127, 127, 0.4);
+}
+
+.card a{
+    text-decoration: none;
+}
+
+
