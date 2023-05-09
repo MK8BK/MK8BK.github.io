@@ -14,7 +14,7 @@
     --standard-border-radius: 4px;
     --standard-border: 1px;
 
-    --nav-bar-height: 10vh;
+    --nav-bar-height: 9vh;
 }
 
 .dark-body-theme {
@@ -72,9 +72,9 @@ body{
     background-color: var(--main-bg-color);
 }
 
-@media (hover: hover) {
+@media (hover: none) {
     .hamburger-button:hover {
-        background-color: var(--main-bg-color);
+        background-color: var(--overlay-bg-color);
     }
 }
 
@@ -101,9 +101,9 @@ body{
     background-color: var(--main-bg-color);
 }
 
-@media (hover: hover) {
+@media (hover: none) {
     .theme-button:hover {
-        background-color: var(--main-bg-color);
+        background-color: var(--overlay-bg-color);
     }
 }
 
