@@ -14,7 +14,7 @@
     --standard-border-radius: 4px;
     --standard-border: 1px;
 
-    --nav-bar-height: 8vh;
+    --nav-bar-height: 6vh;
 }
 
 .dark-body-theme {
@@ -195,9 +195,6 @@ li{
     max-width: 900px;
 }
 
-
-
-
 .card{
     margin: 0.5rem 0;
     width: 100%;
@@ -208,6 +205,27 @@ li{
 
 .card a{
     text-decoration: none;
+}
+
+
+
+@media (min-width: 800px) {
+    .hamburger-button{
+        display: none;
+    }
+    .nav-menu{
+        position: static;
+        width: auto;
+        display: flex;
+        justify-content: space-evenly;
+    }
+    .nav-link{
+        font-size: 1.5em;
+        background-color: var(--overlay-bg-color);
+        display: flex inline;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 

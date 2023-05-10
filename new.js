@@ -12,6 +12,7 @@ const hamburgerButton =
     .item(0);
 
 
+    
 /**
  * To handle clicks outside clickable areas.
  */
