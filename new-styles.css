@@ -14,7 +14,7 @@
     --standard-border-radius: 4px;
     --standard-border: 1px;
 
-    --nav-bar-height: 6vh;
+    --nav-bar-height: max(6vh, 3rem);
 }
 
 .dark-body-theme {
@@ -154,24 +154,23 @@ li{
 
 .content-section{
     min-height: 100vh;
-    margin-bottom: 3rem;
+    padding-top: calc(var(--nav-bar-height)*1.5);
 }
 
 .content-section h2, .content-section>p{
     text-align: center;
 }
 
-.content-section > p{
-    margin-bottom: 1rem;
-}
 
 .page-footer{
+
     position: sticky;
     background-color: var(--overlay-bg-color);
     min-height: var(--nav-bar-height);
 }
 
 .page-footer > address{
+    margin-top: 5vh;
     height: 100%;
     width: 100%;
     font-size: 1.2em;
