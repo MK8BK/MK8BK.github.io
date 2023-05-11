@@ -209,9 +209,10 @@ li{
 
 .card img{
     float: left;
-    width: 100%;
+    width: 95%;
     border-radius: var(--standard-border-radius);
-    margin: 0.5em;
+    margin-left: 2%;
+    margin-right: 2%;
 }
 
 
