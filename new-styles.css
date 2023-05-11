@@ -154,7 +154,7 @@ li{
 
 .content-section{
     min-height: 100vh;
-    padding-top: calc(var(--nav-bar-height)*1.5);
+    padding-top: calc(var(--nav-bar-height)*2);
 }
 
 .content-section h2, .content-section>p{
