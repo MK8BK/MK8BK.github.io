@@ -192,7 +192,7 @@ li{
     display: flex;
     flex-direction: column;
     width: 95%;
-    max-width: 900px;
+    max-width: 1200px;
 }
 
 .card{
@@ -229,6 +229,7 @@ li{
     .nav-link{
         font-size: 1.5em;
         background-color: var(--overlay-bg-color);
+        border-top: none;
         display: flex inline;
         justify-content: center;
         align-items: center;
