@@ -209,7 +209,7 @@ li{
 
 .card img{
     float: left;
-    width: 25%;
+    width: 100%;
     border-radius: var(--standard-border-radius);
     margin: 0.5em;
 }
@@ -232,6 +232,9 @@ li{
         display: flex inline;
         justify-content: center;
         align-items: center;
+    }
+    .card img{
+        width: 50%;
     }
 }
 
