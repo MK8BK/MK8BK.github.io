@@ -33,6 +33,7 @@
 *{
     margin: 0;
     padding: 0;
+    /* border: 0.5px solid orange; */
     box-sizing: border-box;
     color: var(--main-text-color);
     font-family: "JetBrains Mono" , monospace;
@@ -204,6 +205,13 @@ li{
 
 .card a{
     text-decoration: none;
+}
+
+.card img{
+    float: left;
+    width: 25%;
+    border-radius: var(--standard-border-radius);
+    margin: 0.5em;
 }
 
 

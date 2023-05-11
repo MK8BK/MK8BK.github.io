@@ -54,7 +54,7 @@ function initTheme(){
 }
 
 /**
- * Show the links drop down men.
+ * Show the links drop down menu.
  */
 function toggleDropDown(){
     if(dropDown.classList.contains('active')){
