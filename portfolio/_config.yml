@@ -40,5 +40,6 @@ sphinx:
   extra_extensions:
   - sphinx_inline_tabs
   config:
+        # html_show_copyright: true
         # html_theme: quantecon_book_theme
         # html_theme: pydata_sphinx_theme
