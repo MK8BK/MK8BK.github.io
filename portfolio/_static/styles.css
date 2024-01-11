@@ -1,0 +1,32 @@
+*{
+  font-family: "Jetbrains Mono";
+}
+
+.search-button:hover ,
+.theme-switch-button span:hover {
+  box-shadow: none !important;
+}
+
+a:link, a:link p {
+  color: #e60012 !important;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited, a:visited p {
+  color: #e60012 !important;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover, a:hover p {
+  color: #e60012 !important;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active, a:active p {
+  color: #e60012 !important;
+  background-color: transparent;
+  text-decoration: underline;
+}
