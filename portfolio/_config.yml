@@ -4,6 +4,7 @@
 title: MK8BK's Technical Guides
 author: MK8BK
 logo: fav.png
+copyright: "2024"
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
