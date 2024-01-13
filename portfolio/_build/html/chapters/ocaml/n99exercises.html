@@ -466,8 +466,9 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ninety-nine-problems-in-ocaml">
 <h1>Ninety-Nine Problems in Ocaml<a class="headerlink" href="#ninety-nine-problems-in-ocaml" title="Permalink to this heading">#</a></h1>
+<p><strong>Exercise 1: Tail of a List</strong></p>
 <p>Write a function that returns the last element of a list.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">last</span> <span class="p">:</span> <span class="s1">&#39;a list -&gt; &#39;</span><span class="n">a</span> <span class="n">option</span> 
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">last</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">option</span> 
 </pre></div>
 </div>
 <details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
@@ -484,6 +485,75 @@ Show solution<div class="sd-summary-down docutils">
    <span class="o">|</span> <span class="o">_::</span><span class="n">tail</span> <span class="o">-&gt;</span> <span class="n">last</span> <span class="n">tail</span>
 </pre></div>
 </div>
+<p class="sd-card-text"><strong>Explanation</strong></p>
+<p class="sd-card-text">Here we are defining a recursive function in OCaml.</p>
+<p class="sd-card-text">Notice the optional type hints. The function takes a (homogenous) list <code class="docutils literal notranslate"><span class="pre">l</span></code>
+of a generic type <code class="docutils literal notranslate"><span class="pre">'a</span></code> (<code class="docutils literal notranslate"><span class="pre">'SOMETHING</span></code> is OCaml syntax for generic types).</p>
+<p class="sd-card-text">If the list is empty, we return None, there is no last element.</p>
+<p class="sd-card-text">If the list contains a single element <code class="docutils literal notranslate"><span class="pre">e</span></code>, return <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">e</span></code>.</p>
+<p class="sd-card-text">Otherwise, discard the first element <code class="docutils literal notranslate"><span class="pre">_</span></code> and call last on the rest of the list.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">'a</span> <span class="pre">option</span></code> is OCaml’s solution to the billion dollar
+mistake of the <code class="docutils literal notranslate"><span class="pre">NullPointerException</span></code>. All values in OCaml are non-null.</p>
+<p class="sd-card-text">The option type allows us to deal with a case where a “null” value would be
+useful.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">option</span> <span class="o">=</span> 
+<span class="o">|</span> <span class="nc">Some</span> <span class="k">&#39;</span><span class="n">a</span>
+<span class="o">|</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p class="sd-card-text">The compiler will force you to handle <code class="docutils literal notranslate"><span class="pre">None</span></code> values in option types.</p>
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">e::l</span></code> operation appends element <code class="docutils literal notranslate"><span class="pre">e</span></code> to the beginning of the list <code class="docutils literal notranslate"><span class="pre">l</span></code>.</p>
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">match</span></code> allows us to perform different action based on the form of the list
+<code class="docutils literal notranslate"><span class="pre">l</span></code>. It is basically an switch statement on steroids that allows us to
+deconstruct a value of any type into its possible forms.</p>
+<p class="sd-card-text">The compiler will force you to handle all possible forms of the input type.</p>
+</div>
+</details><p><strong>Exercise 2: Last Two Elements of a List</strong></p>
+<p>Find the last but one (last and penultimate) elements of a list.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">last_two</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span><span class="o">)</span> <span class="n">option</span> 
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Show solution<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span> <span class="k">let</span> <span class="k">rec</span> <span class="n">last_two</span> <span class="o">(</span><span class="n">l</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">):</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> 
+   <span class="k">match</span> <span class="n">l</span> <span class="k">with</span>
+   <span class="o">|</span> <span class="bp">[]</span> 
+   <span class="o">|</span> <span class="o">[_]</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+   <span class="o">|</span> <span class="n">e1</span><span class="o">::</span><span class="n">e2</span><span class="o">::</span><span class="bp">[]</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="o">(</span><span class="n">e1</span><span class="o">,</span> <span class="n">e2</span><span class="o">)</span>
+   <span class="o">|</span> <span class="o">_::</span><span class="n">rest</span> <span class="o">-&gt;</span> <span class="n">last_two</span> <span class="n">rest</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><strong>Explanation</strong></p>
+<p class="sd-card-text">Same idea, minor tweaks. We are returing a product type <em>ie:</em> tuple.</p>
+<p class="sd-card-text">If the list contains exactly two elements <code class="docutils literal notranslate"><span class="pre">e1</span></code> and <code class="docutils literal notranslate"><span class="pre">e2</span></code>, return the tuple
+<code class="docutils literal notranslate"><span class="pre">(e1,</span> <span class="pre">e2)</span></code> wrapped in <code class="docutils literal notranslate"><span class="pre">Some</span></code> (we HAVE to return an option type).</p>
+<p class="sd-card-text">If the list contains 0 or 1 elements, return <code class="docutils literal notranslate"><span class="pre">None</span></code>, we can match both cases
+with one arrow.</p>
+<p class="sd-card-text">Otherwise if the list contains 3 or more elements, discard the first one
+and call <code class="docutils literal notranslate"><span class="pre">last_two</span></code> on the rest of the list.</p>
+</div>
+</details><p><strong>Exercise n: ptitle</strong></p>
+<p>pdescription</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">psig</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Show solution<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span>   <span class="c">(* solution *)</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><strong>Explanation</strong></p>
+<p class="sd-card-text">pexpl</p>
 </div>
 </details></section>
 
