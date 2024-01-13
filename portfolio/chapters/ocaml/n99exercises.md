@@ -89,6 +89,50 @@ last_two : 'a list -> ('a * 'a) option
 ````
 
 
+**Exercise 3: N'th Element of a List**
+
+Find the N'th element of a list.
+
+```ocaml
+nth: 'a list -> int -> 'a option
+```
+
+```` {dropdown} Show solution
+
+   ```ocaml
+   let rec nth (lst: 'a list) (k: int): 'a option = 
+     match (k, lst) with 
+     | (_, []) -> None
+     | (0, x::_) -> Some x
+     | (k, _::rest) -> nth rest (k-1)
+   ```
+
+   This function still returns `None` for negative values.
+
+````
+
+
+**Exercise 4: Length of a List**
+
+
+```
+psig
+```
+
+```` {dropdown} Show solution
+
+   ```ocaml
+      (* solution *)
+   ```
+
+  **Explanation**
+
+  pexpl
+
+````
+
+
+
 **Exercise n: ptitle**
 
 pdescription
