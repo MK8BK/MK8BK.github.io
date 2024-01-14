@@ -107,10 +107,115 @@ nth: 'a list -> int -> 'a option
      | (k, _::rest) -> nth rest (k-1)
    ```
 
+   This function still returns `None` for negative values.
+
 ````
 
 
+**Exercise 4: Length of a List**
 
+Find the number of elements of a list.
+
+```ocaml
+length: 'a list -> int
+```
+
+```` {dropdown} Show solution
+
+   ```ocaml
+   let rec length (lst: 'a list): int = 
+     match lst with
+     | [] -> 0
+     | _::rest -> 1 + length rest
+   ```
+
+  **Explanation**
+
+  The length of an empty list is 0.
+
+  The length of a list having a first element 
+  is one plus the length of the rest of the list.
+  
+  Here is a tail recursive version.
+
+   ```ocaml
+   let rec length (lst: 'a list): int = 
+     (* Define an inner auxiliary function *)
+     let rec aux (lst: 'a list) (sofar: int): int = 
+       match lst with
+       | [] -> sofar
+       | _::rest -> aux rest (sofar + 1)
+
+     (* return this expression that uses the auxiliary function *)
+     in aux lst 0
+   ```
+````
+
+**Exercise 5: Reverse a List**
+
+Reverse a List
+
+
+```ocaml
+rev: 'a list -> 'a list
+```
+
+```` {dropdown} Show solution
+
+   ```ocaml
+   let rec rev (lst: 'a list): 'a list =
+     let rec aux (reversed: 'a list) (remaining: 'a list): 'a list = 
+       match (reversed, remaining) with
+       | (reversed, []) -> reversed
+       | (reversed, x::tail) -> aux (x::reversed) tail
+     in aux [] lst
+   ```
+````
+
+
+**Exercise 6: Duplicate the Elements of a List**
+
+Duplicate the Elements of a List.
+
+```ocaml
+dupl: 'a list -> 'a list
+```
+
+```` {dropdown} Show solution
+
+   ```ocaml
+   let rec dupl (lst: 'a list): 'a list = 
+     match lst with 
+     | [] -> []
+     | x::rest -> x::x::(dupl rest)
+   ```
+
+````
+
+**Exercise 7: Split a List Into Two Parts**
+
+Split a list into two parts; the length of the first part is given.
+
+If the length of the first part is longer than the entire list, 
+then the first part is the list and the second part is empty.
+
+```
+split: 'a list -> int -> 'a list * 'a list 
+```
+
+```` {dropdown} Show solution
+
+   ```ocaml
+   let split (l: 'a list) (n: int): 'a list * 'a list = 
+         let rec aux (f: 'a list) (l: 'a list) (r: int) : 'a list * 'a list = 
+           match (r, l) with 
+           | (0, l) 
+           | (k, []) -> (List.rev f, l)
+           | (k, x::rest) -> aux (x::f) (rest) (k-1)
+         in aux [] l n
+   ```
+
+````
 
 **Exercise n: ptitle**
 

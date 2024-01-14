@@ -556,6 +556,106 @@ Show solution<div class="sd-summary-down docutils">
   <span class="o">|</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="o">_::</span><span class="n">rest</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">nth</span> <span class="n">rest</span> <span class="o">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span>
 </pre></div>
 </div>
+<p class="sd-card-text">This function still returns <code class="docutils literal notranslate"><span class="pre">None</span></code> for negative values.</p>
+</div>
+</details><p><strong>Exercise 4: Length of a List</strong></p>
+<p>Find the number of elements of a list.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">length</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Show solution<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">length</span> <span class="o">(</span><span class="n">lst</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">):</span> <span class="kt">int</span> <span class="o">=</span> 
+  <span class="k">match</span> <span class="n">lst</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+  <span class="o">|</span> <span class="o">_::</span><span class="n">rest</span> <span class="o">-&gt;</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">length</span> <span class="n">rest</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><strong>Explanation</strong></p>
+<p class="sd-card-text">The length of an empty list is 0.</p>
+<p class="sd-card-text">The length of a list having a first element
+is one plus the length of the rest of the list.</p>
+<p class="sd-card-text">Here is a tail recursive version.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">length</span> <span class="o">(</span><span class="n">lst</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">):</span> <span class="kt">int</span> <span class="o">=</span> 
+  <span class="c">(* Define an inner auxiliary function *)</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">aux</span> <span class="o">(</span><span class="n">lst</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">)</span> <span class="o">(</span><span class="n">sofar</span><span class="o">:</span> <span class="kt">int</span><span class="o">):</span> <span class="kt">int</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="n">lst</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">sofar</span>
+    <span class="o">|</span> <span class="o">_::</span><span class="n">rest</span> <span class="o">-&gt;</span> <span class="n">aux</span> <span class="n">rest</span> <span class="o">(</span><span class="n">sofar</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+
+  <span class="c">(* return this expression that uses the auxiliary function *)</span>
+  <span class="k">in</span> <span class="n">aux</span> <span class="n">lst</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</details><p><strong>Exercise 5: Reverse a List</strong></p>
+<p>Reverse a List</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">rev</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Show solution<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">rev</span> <span class="o">(</span><span class="n">lst</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">):</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">aux</span> <span class="o">(</span><span class="n">reversed</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">)</span> <span class="o">(</span><span class="n">remaining</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">):</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span> 
+    <span class="k">match</span> <span class="o">(</span><span class="n">reversed</span><span class="o">,</span> <span class="n">remaining</span><span class="o">)</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="o">(</span><span class="n">reversed</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">reversed</span>
+    <span class="o">|</span> <span class="o">(</span><span class="n">reversed</span><span class="o">,</span> <span class="n">x</span><span class="o">::</span><span class="n">tail</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">aux</span> <span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">reversed</span><span class="o">)</span> <span class="n">tail</span>
+  <span class="k">in</span> <span class="n">aux</span> <span class="bp">[]</span> <span class="n">lst</span>
+</pre></div>
+</div>
+</div>
+</details><p><strong>Exercise 6: Duplicate the Elements of a List</strong></p>
+<p>Duplicate the Elements of a List.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">dupl</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Show solution<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">dupl</span> <span class="o">(</span><span class="n">lst</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">):</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span> 
+  <span class="k">match</span> <span class="n">lst</span> <span class="k">with</span> 
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+  <span class="o">|</span> <span class="n">x</span><span class="o">::</span><span class="n">rest</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">::</span><span class="n">x</span><span class="o">::(</span><span class="n">dupl</span> <span class="n">rest</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</details><p><strong>Exercise 7: Split a List Into Two Parts</strong></p>
+<p>Split a list into two parts; the length of the first part is given.</p>
+<p>If the length of the first part is longer than the entire list,
+then the first part is the list and the second part is empty.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">split</span><span class="p">:</span> <span class="s1">&#39;a list -&gt; int -&gt; &#39;</span><span class="n">a</span> <span class="nb">list</span> <span class="o">*</span> <span class="s1">&#39;a list </span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+Show solution<div class="sd-summary-down docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="sd-summary-up docutils">
+<svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">split</span> <span class="o">(</span><span class="n">l</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">)</span> <span class="o">(</span><span class="n">n</span><span class="o">:</span> <span class="kt">int</span><span class="o">):</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span> 
+      <span class="k">let</span> <span class="k">rec</span> <span class="n">aux</span> <span class="o">(</span><span class="n">f</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">)</span> <span class="o">(</span><span class="n">l</span><span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span><span class="o">)</span> <span class="o">(</span><span class="n">r</span><span class="o">:</span> <span class="kt">int</span><span class="o">)</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span> 
+        <span class="k">match</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="k">with</span> 
+        <span class="o">|</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> 
+        <span class="o">|</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="bp">[]</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">f</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span>
+        <span class="o">|</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">x</span><span class="o">::</span><span class="n">rest</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">aux</span> <span class="o">(</span><span class="n">x</span><span class="o">::</span><span class="n">f</span><span class="o">)</span> <span class="o">(</span><span class="n">rest</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="o">)</span>
+      <span class="k">in</span> <span class="n">aux</span> <span class="bp">[]</span> <span class="n">l</span> <span class="n">n</span>
+</pre></div>
+</div>
 </div>
 </details><p><strong>Exercise n: ptitle</strong></p>
 <p>pdescription</p>
