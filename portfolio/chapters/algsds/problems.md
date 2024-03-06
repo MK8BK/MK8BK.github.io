@@ -1,1 +1,0 @@
-# Catalog of Solved Problems

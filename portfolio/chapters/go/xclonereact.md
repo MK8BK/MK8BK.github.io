@@ -1,1 +1,0 @@
-# Twitter Clone with React, Golang, Postgresql and Redis

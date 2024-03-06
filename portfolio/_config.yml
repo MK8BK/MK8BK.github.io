@@ -3,7 +3,7 @@
 
 title: MK8BK's Technical Guides
 author: MK8BK
-logo: fav.png
+#logo: fav.png
 copyright: "2024"
 
 # Force re-execution of notebooks on each build.
@@ -42,4 +42,7 @@ sphinx:
   config:
         # html_show_copyright: true
         # html_theme: quantecon_book_theme
+        # html_theme: "furo"
         # html_theme: pydata_sphinx_theme
+        # html_theme: alabaster
+        html_theme: sphinx_book_theme

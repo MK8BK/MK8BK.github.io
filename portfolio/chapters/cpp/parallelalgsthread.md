@@ -1,1 +1,0 @@
-# Some Parallel Algorithms in C++

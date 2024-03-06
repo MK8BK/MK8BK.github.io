@@ -2,84 +2,54 @@ format: jb-book
 root: intro.md
 
 parts:
-  - caption: C++ Projects
+  - caption: Algorithms and Data Structures in C
     chapters:
-    - file: chapters/cpp/intro.md
-    - file: chapters/cpp/stl.md
-      sections:
-      - file: chapters/cpp/stlcontainers.md
-      - file: chapters/cpp/stliterators.md
-      - file: chapters/cpp/stlalgs.md
-
-    - file: chapters/cpp/nonlinearprog.md
-    - file: chapters/cpp/dynamicprog.md
-    - file: chapters/cpp/textmining.md
-    - file: chapters/cpp/numlinalg.md
-    - file: chapters/cpp/parallelalgsthread.md
-    - file: chapters/cpp/dl.md
-      sections:
-      - file: chapters/cpp/perceptron.md
-      - file: chapters/cpp/multlayerperceptron.md
-      - file: chapters/cpp/convnet.md
-      - file: chapters/cpp/recnet.md
-      - file: chapters/cpp/autodiff.md
-  - caption: Python Projects
+    - file: chapters/algsInC/cprimer.md
+    - file: chapters/algsInC/sorting.md
+    - file: chapters/algsInC/searching.md
+    - file: chapters/algsInC/linkedlist.md
+    - file: chapters/algsInC/stack.md
+    - file: chapters/algsInC/queue.md
+    - file: chapters/algsInC/trees.md
+    - file: chapters/algsInC/graphs.md
+  - caption: Linear & Integer Programming
     chapters:
-    - file: chapters/python/intro.md
-    - file: chapters/python/musimath.md
-    - file: chapters/python/scraper.md
-    - file: chapters/python/dlscratch.md
-    - file: chapters/python/sklearnprojects.md
-    - file: chapters/python/tensorflowprojects.md
-  - caption: Go Projects
+    - file: chapters/linprog/linear.md
+    - file: chapters/linprog/integer.md
+  - caption: Langages et Automates
     chapters:
-    - file: chapters/go/intro.md
-    - file: chapters/go/xclonereact.md
-    - file: chapters/go/summarizer.md
-    - file: chapters/go/redis.md
-    - file: chapters/go/postgresql.md
-    - file: chapters/go/sql.md
-    - file: chapters/go/sqlex.md
-    - file: chapters/go/nginx.md
-  - caption: Algorithms and Data Structures
-    chapters:
-    - file: chapters/algsds/intro.md
-    - file: chapters/algsds/linear.md
-      sections:
-      - file: chapters/algsds/arrays.md
-      - file: chapters/algsds/linklist.md
-      - file: chapters/algsds/queue.md
-      - file: chapters/algsds/stack.md
-    - file: chapters/algsds/hashtable.md
-    - file: chapters/algsds/graphs.md
-    - file: chapters/algsds/trees.md
-      sections:
-      - file: chapters/algsds/bintrees.md
-      - file: chapters/algsds/btrees.md
-      - file: chapters/algsds/rbtrees.md
-    - file: chapters/algsds/sorting.md
-      sections:
-      - file: chapters/algsds/insertionsort.md
-      - file: chapters/algsds/selectionsort.md
-      - file: chapters/algsds/quicksort.md
-      - file: chapters/algsds/mergesort.md
-      - file: chapters/algsds/radixsort.md
-      - file: chapters/algsds/heapsort.md
-    - file: chapters/algsds/searching.md
-      sections:
-      - file: chapters/algsds/linsearch.md
-      - file: chapters/algsds/binsearch.md
-      - file: chapters/algsds/expsearch.md
-    - file: chapters/algsds/divconq.md
-    - file: chapters/algsds/regex.md
-    - file: chapters/algsds/linearprog.md
-    - file: chapters/algsds/dynamicaprog.md
-    - file: chapters/algsds/problems.md
-  - caption: OCaml Programming
+    - file: chapters/automata/grammars.md
+    - file: chapters/automata/automata.md
+  - caption: OCaml Functional Programming
     chapters:
     - file: chapters/ocaml/intro.md
     - file: chapters/ocaml/n99exercises.md
-    - file: chapters/ocaml/graph_algorithms.md
+    - file: chapters/ocaml/lambdacalc.md
+  - caption: Maths de 1er cycle
+    chapters:
+    - file: chapters/umath/logique.md
+    - file: chapters/umath/suites.md
+    - file: chapters/umath/fonctions.md
+    - file: chapters/umath/contin.md
+    - file: chapters/umath/deriv.md
+    - file: chapters/umath/series.md
+    - file: chapters/umath/arith.md
+    - file: chapters/umath/group.md
+    - file: chapters/umath/anneau.md
+    - file: chapters/umath/corps.md
+    - file: chapters/umath/actionsgroup.md
+    - file: chapters/umath/linalg.md
+    - file: chapters/umath/reduction.md
+    - file: chapters/umath/suitef.md
+    - file: chapters/umath/seriesf.md
+    - file: chapters/umath/topologie.md
+    - file: chapters/umath/integration.md
+    - file: chapters/umath/calcdiff.md
+    - file: chapters/umath/proba.md
+    - file: chapters/umath/stat.md
+    - file: chapters/umath/equadiff.md
+    - file: chapters/umath/numlinalg.md
+    - file: chapters/umath/analhilbert.md
   - caption: About
     chapters:
     - file: chapters/about/whoami.md
