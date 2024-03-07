@@ -1,0 +1,297 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>99 Excercises in OCaml - The Guides</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="intro.html"><strong>1.</strong> Introduction</a></li><li><a href="chapters/algsInC/intro.html"><strong>2.</strong> Algorithms and Data Structures in C</a></li><li><ul class="section"><li><a href="chapters/algsInC/cprimer.html"><strong>2.1.</strong> C Primer</a></li><li><a href="chapters/algsInC/sorting.html"><strong>2.2.</strong> Sorting</a></li><li><a href="chapters/algsInC/searching.html"><strong>2.3.</strong> Searching</a></li><li><a href="chapters/algsInC/linkedlist.html"><strong>2.4.</strong> Linked Lists</a></li><li><a href="chapters/algsInC/stack.html"><strong>2.5.</strong> Stacks</a></li><li><a href="chapters/algsInC/queue.html"><strong>2.6.</strong> Queues</a></li><li><a href="chapters/algsInC/trees.html"><strong>2.7.</strong> Trees</a></li><li><a href="chapters/algsInC/graphs.html"><strong>2.8.</strong> Graphs</a></li></ul></li><li><a href="chapters/linprog/intro.html"><strong>3.</strong> Linear &amp; Integer Programming</a></li><li><ul class="section"><li><a href="chapters/linprog/linear.html"><strong>3.1.</strong> Linear Programming</a></li><li><a href="chapters/linprog/integer.html"><strong>3.2.</strong> Integer Programming</a></li></ul></li><li><a href="chapters/automata/intro.html"><strong>4.</strong> Langages et Automates</a></li><li><ul class="section"><li><a href="chapters/automata/grammars.html"><strong>4.1.</strong> Grammaires</a></li><li><a href="chapters/automata/automata.html"><strong>4.2.</strong> Automates</a></li></ul></li><li><a href="chapters/ocaml/intro.html"><strong>5.</strong> OCaml Functional Programming</a></li><li><ul class="section"><li><a href="chapters/ocaml/n99exercises.html" class="active"><strong>5.1.</strong> 99 Excercises in OCaml</a></li><li><a href="chapters/ocaml/lambdacalc.html"><strong>5.2.</strong> Lambda Calcul</a></li></ul></li><li><a href="chapters/umath/intro.html"><strong>6.</strong> Maths de 1er cycle</a></li><li><ul class="section"><li><a href="chapters/umath/logique.html"><strong>6.1.</strong> Logique</a></li><li><a href="chapters/umath/suites.html"><strong>6.2.</strong> Suites</a></li><li><a href="chapters/umath/fonctions.html"><strong>6.3.</strong> Fonctions</a></li><li><a href="chapters/umath/contin.html"><strong>6.4.</strong> Continuite</a></li><li><a href="chapters/umath/deriv.html"><strong>6.5.</strong> Derivation</a></li><li><a href="chapters/umath/series.html"><strong>6.6.</strong> Series</a></li><li><a href="chapters/umath/arith.html"><strong>6.7.</strong> Arithmetique</a></li><li><a href="chapters/umath/group.html"><strong>6.8.</strong> Groupes</a></li><li><a href="chapters/umath/anneau.html"><strong>6.9.</strong> Anneaux</a></li><li><a href="chapters/umath/corps.html"><strong>6.10.</strong> Corps</a></li><li><a href="chapters/umath/actionsgroup.html"><strong>6.11.</strong> Actions de Groupes</a></li><li><a href="chapters/umath/linalg.html"><strong>6.12.</strong> Algebre Lineaire</a></li><li><a href="chapters/umath/reduction.html"><strong>6.13.</strong> Reduction des Endomorphismes</a></li><li><a href="chapters/umath/suitef.html"><strong>6.14.</strong> Suites de Fonctions</a></li><li><a href="chapters/umath/seriesf.html"><strong>6.15.</strong> Series de Fonctions</a></li><li><a href="chapters/umath/topologie.html"><strong>6.16.</strong> Topologie</a></li><li><a href="chapters/umath/integration.html"><strong>6.17.</strong> Integration</a></li><li><a href="chapters/umath/calcdiff.html"><strong>6.18.</strong> Calcul Differentiel</a></li><li><a href="chapters/umath/proba.html"><strong>6.19.</strong> Probabilites</a></li><li><a href="chapters/umath/stat.html"><strong>6.20.</strong> Statistique</a></li><li><a href="chapters/umath/equadiff.html"><strong>6.21.</strong> Equations Differentielles</a></li><li><a href="chapters/umath/numlinalg.html"><strong>6.22.</strong> Algebre Lineaire Numerique</a></li><li><a href="chapters/umath/analhilbert.html"><strong>6.23.</strong> Analyse Hilbertienne</a></li></ul></li><li><a href="chapters/about/whoami.html"><strong>7.</strong> About</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">The Guides</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="chapters/ocaml/n99exercises.html#ninety-nine-problems-in-ocaml" id="ninety-nine-problems-in-ocaml"><h1>Ninety-Nine Problems in Ocaml</h1></a>
+<p><strong>Exercise 1: Tail of a List</strong></p>
+<p>Write a function that returns the last element of a list.</p>
+<pre><code class="language-ocaml">last : 'a list -&gt; 'a option 
+</code></pre>
+<p><details>
+<summary>Show Solution</summary></p>
+<pre><code class="language-ocaml"> let rec last (l: 'a list): 'a option = 
+   match l with
+   | [] -&gt; None
+   | [e] -&gt; Some e
+   | _::tail -&gt; last tail
+</code></pre>
+<p><strong>Explanation</strong></p>
+<p>Here we are defining a recursive function in OCaml.</p>
+<p>Notice the optional type hints. The function takes a (homogenous) list <code>l</code>
+of a generic type <code>'a</code> (<code>'SOMETHING</code> is OCaml syntax for generic types).</p>
+<p>If the list is empty, we return None, there is no last element.</p>
+<p>If the list contains a single element <code>e</code>, return <code>Some e</code>.</p>
+<p>Otherwise, discard the first element <code>_</code> and call last on the rest of the list.</p>
+<p><code>'a option</code> is OCaml's solution to the billion dollar
+mistake of the <code>NullPointerException</code>. All values in OCaml are non-null.</p>
+<p>The option type allows us to deal with a case where a &quot;null&quot; value would be
+useful.</p>
+<pre><code class="language-ocaml">type 'a option = 
+| Some 'a
+| None
+</code></pre>
+<p>The compiler will force you to handle <code>None</code> values in option types.</p>
+<p>The <code>e::l</code> operation appends element <code>e</code> to the beginning of the list <code>l</code>.</p>
+<p>The <code>match</code> allows us to perform different action based on the form of the list
+<code>l</code>. It is basically an switch statement on steroids that allows us to
+deconstruct a value of any type into its possible forms.</p>
+<p>The compiler will force you to handle all possible forms of the input type.</p>
+<p></details></p>
+<p><strong>Exercise 2: Last Two Elements of a List</strong></p>
+<p>Find the last but one (last and penultimate) elements of a list.</p>
+<pre><code class="language-ocaml">last_two : 'a list -&gt; ('a * 'a) option 
+</code></pre>
+<p><details>
+<summary>Show Solution</summary></p>
+<pre><code class="language-ocaml"> let rec last_two (l: 'a list): ('a * 'a) option = 
+   match l with
+   | [] 
+   | [_] -&gt; None
+   | e1::e2::[] -&gt; Some (e1, e2)
+   | _::rest -&gt; last_two rest
+</code></pre>
+<p><strong>Explanation</strong></p>
+<p>Same idea, minor tweaks. We are returing a product type <em>ie:</em> tuple.</p>
+<p>If the list contains exactly two elements <code>e1</code> and <code>e2</code>, return the tuple
+<code>(e1, e2)</code> wrapped in <code>Some</code> (we HAVE to return an option type).</p>
+<p>If the list contains 0 or 1 elements, return <code>None</code>, we can match both cases
+with one arrow.</p>
+<p>Otherwise if the list contains 3 or more elements, discard the first one
+and call <code>last_two</code> on the rest of the list.</p>
+<p></details></p>
+<p><strong>Exercise 3: N'th Element of a List</strong></p>
+<p>Find the N'th element of a list.</p>
+<pre><code class="language-ocaml">nth: 'a list -&gt; int -&gt; 'a option
+</code></pre>
+<p><details>
+<summary>Show solution</summary></p>
+<pre><code class="language-ocaml">let rec nth (lst: 'a list) (k: int): 'a option = 
+  match (k, lst) with 
+  | (_, []) -&gt; None
+  | (0, x::_) -&gt; Some x
+  | (k, _::rest) -&gt; nth rest (k-1)
+</code></pre>
+<p>This function still returns <code>None</code> for negative values.</p>
+<p></details></p>
+<p><strong>Exercise 4: Length of a List</strong></p>
+<p>Find the number of elements of a list.</p>
+<pre><code class="language-ocaml">length: 'a list -&gt; int
+</code></pre>
+<p><details>
+<summary>Show solution</summary></p>
+<pre><code class="language-ocaml">let rec length (lst: 'a list): int = 
+  match lst with
+  | [] -&gt; 0
+  | _::rest -&gt; 1 + length rest
+</code></pre>
+<p><strong>Explanation</strong></p>
+<p>The length of an empty list is 0.</p>
+<p>The length of a list having a first element
+is one plus the length of the rest of the list.</p>
+<p>Here is a tail recursive version.</p>
+<pre><code class="language-ocaml">let rec length (lst: 'a list): int = 
+  (* Define an inner auxiliary function *)
+  let rec aux (lst: 'a list) (sofar: int): int = 
+    match lst with
+    | [] -&gt; sofar
+    | _::rest -&gt; aux rest (sofar + 1)
+
+  (* return this expression that uses the auxiliary function *)
+  in aux lst 0
+</code></pre>
+<p></details></p>
+<p><strong>Exercise 5: Reverse a List</strong></p>
+<p>Reverse a List</p>
+<pre><code class="language-ocaml">rev: 'a list -&gt; 'a list
+</code></pre>
+<p><details>
+<summary>Show solution</summary></p>
+<pre><code class="language-ocaml">let rec rev (lst: 'a list): 'a list =
+  let rec aux (reversed: 'a list) (remaining: 'a list): 'a list = 
+    match (reversed, remaining) with
+    | (reversed, []) -&gt; reversed
+    | (reversed, x::tail) -&gt; aux (x::reversed) tail
+  in aux [] lst
+</code></pre>
+<p></details></p>
+<p><strong>Exercise 6: Duplicate the Elements of a List</strong></p>
+<p>Duplicate the Elements of a List.</p>
+<pre><code class="language-ocaml">dupl: 'a list -&gt; 'a list
+</code></pre>
+<p><details>
+<summary>Show solution</summary></p>
+<pre><code class="language-ocaml">let rec dupl (lst: 'a list): 'a list = 
+  match lst with 
+  | [] -&gt; []
+  | x::rest -&gt; x::x::(dupl rest)
+</code></pre>
+<p></details></p>
+<p><strong>Exercise 7: Split a List Into Two Parts</strong></p>
+<p>Split a list into two parts; the length of the first part is given.</p>
+<p>If the length of the first part is longer than the entire list,
+then the first part is the list and the second part is empty.</p>
+<pre><code class="language-ocaml">split: 'a list -&gt; int -&gt; 'a list * 'a list 
+</code></pre>
+<p><details>
+<summary>Show solution</summary></p>
+<pre><code class="language-ocaml">let split (l: 'a list) (n: int): 'a list * 'a list = 
+      let rec aux (f: 'a list) (l: 'a list) (r: int) : 'a list * 'a list = 
+        match (r, l) with 
+        | (0, l) 
+        | (k, []) -&gt; (List.rev f, l)
+        | (k, x::rest) -&gt; aux (x::f) (rest) (k-1)
+      in aux [] l n
+</code></pre>
+<p></details></p>
+<p><strong>Exercise n: ptitle</strong></p>
+<p>pdescription</p>
+<pre><code class="language-ocaml">psig
+</code></pre>
+<p><details>
+<summary>Show solution</summary></p>
+<pre><code class="language-ocaml">   (* solution *)
+</code></pre>
+<p><strong>Explanation</strong></p>
+<p>pexpl</p>
+<p></details></p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="chapters/ocaml/intro.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="chapters/ocaml/lambdacalc.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="chapters/ocaml/intro.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="chapters/ocaml/lambdacalc.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </body>
+</html>
