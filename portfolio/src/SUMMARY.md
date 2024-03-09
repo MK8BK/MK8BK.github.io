@@ -1,6 +1,9 @@
 # Summary
 
 - [Introduction](intro.md)
+- [Theory of NP-Completeness](chapters/theorynpcomp/intro.md)
+    - [The Theory of NP-Completeness](chapters/theorynpcomp/theorynpcomp.md)
+    - [Proving NP-Complete Results](chapters/theorynpcomp/proofnpcomp.md)
 - [Algorithms and Data Structures in C](chapters/algsInC/intro.md)
     - [C Primer](chapters/algsInC/cprimer.md)
     - [Sorting](chapters/algsInC/sorting.md)
