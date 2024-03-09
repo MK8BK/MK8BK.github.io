@@ -183,6 +183,20 @@ subject \quad to \quad a_{11}x_{1} + ... + a_{1n}x_n + w_1 = b_1 \\
 
         <!-- Livereload script (if served using the cli tool) -->
         
+    <script type="text/javascript">
+        var socket = new WebSocket("ws://localhost:3001");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                socket.close();
+                location.reload(true); // force reload from server (not from cache)
+            }
+        };
+
+        window.onbeforeunload = function() {
+            socket.close();
+        }
+    </script>
+
 
         
 

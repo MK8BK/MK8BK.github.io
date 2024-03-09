@@ -93,15 +93,54 @@
 <p>Soit \(\mathbb{K}\) un corps.</p>
 <p>Soit \(E\) un \(\mathbb{K}\)-espace vectoriel.</p>
 <p>Soit \(u: E \rightarrow E\) un endomorphisme de \(E\).</p>
-<div style="padding: 1em; border: 1px solid black; border-radius: 2px; margin: 1em 0">
-<p><strong>Definition</strong>:</p>
-<p>Un sous-espace vectoriel \(F\) de \(E\) est dit stable par \(u\) si \(u(F)\subset F\).</p>
-</div>
-<div style="padding: 1em; border: 1px solid black; border-radius: 2px">
-<p><strong>Proposition</strong>:</p>
-<p>Si les endomorphismes \(u\) et \(v\) de \(E\) commutent, <em>c'est a dire si</em> \(u\circ v = v\circ u\)
+<hr />
+<p><strong>Definition 1</strong></p>
+<p>Un sous-espace vectoriel \(F\) de \(E\) est dit stable par \(u\) si
+\(u(F)\subset F\).</p>
+<hr />
+<hr />
+<p><strong>Proposition 1</strong></p>
+<p>Si les endomorphismes \(u\) et \(v\) de \(E\) commutent,
+<em>c'est a dire si</em> \(u\circ v = v\circ u\)
 , alors \(Ker(v)\) et \(Im(v)\) sont stables par \(u\).</p>
-</div>
+<hr />
+<hr />
+<p><strong>Proposition 2</strong></p>
+<p>Si \(F\) est un sous-espace vectoriel de \(E\)
+engendré par une famille \((e_i)_{i \in I}\),
+alors \(F\) est stable par \(u\) ssi:
+\[\forall i \in I\quad u(e_i) \in F.\]</p>
+<hr />
+<hr />
+<p><strong>Corollaire 3: traduction matricielle de la stabilité</strong></p>
+<p>Soit \(F\) un sous-espace vectoriel de \(E\) de dimension \(p\) et
+\(\mathcal{B}=(e_1, ..., e_n)\)
+une base de E adaptée a \(F\), c'est a dire telle que
+\(\mathcal{B}' = (e_1, ..., e_p)\) soit une
+base de \(F\).</p>
+<p>Alors \(F\) est stable par \(u\) ssi sa matrice dans la base
+\(\mathcal{B}\) est de la forme
+\(\begin{pmatrix}A &amp; C\\0 &amp; B\end{pmatrix}\),
+avec \(A\in \mathcal{M}_p(\mathbb{K})\).</p>
+<p>Dans ce cas, \(A\) est la matrice dans la base
+\(\mathcal{B}'\) de l'endomorphisme induit \(u_F\).</p>
+<hr />
+<hr />
+<p><strong>Definition 3</strong></p>
+<ol>
+<li>On dit que \(\lambda \in \mathbb{K}\) est <strong>valeur propre</strong>
+de \(u\) s'il existe un vecteur non nul \(x \in E\) tel que
+\(u(x) = \lambda x\), c'est a dire si l'endomorphisme
+\(u - \lambda Id_E\) est non injectif.</li>
+<li>On dit que \(x \in E\) est <strong>vecteur propre</strong>
+de \(u\) associee a la valeur propre \(\lambda\in\mathbb{K}\)
+s'il est non nul et vérifie \(u(x)=\lambda x\).</li>
+<li>Si \(\lambda \in \mathbb{K}\) est valeur propre de \(u\),
+le <strong>sous-espace propre</strong> de \(u\) associé a la valeur propre \(\lambda\)
+est: \[E_\lambda (u)=Ker(u-\lambda Id_E)=
+\{x\in E : u(x)=\lambda x\}.\]</li>
+</ol>
+<hr />
 
                 </div>
 
@@ -144,6 +183,20 @@
 
         <!-- Livereload script (if served using the cli tool) -->
         
+    <script type="text/javascript">
+        var socket = new WebSocket("ws://localhost:3001");
+        socket.onmessage = function (event) {
+            if (event.data === "reload") {
+                socket.close();
+                location.reload(true); // force reload from server (not from cache)
+            }
+        };
+
+        window.onbeforeunload = function() {
+            socket.close();
+        }
+    </script>
+
 
         
 
