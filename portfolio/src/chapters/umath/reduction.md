@@ -73,4 +73,49 @@ Dans ce cas, \\(A\\) est la matrice dans la base
 
 ---
 
+---
+**Definition 4** 
 
+Le spectre d'un endomorphisme d'un espace de dimension finie
+est l'ensemble de ses valeurs propres.
+
+---
+
+---
+**Proposition 5**
+
+Si les endomorphismes \\(u\\) et \\(v\\) commutent, 
+c'est a dire si \\(u\circ v = v\circ u\\), alors les sous-espaces propres
+de l'un sont stables par l'autre.
+
+---
+
+---
+**Proposition 6**
+
+- Si \\(\lambda_1, ..., \lambda_p\\) sont des valeurs propres deux a deux
+  deux distinctes de \\(u\\), alors les sous-espaces propres associés 
+  \\(E_{\lambda_1}(u), ..., E_{\lambda_p}(u)\\) sont en somme directe.
+- Toute famille de vecteurs propres associés a des valeurs propres deux a deux 
+  distinctes est libre.
+
+---
+
+---
+**Corollaire 7**
+
+Si \\(E\\) est de dimension finie et si \\(\lambda_1, ..., \lambda_p\\) sont
+des valeurs propres deux a deux distinctes de \\(u\\), alors:
+\\[
+    \sum_{i=1}^{p}{dim(E_{\lambda_i} (u))} \leq dim(E)
+\\]
+
+---
+
+---
+**Corollaire 8**
+
+Un endomorphisme d'un espace vectoriel de dimension \\(n\\) a au plus \\(n\\)
+valeurs propres distinctes.
+
+---
