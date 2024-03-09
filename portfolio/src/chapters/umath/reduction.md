@@ -1,5 +1,8 @@
 # Reduction des Endomorphismes
 
+<!-- <details> -->
+<!-- <summary>**Cours**</summary> -->
+
 Soit \\(\mathbb{K}\\) un corps.
 
 Soit \\(E\\) un \\(\mathbb{K}\\)-espace vectoriel.
@@ -119,3 +122,74 @@ Un endomorphisme d'un espace vectoriel de dimension \\(n\\) a au plus \\(n\\)
 valeurs propres distinctes.
 
 ---
+
+---
+**Proposition 9**
+
+Si \\(F\\) est un sous-espace vectoriel de \\(E\\) stable par \\(u\\),
+les valeurs propres de l'endomorphisme \\(u_F\\) induit par \\(u\\) sur \\(F\\)
+sont les valeurs propres \\(\lambda\\) telles que 
+\\(E_\lambda(u)\cap F \neq \\{0\\}\\). On a alors: 
+\\[E_\lambda(u_F) = E_\lambda(u)\cap F.\\]
+
+---
+
+---
+**Proposition 10**
+
+Si \\(f\\) est un endomorphisme de \\(E\\) et si \\(\mathcal{B}\\) et 
+\\(\mathcal{B}'\\) sont deux bases de \\(E\\), alors les matrices \\(M\\) et
+\\(M'\\) de \\(f\\) respectivement dans les bases \\(\mathcal{B}\\) et 
+\\(\mathcal{B}'\\) sont reliés par: \\[M' = P^{-1}MP,\\]
+ou \\(P\\) est la matrice de passage de \\(\mathcal{B}\\) a \\(\mathcal{B}'\\).
+
+---
+
+
+---
+**Definition 5**
+
+Deux matrices \\(A\\) et \\(B\\) sont semblables s'il existe 
+\\(P\in GL_n(\mathbb{K})\\) telle que \\(B=P^{-1}AP\\).
+
+---
+
+---
+**Proposition 11**
+
+
+Deux matrices 
+\\(M\\) et \\(M'\\) 
+de \\(\mathcal{M}_n (\mathbb{K})\\) sont
+semblables ssi elles representent le meme endomorphisme de 
+\\(\mathbb{K}^n\\),
+c'est a dire s'il existe \\(\mathcal{B}\\) et \\(\mathcal{B}'\\) deux
+bases de \\(\mathbb{K}^n\\) et \\(f\in \mathcal{L}(\mathbb{K}^n)\\) telles que:
+
+\\[
+    M=Mat_{\mathcal{B}}(f) \quad et \quad M'=Mat_{\mathcal{B}'}(f).
+\\]
+
+---
+
+---
+**Proposition 12**
+
+Deux matrices semblables ont meme trace et meme determinant.
+
+---
+
+
+---
+**Definition 6**
+
+Soit \\(A\in \mathcal{M}_n(\mathbb{K})\\)
+
+1. On dit que \\(\lambda\in\mathbb{K}\\) est valeur propre de \\(A\\) s'il
+   existe une matrice colonne \\(X\in\mathcal{M}_{n,1}(\mathbb{K})\\) 
+   *non nulle* telle que \\(AX=\lambda X\\).
+
+---
+
+
+<!-- </details> -->

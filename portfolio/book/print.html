@@ -332,6 +332,8 @@ then the first part is the list and the second part is empty.</p>
 <a class="header" href="print.html#actions-de-groupe" id="actions-de-groupe"><h1>Actions de Groupe</h1></a>
 <a class="header" href="print.html#algebre-lineaire" id="algebre-lineaire"><h1>Algebre Lineaire</h1></a>
 <a class="header" href="print.html#reduction-des-endomorphismes" id="reduction-des-endomorphismes"><h1>Reduction des Endomorphismes</h1></a>
+<!-- <details> -->
+<!-- <summary>**Cours**</summary> -->
 <p>Soit \(\mathbb{K}\) un corps.</p>
 <p>Soit \(E\) un \(\mathbb{K}\)-espace vectoriel.</p>
 <p>Soit \(u: E \rightarrow E\) un endomorphisme de \(E\).</p>
@@ -417,7 +419,54 @@ des valeurs propres deux a deux distinctes de \(u\), alors:
 <p>Un endomorphisme d'un espace vectoriel de dimension \(n\) a au plus \(n\)
 valeurs propres distinctes.</p>
 <hr />
-<a class="header" href="print.html#suites-de-fonctions" id="suites-de-fonctions"><h1>Suites de Fonctions</h1></a>
+<hr />
+<p><strong>Proposition 9</strong></p>
+<p>Si \(F\) est un sous-espace vectoriel de \(E\) stable par \(u\),
+les valeurs propres de l'endomorphisme \(u_F\) induit par \(u\) sur \(F\)
+sont les valeurs propres \(\lambda\) telles que
+\(E_\lambda(u)\cap F \neq \{0\}\). On a alors:
+\[E_\lambda(u_F) = E_\lambda(u)\cap F.\]</p>
+<hr />
+<hr />
+<p><strong>Proposition 10</strong></p>
+<p>Si \(f\) est un endomorphisme de \(E\) et si \(\mathcal{B}\) et
+\(\mathcal{B}'\) sont deux bases de \(E\), alors les matrices \(M\) et
+\(M'\) de \(f\) respectivement dans les bases \(\mathcal{B}\) et
+\(\mathcal{B}'\) sont reliés par: \[M' = P^{-1}MP,\]
+ou \(P\) est la matrice de passage de \(\mathcal{B}\) a \(\mathcal{B}'\).</p>
+<hr />
+<hr />
+<p><strong>Definition 5</strong></p>
+<p>Deux matrices \(A\) et \(B\) sont semblables s'il existe
+\(P\in GL_n(\mathbb{K})\) telle que \(B=P^{-1}AP\).</p>
+<hr />
+<hr />
+<p><strong>Proposition 11</strong></p>
+<p>Deux matrices
+\(M\) et \(M'\)
+de \(\mathcal{M}_n (\mathbb{K})\) sont
+semblables ssi elles representent le meme endomorphisme de
+\(\mathbb{K}^n\),
+c'est a dire s'il existe \(\mathcal{B}\) et \(\mathcal{B}'\) deux
+bases de \(\mathbb{K}^n\) et \(f\in \mathcal{L}(\mathbb{K}^n)\) telles que:</p>
+<p>\[
+M=Mat_{\mathcal{B}}(f) \quad et \quad M'=Mat_{\mathcal{B}'}(f).
+\]</p>
+<hr />
+<hr />
+<p><strong>Proposition 12</strong></p>
+<p>Deux matrices semblables ont meme trace et meme determinant.</p>
+<hr />
+<hr />
+<p><strong>Definition 6</strong></p>
+<p>Soit \(A\in \mathcal{M}_n(\mathbb{K})\)</p>
+<ol>
+<li>On dit que \(\lambda\in\mathbb{K}\) est valeur propre de \(A\) s'il
+existe une matrice colonne \(X\in\mathcal{M}_{n,1}(\mathbb{K})\)
+<em>non nulle</em> telle que \(AX=\lambda X\).</li>
+</ol>
+<hr />
+<!-- </details> --><a class="header" href="print.html#suites-de-fonctions" id="suites-de-fonctions"><h1>Suites de Fonctions</h1></a>
 <a class="header" href="print.html#series-de-fonctions" id="series-de-fonctions"><h1>Series de Fonctions</h1></a>
 <a class="header" href="print.html#topologie" id="topologie"><h1>Topologie</h1></a>
 <a class="header" href="print.html#integration" id="integration"><h1>Integration</h1></a>
