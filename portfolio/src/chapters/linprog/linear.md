@@ -8,7 +8,6 @@
     \quad\quad\quad\quad\quad a_{21}x_{1} + ... + a_{2n}x_n \quad \leq/=/\geq \quad b_2 \\\\
     ...\\\\
     \quad\quad\quad\quad\quad a_{m1}x_{1} + ... + a_{mn}x_n \quad \leq/=/\geq \quad b_m \\\\
-    \quad\quad\quad\quad\quad x_1, ... , x_n \geq 0\\\\
 \\]
 
 **Canonical Form of a Linear Program**

@@ -93,9 +93,100 @@
 <p>This website is a fusion of a portfolio, a knowledge base
 and a blog.</p>
 <a class="header" href="print.html#theory-of-np-completeness" id="theory-of-np-completeness"><h1>Theory of NP-Completeness</h1></a>
-<p>This chapter is a summary of the book</p>
-<p><em>Computers and Intractability: A Guide to the Theory of NP-Completeness</em>
-- <em>Michael R.Garey / David S. Johnson</em></p>
+<p>This chapter is a summary of the book
+&quot;<em>Computers and Intractability: A Guide to the Theory of NP-Completeness</em>&quot;
+- <em>Michael R.Garey / David S. Johnson</em>.</p>
+<a class="header" href="print.html#basics" id="basics"><h2>Basics</h2></a>
+<p><strong>Purpose</strong>:
+&quot;<em>In short, the primary application of the theory of \(NP\)-completeness
+is to assist algorithm designers in directing their problem-solving efforts
+towards those approaches that have the greatest likelihood of leading to
+useful algorithms</em>&quot;
+<br></p>
+<p><strong>Definition</strong></p>
+<p>\(f(n)\) is \(O(g(n))\) if there exists a constant \(c\) such that
+\(|f(n)|\leq c\cdot|g(n)|\) for all values of \(n\).</p>
+<p><strong>Definition</strong></p>
+<p>A problem is <strong>intractable</strong> if no polynomial
+time algorithm can possibly solve it.</p>
+<p><strong>Two cases of intractability</strong></p>
+<ol>
+<li>A problem is so difficult that an exponential amount of time is required
+to find a solution.</li>
+<li>A solution to the problem cannot be encoded into an expression having
+length bounded by a polynomial fuction of the input length.
+<br>\(\longrightarrow\) only problems for which the solution length is
+bounded by a polynomial function of the input length will be considered.</li>
+</ol>
+<p><strong>Definition</strong></p>
+<p>A problem is said to be <strong>undecidable</strong> if no algorithm
+at all can be given for solving it.</p>
+<p><em>Examples</em></p>
+<ol>
+<li>The halting problem is undecidable: it is impossible to specify an algorithm
+which, given an arbitrary computer program and an arbitrary input to that
+program, can decide whether or not the program will eventually halt when
+applied to that input.</li>
+<li>Hilbert's tenth problem: solvability of polynomial equations in integers.</li>
+<li>The triviality problem for finitely presented groups
+<a href="https://arxiv.org/pdf/1401.2273.pdf">[Rabin 1958]</a>.</li>
+</ol>
+<p><strong>Remark</strong>
+Undecidable problems are intractable.</p>
+<p><strong>Definition</strong></p>
+<p>A problem is said to be <strong>non-deterministically intractable</strong> if it cannot be solved
+in polynomial time using a <strong>non-deterministic computer</strong> model, which has the
+ability to pursue an unbounded number of independant computational sequences
+in parallel.</p>
+<p><strong>Remark</strong>
+All provably intractable problems known to date are either undecidable or
+non-deterministically intractable.</p>
+<p><strong>Definition</strong></p>
+<ul>
+<li>NP is the set of decision problems solvable in polynomial time by a nondeterministic Turing machine.</li>
+<li>NP is the set of decision problems verifiable in polynomial time by a deterministic Turing machine.</li>
+</ul>
+<p><strong>Reduction</strong> is a technique used for demonstrating that two problems are
+related to one another, by giving a constructive transformation that maps
+any instance of the first problem into an equivalent instance of the second.</p>
+<p>The Complexity of Theorem Proving Procedures - <a href="https://doi.org/10.1145/800157.805047">paper by Cook</a></p>
+<ol>
+<li>Polynomial time reducibility: If we have a polynomial time reduction
+from one problem to another, this ensures that any polynomial time algorithm
+for the second problem can be converted into a polynomial time algorithm for
+the first problem.</li>
+<li>Most of the apparently intractable problems encountered in practice, when
+phrased as decision problems belong to the class of \(NP\) decision problems that
+can be solved in polynomial time by a non-deterministic computer.</li>
+<li>Every problem in NP can be polynomially reduced to the satisfiability problem.</li>
+</ol>
+<p>The satisfiability problem is the &quot;hardest&quot; problem in \(NP\).</p>
+<p>The problem &quot;Does a graph \(G\) contain a
+complete subgraph on a given number \(k\) of vertices?&quot; also has this property.</p>
+<p>The class of these &quot;hardest&quot; problems in \(NP\) has been shown to include
+many other problems by <em>Richard Karp</em> in <em>1972</em>.
+See this <a href="https://en.wikipedia.org/wiki/Karp%27s_21_NP-complete_problems">page</a>
+for more details.</p>
+<p>The equivalence class of the Satisfiability problems is called the set of
+<strong>\(NP\)-complete</strong> problems.</p>
+<p>Here is a more concrete definition from <a href="https://en.wikipedia.org/wiki/NP-completeness">wikipedia</a>:</p>
+<p>A problem is <strong>\(NP\)-complete</strong> if:</p>
+<ul>
+<li>It is a decision problem, meaning that for any input to the problem,
+the output is either &quot;yes&quot; or &quot;no&quot;.</li>
+<li>When the answer is &quot;yes&quot;, this can be demonstrated through the existence
+of a short (polynomial length) solution.</li>
+<li>The correctness of each solution can be verified quickly (namely,
+in polynomial time) and a brute-force search algorithm can find a solution
+by trying all possible solutions.</li>
+<li>The problem can be used to simulate every other problem for which we can
+verify quickly that a solution is correct. In this sense, NP-complete
+problems are the hardest of the problems to which solutions can be verified
+quickly. If we could find solutions of some NP-complete problem quickly,
+we could quickly find the solutions of every other problem to which a given
+solution can be easily verified.</li>
+</ul>
+<p><strong>Open Question</strong>: are the \(NP\)-complete problems intractable ?</p>
 <a class="header" href="print.html#the-theory-of-np-completeness" id="the-theory-of-np-completeness"><h1>The Theory of NP-Completeness</h1></a>
 <a class="header" href="print.html#proving-np-complete-results" id="proving-np-complete-results"><h1>Proving NP-Complete Results</h1></a>
 <a class="header" href="print.html#algorithms-and-data-structures-in-c" id="algorithms-and-data-structures-in-c"><h1>Algorithms and Data Structures in C</h1></a>
@@ -116,7 +207,6 @@ subject \quad to \quad a_{11}x_{1} + ... + a_{1n}x_n \quad \leq/=/\geq \quad b_1
 \quad\quad\quad\quad\quad a_{21}x_{1} + ... + a_{2n}x_n \quad \leq/=/\geq \quad b_2 \\
 ...\\
 \quad\quad\quad\quad\quad a_{m1}x_{1} + ... + a_{mn}x_n \quad \leq/=/\geq \quad b_m \\
-\quad\quad\quad\quad\quad x_1, ... , x_n \geq 0\\
 \]</p>
 <p><strong>Canonical Form of a Linear Program</strong></p>
 <p>\[
