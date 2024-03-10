@@ -226,4 +226,244 @@ associés sont de meme dimension.
 
 ---
 
+---
+
+**Proposition 15**
+
+Soit \\(\mathbb{K}'\\) un sous-corps du corps \\(\mathbb{K}\\) et 
+\\(A\in\mathcal{M}_n(\mathbb{K}')\\). Alors 
+
+\\[sp_{\mathbb{K}'}(A) \subseteq sp_{\mathbb{K}}(A)\\]
+
+---
+
+
+---
+**Proposition 16**
+
+Soit \\(A\in \mathcal{M}_n(\mathbb{R})\\). Si \\(\lambda\in sp\_\mathbb{C}(A)\\)
+, alors \\(\overline\lambda\\) est valeur propre de \\(A\\) et:
+
+\\[
+    X\in E_\lambda (A) \iff \overline X \in E_{\overline\lambda}(A).
+\\]
+
+Si \\((X_1, ..., X_k)\\) est une base de \\( E_\lambda (A) \\) alors 
+\\((\overline X_1, ..., \overline X_k)\\) est une base de
+\\( E_\overline\lambda (A) \\) donc 
+\\(dim(E_\lambda (A))=dim(E_\overline\lambda (A))\\).
+
+---
+
+---
+**Definition 7**
+
+Soit \\(u\in\mathcal{L}(E)\\) et 
+\\(P=\sum_{k=0}^{p}{a_k X^k} \in\mathbb{K}[X]\\).
+
+On note \\(P(u)\\) l'endomorphisme de \\(E\\) defini par:
+
+\\[
+    P(u) = \sum_{k=0}^{p}{a_k u^k} .
+\\]
+
+Pour \\(A\in \mathcal{M}_n (\mathbb{K})\\), on definit de meme la matrice 
+\\(P(A)\in\mathcal{M}_n (\mathbb{K})\\) par:
+
+\\[
+    P(A) = \sum_{k=0}^{p}{a_k A^k} .
+\\]
+
+---
+**Proposition 17**
+
+Pour tout \\((P, Q)\in\mathbb{K}[X]^2\\), les endomorphismes \\(P(u)\\) et 
+\\(Q(u)\\) commutent. En particulier, pour tout \\(P\in\mathbb{K}[X]\\),
+\\(Im(u)\\) et \\(Ker(u)\\) sont des sous-espaces stables par \\(u\\).
+
+---
+**Proposition 18**
+
+1. Si \\(x\in E_\lambda (u)\\) et si \\(P\in\mathbb{K}[X]\\) alors 
+   \\(P(u)(x) = P(\lambda) x\\).
+2. En particulier, si \\(\lambda\\) est valeur propre de \\(u\\),
+   alors \\(P(\lambda)\\) est valeur propre de \\(P(u)\\) et tout vecteur propre
+   de \\(u\\) associé a la valeur propre \\(\lambda\\) est vecteur propre de 
+   \\(P(u)\\) associé la valeur propre \\(P(\lambda)\\).
+
+---
+**Corollaire 19**
+
+Soit \\(A\in\mathcal{M}_n(\mathbb{K})\\).
+
+1. Si \\(X\in E_\lambda(A)\\) et si \\(P\in \mathbb{K}[X]\\) alors 
+   \\(P(A)X=P(\lambda)X\\).
+2. En particulier, si \\(\lambda\\) est valeur propre de \\(A\\),
+   alors \\(P(\lambda)\\) est valeur propre de \\(P(A)\\) et tout vecteur propre
+   de \\(A\\) associé a la valeur propre \\(\lambda\\) est vecteur propre de 
+   \\(P(A)\\) associé la valeur propre \\(P(\lambda)\\).
+
+---
+
+---
+**Definition 8**
+
+On dit que \\(P\in\mathbb{K}[X]\\) est un polynome annulateur de \\(u\\), s'il
+vérifie \\(P(u)=0\\).
+
+On dit que \\(P\in\mathbb{K}[X]\\) est un polynome annulateur de \\(A\\), s'il
+vérifie \\(P(A)=0\\).
+
+---
+
+---
+**Proposition 20**
+
+Si \\(P\\) est un polynome annulateur de \\(u\in\mathcal{L}(E)\\), alors
+toute valeur propre de \\(u\\) est racine de \\(P\\).
+
+---
+
+---
+**Corollaire 21**
+
+Si \\(P\\) est un polynome annulateur de \\(A\in\mathcal{M}_n(\mathbb{K})\\),
+alors toute valeur propre de \\(A\\) est racine de \\(P\\).
+
+---
+
+---
+**Corollaire 22**
+
+Si \\(P\\) est un polynome annulateur de \\(u\\) tel que \\(P(0)\neq 0\\) et si
+\\(E\\) est de dimension finie, alors \\(u\\) est bijectif.
+
+---
+
+---
+**Corollaire 23**
+
+Si \\(P\\) est un polynome annulateur de \\(A\\) et si \\(P(0)\neq 0\\), alors
+\\(A\\) est inversible.
+
+---
+
+
+---
+**Definition 9**
+
+Soit \\(A\in\mathcal{M}_n(\mathbb{K})\\). On appelle polynome caracteristique de 
+\\(A\\) et on note \\(\chi_A(X)\\) l'unique polynome tel que:
+
+\\[
+    \forall \lambda \in \mathbb{C} \quad \chi_A(\lambda) = det(\lambda I_n - A).
+\\]
+
+On note alors \\(\chi_A(X)=det(XI_n-A)\\).
+
+---
+
+---
+**Theoreme 24**
+
+\\(\lambda\in\mathbb{K}\\) est valeur propre de \\(A\\) si et seulement s'il est
+racine du polynome caracteristique de \\(A\\).
+
+---
+
+---
+**Proposition 25**
+
+Si \\(A\in\mathcal{M}_n(\mathbb{K})\\) est triangulaire de diagonale
+\\((\alpha_1, ..., \alpha_n)\\), alors son polynome caracteristique est:
+\\(\prod\_{k=1}^{n}{(X-\alpha\_k)}\\) et \\(sp(A)=\\{\alpha_1,...,\alpha_n\\}\\).
+
+---
+
+---
+**Corollaire 26**
+
+Soit \\(A\in\mathcal{M}_n(\mathbb{k})\\).
+- Si \\(\mathbb{K}=\mathbb{C}\\), alors \\(A\\) a au moins une valeur propre.
+- Si \\(\mathbb{K}=\mathbb{R}\\) et si \\(n\\) est impair, alors \\(A\\)
+  a au moins une valeur propre.
+
+---
+
+---
+**Proposition 27**
+
+Soit \\(A\in\mathcal{M}_n(K)\\). Son polynome caracteristique \\(\chi_A\\) est
+un polynome unitaire de degré \\(n\\) et l'on a :
+
+\\[
+    \chi_A(X) = X^n - (Tr(A))X^{n-1} + ... + (-1)^ndet(A).
+\\]
+
+---
+
+---
+**Lemme 28**
+
+Deux matrices semblables ont meme polynome caracteristique.
+
+---
+
+---
+**Définition 10**
+
+On appelle polynome caractéristique de l'endomorphisme \\(u\\) et l'on note 
+\\(\chi_u\\), le polynome caractéristique de toute matrice représentant \\(u\\).
+
+On a donc, pour tout scalaire \\(\lambda\\),
+\\(\chi_u(\lambda)=det(\lambda Id_E - u)\\).
+
+---
+
+---
+**Proposition 29**
+
+Le polynome caracteristique \\(\chi_u\\) est unitaire de degré \\(n\\) et l'on a :
+
+\\[
+    \chi_u(X) = X^n - (Tr(u))X^{n-1} + ... + (-1)^ndet(u).
+\\]
+
+---
+
+---
+**Theoreme 30**
+
+\\(\lambda\in\mathbb{K}\\) est valeur propre de \\(u\\) si et seulement s'il est
+racine du polynome caracteristique de \\(u\\).
+
+---
+
+---
+**Corollaire 31**
+
+- Si \\(\mathbb{K}=\mathbb{C}\\), alors \\(u\\) a au moins une valeur propre.
+- Si \\(\mathbb{K}=\mathbb{R}\\) et si \\(n\\) est impair, alors \\(u\\)
+  a au moins une valeur propre.
+
+---
+
+---
+**Proposition 32**
+
+Si \\(F\\) est un sous-espace vectoriel de \\(E\\) stable par \\(u\\), alors
+le polynome caracteristique \\(\chi_{u_F}\\) de l'endomorphisme induit par 
+\\(u\\) sur \\(F\\) divise \\(\chi_u\\).
+
+---
+
+---
+**Proposition 33**
+
+Si le polynome caracteristique de \\(u\\) est scindé (respectivement scindé a 
+racines simples), alors celui de l'endomorphisme induit par \\(u\\) sur tout 
+sous-espace vectoriel de \\(E\\) stable par \\(u\\) l'est aussi.
+
+---
+
 <!-- </details> -->
