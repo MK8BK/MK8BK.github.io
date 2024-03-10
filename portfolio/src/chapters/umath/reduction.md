@@ -466,4 +466,25 @@ sous-espace vectoriel de \\(E\\) stable par \\(u\\) l'est aussi.
 
 ---
 
+---
+**Definition 11**
+
+On appelle ordre de multiplicité d'une valeur propre \\(\lambda\\) de \\(u\\)
+(respectivement de \\(A\\)), son ordre de multiplicité en tant que racine du 
+polynome caractéristique de \\(u\\) (respectivement de \\(A\\)). On le note
+\\(m(\lambda)\\).
+
+---
+
+---
+**Proposition 34**
+
+Pour tout \\(\lambda \in sp(u)\\), on a:
+
+\\[
+    1 \leq dim(E_\lambda(u)) \leq m(\lambda).
+\\]
+
+---
+
 <!-- </details> -->
