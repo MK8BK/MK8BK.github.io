@@ -188,6 +188,129 @@ solution can be easily verified.</li>
 </ul>
 <p><strong>Open Question</strong>: are the \(NP\)-complete problems intractable ?</p>
 <a class="header" href="print.html#the-theory-of-np-completeness" id="the-theory-of-np-completeness"><h1>The Theory of NP-Completeness</h1></a>
+<a class="header" href="print.html#decision-problems-languages-and-encoding-schemes" id="decision-problems-languages-and-encoding-schemes"><h2>Decision Problems, Languages and Encoding Schemes</h2></a>
+<p>The theory of \(NP\)-completeness is designed to be applied only to decision
+problems.</p>
+<p>A Decision problem is a problem with only two possible solutions: &quot;yes&quot; and &quot;no&quot;.</p>
+<p><strong>Definition</strong>
+A decision problem \(\Pi\) consists of a set \(D_\Pi\) of instances and a
+subset \(Y_\Pi \subseteq D_\Pi\) of <em>yes</em>-instances.</p>
+<p>\(\rightarrow\) a more practical approach is to define a <em>generic instance</em>
+using a set of various components (graphs, functions, numbers, sets) and a
+<em>yes-no</em> question asked in terms of the generic instance.</p>
+<p>An instance belongs to \(D_\Pi\) iff it can be obtained from a generic instance
+by substiting particular objects of the specified types for all
+the generic components.</p>
+<p>An instance belongs to \(Y_\Pi\) iff the answer to the stated question,
+when particularized to that instance, is <em>&quot;yes&quot;</em>.</p>
+<p><strong>Examples</strong></p>
+<ul>
+<li>
+<p><strong>Subgraph Isomorphism</strong></p>
+<p><em>Instance</em>: Two graphs \(G_1=(V_1, E_1)\) and \(G_2=(V_2, E_2)\).</p>
+<p><em>Question</em>: Does \(G_1\) contain a subgraph isomorphic to \(G2\), that is,
+a subset \(V'\subseteq V_1\) and a subset \(E'\subseteq E_1\) such that
+\(|V'|=|V_2|\), \(|E'|=|E_2|\), and there exists a one-to-one function
+\(f: V_2 \rightarrow V'\) satisfying \(\{u, v\}\in E_2\) iff
+\(\{f(u), f(v)\}\in E'\) ?</p>
+</li>
+<li>
+<p><strong>Traveling Salesman</strong></p>
+<p><em>Instance</em>: A finite set \(C=\{c_1, ..., c_m\}\) of &quot;cities&quot;, a &quot;distance&quot;
+\(d(c_i, c_j)\in\mathbb{Z}^+\) for each pair of cities \(c_i, c_j \in C\)
+, and a bound \(B\in\mathbb{Z}^+\).</p>
+<p><em>Question</em>: Is there a &quot;tour&quot; of all the cities in \(C\) having total
+length no more than \(B\), that is an ordering
+\(&lt; c_{\pi(1)}, ..., c_{\pi(m)} &gt;\) of \(C\) such that</p>
+<p>\[(\sum_{i=1}^{m-1}{d(c_{\pi(i)}, c_{\pi(i+1)})}) + d(c_{\pi(m)}, c_{\pi(1)}) \leq B ?\]</p>
+</li>
+</ul>
+<p>The traveling salesman problem variant described above is an example of how
+a non decision problem can be transformed into a decision problem.</p>
+<p><strong>Definition</strong></p>
+<p>For any finite set \(\Sigma\) of symbols, we denote by \(\Sigma^* \) the set
+of all finite strings of symbols from \(\Sigma\). If \(L\) is a subset
+of \(\Sigma^* \), we say that \(L\) is a <strong>language</strong> over the <strong>alphabet</strong>
+\(\Sigma\).</p>
+<p><strong>Examples</strong></p>
+<ul>
+<li>If \(\Sigma=\{0, 1\}\) then \(\Sigma^* \) consists of the empty string
+&quot;\(\epsilon\)&quot;, the strings \(0, 1, 00, 01, 11, 000, 001\) and all other
+finite strings of \(1\)'s and \(0\)'s.</li>
+<li>\(\{01, 001, 111, 1101010\}\) is a language over \(\{0, 1\}\), as is
+the set of all binary representations of integers that are perfect squares,
+as is \(\{0, 1\}^* \) itself.</li>
+</ul>
+<p><strong>Definition</strong></p>
+<p>An encoding scheme \(e\) for a problem \(\Pi\) provides a way of describing
+each instance of \(\Pi\) by an appropriate string of symbols over some fixed
+alphabet \(\Sigma\).</p>
+<p><strong>Remark</strong></p>
+<p>The problem \(\Pi\) and the encoding sceme \(e\) for \(\Pi\) partition
+\(\Sigma^* \) intro three classes of strings:</p>
+<ul>
+<li>those that are not encodings of instances of \(\Pi\).</li>
+<li>those that encode instances of \(\Pi\) for which the answer is &quot;<em>no</em>&quot;.</li>
+<li>those that encode instances of \(\Pi\) for which the answer is &quot;<em>yes</em>&quot;.</li>
+</ul>
+<p><strong>Definition</strong></p>
+<p>Assuming that \(\Sigma\) is the alphabet used by \(e\),
+the language associated to the problem \(\Pi\) and the encoding \(e\) is
+denoted :
+\[
+L[\Pi, e] = \{x\in\Sigma^* :  x\
+is\ the\ encoding\ under\ e\ of\ an \ instance\ I\in Y_{\Pi}\}.
+\]</p>
+<p><strong>Lemma</strong>
+If a result holds for the language \(L[\Pi, e]\), then it holds for the
+problem \(\Pi\) under the encoding scheme \(e\).</p>
+<p>Assuming the encodings we employ are &quot;reasonable&quot; most properties are
+encoding-independant.</p>
+<p>We assume that every decision problem \(\Pi\) has an associated
+encoding-independant function \(Length: D_\Pi \rightarrow\mathbb{N}\),
+which is &quot;polynomially related&quot; to the input lengths we would we would obtain
+from a reasonable encoding scheme.</p>
+<p><strong>A Standard Encoding Scheme</strong></p>
+<p>The alphabet used is \(\Psi=\{ 0 , 1 , - , [ , ] , ( , ) , , \} \).</p>
+<p>We define <strong>structured strings</strong> recursively:</p>
+<ol>
+<li>An integer \(k\) is represented by a string of \(0\)'s and \(1\)'s
+preceded by a minus sign &quot;\(-\)&quot; if \(k\) is negative.</li>
+<li>If \(x\) is a structured string representing the integer \(k\), then
+\([x]\) is a structured string that can be used as a &quot;name&quot;. (for examples:
+a vertex in a graph, a set element, a city in the traveling salesman problem).</li>
+<li>If \(x_1, \dots, x_m\) are structured strings representing the objects
+\(X_1, ..., X_m\), then \((x_1, ..., x_m)\) is a structured string
+representing the sequence \(&lt; X_1, ..., X_m &gt;\).</li>
+</ol>
+<p>We already know how to encode <strong>integers</strong> and <strong>sequences</strong>.</p>
+<ul>
+<li>A <strong>set</strong> is represented by ordering its elements as a sequence
+\(&lt; X_1, ..., X_m &gt;\) and taking the structured string corresponding
+to that sequence.</li>
+<li>A <strong>graph</strong> with vertex set \(V\) and edge set \(E\) is represented by a
+structured string \((x, y)\), where \(x\) is a structured string
+representing the set \(V\) and \(y\) is a structured string representing
+the \(E\) (the elements of \(E\) being the two-element subsets of \(V\)
+that are edges).</li>
+<li>A <strong>finite function</strong>  \(f: \{U_1, ..., U_m\}\rightarrow W\) is
+represented by a structured string \(((x_1, y_1), ... ,(x_m, y_m))\) where
+\(x_i\) is a structured string representing the object \(U_i\)
+and \(y_i\) a structured string representing the object \(f(U_i)\in W\)
+, \(\forall \ 1\leq i\leq m\).</li>
+<li>A <strong>rational number</strong> \(q\) is represented by a structured string
+\((x,y)\) where \(x\) is a structured string representing an integer
+\(a\), \(y\) is a structured string representing an integer \(b\),
+\(a/b=q\), and \(GCD(a, b)=1\).</li>
+</ul>
+<p>Two structured strings written in the standard encoding schemes can represent
+a same object without being strictly the same.</p>
+<p>From now on, an encoding scheme is said to be reasonable if it is equivalent
+to the standard encoding scheme, in the sense that there exist polynomial time
+algorithms for converting an encoding of an instance back and forth between
+the two encoding schemes.</p>
+<a class="header" href="print.html#deterministic-turing-machines-and-the-class-p" id="deterministic-turing-machines-and-the-class-p"><h2>Deterministic Turing Machines and the Class P</h2></a>
+<p><strong>Definition</strong></p>
 <a class="header" href="print.html#proving-np-complete-results" id="proving-np-complete-results"><h1>Proving NP-Complete Results</h1></a>
 <a class="header" href="print.html#algorithms-and-data-structures-in-c" id="algorithms-and-data-structures-in-c"><h1>Algorithms and Data Structures in C</h1></a>
 <a class="header" href="print.html#c-language-primer" id="c-language-primer"><h1>C Language Primer</h1></a>
@@ -260,7 +383,7 @@ subject \quad to \quad a_{11}x_{1} + ... + a_{1n}x_n + w_1 = b_1 \\
 <p>Write a function that returns the last element of a list.</p>
 <pre><code class="language-ocaml">last : 'a list -&gt; 'a option 
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show Solution</summary></p>
 <pre><code class="language-ocaml"> let rec last (l: 'a list): 'a option = 
    match l with
@@ -294,7 +417,7 @@ deconstruct a value of any type into its possible forms.</p>
 <p>Find the last but one (last and penultimate) elements of a list.</p>
 <pre><code class="language-ocaml">last_two : 'a list -&gt; ('a * 'a) option 
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show Solution</summary></p>
 <pre><code class="language-ocaml"> let rec last_two (l: 'a list): ('a * 'a) option = 
    match l with
@@ -316,7 +439,7 @@ and call <code>last_two</code> on the rest of the list.</p>
 <p>Find the N'th element of a list.</p>
 <pre><code class="language-ocaml">nth: 'a list -&gt; int -&gt; 'a option
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec nth (lst: 'a list) (k: int): 'a option = 
   match (k, lst) with 
@@ -330,7 +453,7 @@ and call <code>last_two</code> on the rest of the list.</p>
 <p>Find the number of elements of a list.</p>
 <pre><code class="language-ocaml">length: 'a list -&gt; int
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec length (lst: 'a list): int = 
   match lst with
@@ -357,7 +480,7 @@ is one plus the length of the rest of the list.</p>
 <p>Reverse a List</p>
 <pre><code class="language-ocaml">rev: 'a list -&gt; 'a list
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec rev (lst: 'a list): 'a list =
   let rec aux (reversed: 'a list) (remaining: 'a list): 'a list = 
@@ -371,7 +494,7 @@ is one plus the length of the rest of the list.</p>
 <p>Duplicate the Elements of a List.</p>
 <pre><code class="language-ocaml">dupl: 'a list -&gt; 'a list
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec dupl (lst: 'a list): 'a list = 
   match lst with 
@@ -385,7 +508,7 @@ is one plus the length of the rest of the list.</p>
 then the first part is the list and the second part is empty.</p>
 <pre><code class="language-ocaml">split: 'a list -&gt; int -&gt; 'a list * 'a list 
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let split (l: 'a list) (n: int): 'a list * 'a list = 
       let rec aux (f: 'a list) (l: 'a list) (r: int) : 'a list * 'a list = 
@@ -400,7 +523,7 @@ then the first part is the list and the second part is empty.</p>
 <p>pdescription</p>
 <pre><code class="language-ocaml">psig
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">   (* solution *)
 </code></pre>
@@ -554,7 +677,36 @@ M=Mat_{\mathcal{B}}(f) \quad et \quad M'=Mat_{\mathcal{B}'}(f).
 <li>On dit que \(\lambda\in\mathbb{K}\) est valeur propre de \(A\) s'il
 existe une matrice colonne \(X\in\mathcal{M}_{n,1}(\mathbb{K})\)
 <em>non nulle</em> telle que \(AX=\lambda X\).</li>
+<li>On dit que la matrice colonne \(X\in \mathcal{M}_{n,1}(\mathbb{K})\) est
+vecteur propre de \(A\) associée a la valeur propre
+\(\lambda\in\mathbb{K}\) si elle est non nulle et vérifie \(AX=\lambda X\).</li>
+<li>Si \(\lambda\in\mathbb{K}\) est valeur propre de \(A\), le sous-espace
+propre de \(A\) associée a la valeur propre \(\lambda\) est:
+\[E_\lambda (A)=Ker(A-\lambda I_n)=
+\{X\in \mathcal{M}_{n,1}(\mathbb{K}): AX=\lambda X\}.\]</li>
+<li>L'ensemble des valeurs propres de \(A\) est appelé le <strong>spectre</strong> de \(A\)
+et noté \(sp(A)\).</li>
 </ol>
+<hr />
+<hr />
+<p><strong>Proposition 13</strong></p>
+<p>Soit \(A\) une matrice représentant l'endomorphisme \(u\) dans une base
+\((e_1, ..., e_n)\). On a alors \(sp(A)=sp(u)\) et, pour tout
+\(\lambda\in sp(u)\):
+\[
+x = \sum_{i=1}^{n}{x_i e_i} \in E_\lambda (u) \iff X=
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_n \\
+\end{bmatrix}
+\in E_\lambda (A).
+\]</p>
+<hr />
+<hr />
+<p><strong>Corollaire 14</strong></p>
+<p>Deux matrices semblables ont meme spectre et les sous-espaces propres
+associés sont de meme dimension.</p>
 <hr />
 <!-- </details> --><a class="header" href="print.html#suites-de-fonctions" id="suites-de-fonctions"><h1>Suites de Fonctions</h1></a>
 <a class="header" href="print.html#series-de-fonctions" id="series-de-fonctions"><h1>Series de Fonctions</h1></a>
@@ -593,20 +745,6 @@ existe une matrice colonne \(X\in\mathcal{M}_{n,1}(\mathbb{K})\)
 
         <!-- Livereload script (if served using the cli tool) -->
         
-    <script type="text/javascript">
-        var socket = new WebSocket("ws://localhost:3001");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                socket.close();
-                location.reload(true); // force reload from server (not from cache)
-            }
-        };
-
-        window.onbeforeunload = function() {
-            socket.close();
-        }
-    </script>
-
 
         
 

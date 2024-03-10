@@ -8,7 +8,7 @@ Write a function that returns the last element of a list.
 last : 'a list -> 'a option 
 ```
 
-<details>
+<details open>
   <summary>Show Solution</summary>
    ```ocaml
     let rec last (l: 'a list): 'a option = 
@@ -65,7 +65,7 @@ last_two : 'a list -> ('a * 'a) option
 ```
 
 
-<details>
+<details open>
   <summary>Show Solution</summary>
 
    ```ocaml
@@ -101,7 +101,7 @@ Find the N'th element of a list.
 nth: 'a list -> int -> 'a option
 ```
 
-<details>
+<details open>
   <summary>Show solution</summary>
 
    ```ocaml
@@ -125,7 +125,7 @@ Find the number of elements of a list.
 length: 'a list -> int
 ```
 
-<details>
+<details open>
   <summary>Show solution</summary>
 
    ```ocaml
@@ -167,7 +167,7 @@ rev: 'a list -> 'a list
 ```
 
 
-<details>
+<details open>
   <summary>Show solution</summary>
 
    ```ocaml
@@ -190,7 +190,7 @@ Duplicate the Elements of a List.
 dupl: 'a list -> 'a list
 ```
 
-<details>
+<details open>
   <summary>Show solution</summary>
    ```ocaml
    let rec dupl (lst: 'a list): 'a list = 
@@ -213,7 +213,7 @@ then the first part is the list and the second part is empty.
 split: 'a list -> int -> 'a list * 'a list 
 ```
 
-<details>
+<details open>
   <summary>Show solution</summary>
    ```ocaml
    let split (l: 'a list) (n: int): 'a list * 'a list = 
@@ -237,7 +237,7 @@ psig
 ```
 
 
-<details>
+<details open>
   <summary>Show solution</summary>
    ```ocaml
       (* solution *)

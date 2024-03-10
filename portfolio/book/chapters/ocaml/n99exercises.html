@@ -94,7 +94,7 @@
 <p>Write a function that returns the last element of a list.</p>
 <pre><code class="language-ocaml">last : 'a list -&gt; 'a option 
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show Solution</summary></p>
 <pre><code class="language-ocaml"> let rec last (l: 'a list): 'a option = 
    match l with
@@ -128,7 +128,7 @@ deconstruct a value of any type into its possible forms.</p>
 <p>Find the last but one (last and penultimate) elements of a list.</p>
 <pre><code class="language-ocaml">last_two : 'a list -&gt; ('a * 'a) option 
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show Solution</summary></p>
 <pre><code class="language-ocaml"> let rec last_two (l: 'a list): ('a * 'a) option = 
    match l with
@@ -150,7 +150,7 @@ and call <code>last_two</code> on the rest of the list.</p>
 <p>Find the N'th element of a list.</p>
 <pre><code class="language-ocaml">nth: 'a list -&gt; int -&gt; 'a option
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec nth (lst: 'a list) (k: int): 'a option = 
   match (k, lst) with 
@@ -164,7 +164,7 @@ and call <code>last_two</code> on the rest of the list.</p>
 <p>Find the number of elements of a list.</p>
 <pre><code class="language-ocaml">length: 'a list -&gt; int
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec length (lst: 'a list): int = 
   match lst with
@@ -191,7 +191,7 @@ is one plus the length of the rest of the list.</p>
 <p>Reverse a List</p>
 <pre><code class="language-ocaml">rev: 'a list -&gt; 'a list
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec rev (lst: 'a list): 'a list =
   let rec aux (reversed: 'a list) (remaining: 'a list): 'a list = 
@@ -205,7 +205,7 @@ is one plus the length of the rest of the list.</p>
 <p>Duplicate the Elements of a List.</p>
 <pre><code class="language-ocaml">dupl: 'a list -&gt; 'a list
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let rec dupl (lst: 'a list): 'a list = 
   match lst with 
@@ -219,7 +219,7 @@ is one plus the length of the rest of the list.</p>
 then the first part is the list and the second part is empty.</p>
 <pre><code class="language-ocaml">split: 'a list -&gt; int -&gt; 'a list * 'a list 
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">let split (l: 'a list) (n: int): 'a list * 'a list = 
       let rec aux (f: 'a list) (l: 'a list) (r: int) : 'a list * 'a list = 
@@ -234,7 +234,7 @@ then the first part is the list and the second part is empty.</p>
 <p>pdescription</p>
 <pre><code class="language-ocaml">psig
 </code></pre>
-<p><details>
+<p><details open>
 <summary>Show solution</summary></p>
 <pre><code class="language-ocaml">   (* solution *)
 </code></pre>
@@ -283,20 +283,6 @@ then the first part is the list and the second part is empty.</p>
 
         <!-- Livereload script (if served using the cli tool) -->
         
-    <script type="text/javascript">
-        var socket = new WebSocket("ws://localhost:3001");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                socket.close();
-                location.reload(true); // force reload from server (not from cache)
-            }
-        };
-
-        window.onbeforeunload = function() {
-            socket.close();
-        }
-    </script>
-
 
         
 

@@ -222,7 +222,36 @@ M=Mat_{\mathcal{B}}(f) \quad et \quad M'=Mat_{\mathcal{B}'}(f).
 <li>On dit que \(\lambda\in\mathbb{K}\) est valeur propre de \(A\) s'il
 existe une matrice colonne \(X\in\mathcal{M}_{n,1}(\mathbb{K})\)
 <em>non nulle</em> telle que \(AX=\lambda X\).</li>
+<li>On dit que la matrice colonne \(X\in \mathcal{M}_{n,1}(\mathbb{K})\) est
+vecteur propre de \(A\) associée a la valeur propre
+\(\lambda\in\mathbb{K}\) si elle est non nulle et vérifie \(AX=\lambda X\).</li>
+<li>Si \(\lambda\in\mathbb{K}\) est valeur propre de \(A\), le sous-espace
+propre de \(A\) associée a la valeur propre \(\lambda\) est:
+\[E_\lambda (A)=Ker(A-\lambda I_n)=
+\{X\in \mathcal{M}_{n,1}(\mathbb{K}): AX=\lambda X\}.\]</li>
+<li>L'ensemble des valeurs propres de \(A\) est appelé le <strong>spectre</strong> de \(A\)
+et noté \(sp(A)\).</li>
 </ol>
+<hr />
+<hr />
+<p><strong>Proposition 13</strong></p>
+<p>Soit \(A\) une matrice représentant l'endomorphisme \(u\) dans une base
+\((e_1, ..., e_n)\). On a alors \(sp(A)=sp(u)\) et, pour tout
+\(\lambda\in sp(u)\):
+\[
+x = \sum_{i=1}^{n}{x_i e_i} \in E_\lambda (u) \iff X=
+\begin{bmatrix}
+x_1 \\
+\vdots \\
+x_n \\
+\end{bmatrix}
+\in E_\lambda (A).
+\]</p>
+<hr />
+<hr />
+<p><strong>Corollaire 14</strong></p>
+<p>Deux matrices semblables ont meme spectre et les sous-espaces propres
+associés sont de meme dimension.</p>
 <hr />
 <!-- </details> -->
                 </div>
@@ -266,20 +295,6 @@ existe une matrice colonne \(X\in\mathcal{M}_{n,1}(\mathbb{K})\)
 
         <!-- Livereload script (if served using the cli tool) -->
         
-    <script type="text/javascript">
-        var socket = new WebSocket("ws://localhost:3001");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                socket.close();
-                location.reload(true); // force reload from server (not from cache)
-            }
-        };
-
-        window.onbeforeunload = function() {
-            socket.close();
-        }
-    </script>
-
 
         
 

@@ -188,8 +188,42 @@ Soit \\(A\in \mathcal{M}_n(\mathbb{K})\\)
 1. On dit que \\(\lambda\in\mathbb{K}\\) est valeur propre de \\(A\\) s'il
    existe une matrice colonne \\(X\in\mathcal{M}_{n,1}(\mathbb{K})\\) 
    *non nulle* telle que \\(AX=\lambda X\\).
+2. On dit que la matrice colonne \\(X\in \mathcal{M}_{n,1}(\mathbb{K})\\) est
+   vecteur propre de \\(A\\) associée a la valeur propre
+   \\(\lambda\in\mathbb{K}\\) si elle est non nulle et vérifie \\(AX=\lambda X\\).
+3. Si \\(\lambda\in\mathbb{K}\\) est valeur propre de \\(A\\), le sous-espace 
+   propre de \\(A\\) associée a la valeur propre \\(\lambda\\) est:
+   \\[E_\lambda (A)=Ker(A-\lambda I_n)=
+   \\{X\in \mathcal{M}_{n,1}(\mathbb{K}): AX=\lambda X\\}.\\]
+4. L'ensemble des valeurs propres de \\(A\\) est appelé le **spectre** de \\(A\\)
+   et noté \\(sp(A)\\).
 
 ---
 
+---
+**Proposition 13**
+
+Soit \\(A\\) une matrice représentant l'endomorphisme \\(u\\) dans une base 
+\\((e_1, ..., e_n)\\). On a alors \\(sp(A)=sp(u)\\) et, pour tout
+\\(\lambda\in sp(u)\\):
+\\[
+    x = \sum_{i=1}^{n}{x_i e_i} \in E_\lambda (u) \iff X=
+    \begin{bmatrix}
+    x_1 \\\\
+    \vdots \\\\
+    x_n \\\\
+    \end{bmatrix}
+    \in E_\lambda (A).
+\\]
+
+---
+
+---
+**Corollaire 14**
+
+Deux matrices semblables ont meme spectre et les sous-espaces propres 
+associés sont de meme dimension.
+
+---
 
 <!-- </details> -->
