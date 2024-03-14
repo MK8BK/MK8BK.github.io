@@ -1,1 +1,3 @@
-# Algorithms and Data Structures in C
+# Algorithms and Programming in C
+
+

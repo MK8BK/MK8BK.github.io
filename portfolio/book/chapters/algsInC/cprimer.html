@@ -89,7 +89,42 @@
                 </div>
 
                 <div id="content" class="content">
-                    <a class="header" href="chapters/algsInC/cprimer.html#c-language-primer" id="c-language-primer"><h1>C Language Primer</h1></a>
+                    <a class="header" href="chapters/algsInC/cprimer.html#c-language-notes" id="c-language-notes"><h1>C Language Notes</h1></a>
+<p><strong>Hello World</strong></p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+int main(){
+    printf(&quot;Hello World\n&quot;);
+    return 0;
+}
+</code></pre>
+<p><strong>Read from Standard Input</strong></p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+int main(){
+    int x;
+    scanf(&quot;%d&quot;, &amp;x);
+    printf(&quot;You typed %d\n&quot;, x);
+    return 0;
+}
+</code></pre>
+<p><strong>Standard Data Types</strong></p>
+<pre><code class="language-c">int n; // integer
+float x; // float
+double y; // double
+char c; // char
+unsigned y; // unsigned: prefix to numeric types
+</code></pre>
+<p><strong>Conversions</strong></p>
+<pre><code class="language-c">int x = 3;
+double y = (double) x;
+</code></pre>
+<p><strong>Constants</strong></p>
+<pre><code class="language-c">#define PI 3.1415
+</code></pre>
+<p><strong>typedef</strong></p>
+<pre><code class="language-c">typedef char board[8][8]
+...
+board b; // still an 8x8 char array
+</code></pre>
 
                 </div>
 
@@ -143,6 +178,8 @@
         <script src="book.js"></script>
 
         <!-- Custom JS script -->
+        
+        <script type="text/javascript" src="highlightjs-line-numbers.js"></script>
         
 
     </body>

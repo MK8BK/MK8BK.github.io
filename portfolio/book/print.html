@@ -311,9 +311,91 @@ algorithms for converting an encoding of an instance back and forth between
 the two encoding schemes.</p>
 <a class="header" href="print.html#deterministic-turing-machines-and-the-class-p" id="deterministic-turing-machines-and-the-class-p"><h2>Deterministic Turing Machines and the Class P</h2></a>
 <p><strong>Definition</strong></p>
+<p>A <strong>Deterministic One-Tape Turing Machine</strong> (DTM) is a model of computation
+which consists of a <em>finite state control</em>, a <em>read-write head</em> and a two-way
+infinite <em>tape</em> of squares labeled (\(..., -2, -1, 0, 1, 2, ...\)).</p>
+<p><img src="https://www.tutorialspoint.com/design_and_analysis_of_algorithms/images/deterministic_turing_machine.jpg" alt="img" /></p>
+<p><strong>Definition</strong></p>
+<p>A <em>program</em> for a DTM specifies the following information:</p>
+<ol>
+<li>A finite set \(\Gamma\) of tape symbols, including a subset
+\(\Sigma\subset\Gamma\) of <em>input</em> symbols and a distinguished
+<em>blank symbol</em> \(b\in\Gamma\backslash\Sigma\);</li>
+<li>a finite set \(Q\) of <em>states</em>, including a distinguished <em>start-state</em>
+\(q_0\) and two distinguished <em>halt-states</em> \(q_Y\) and \(q_N\);</li>
+<li>a <em>transition function</em>
+\(\delta: (Q\backslash\{q_Y, q_N\})\times\Gamma\rightarrow
+Q\times\Gamma\times\{-1, +1\}\).</li>
+</ol>
+<p><strong>Operation of a DTM program</strong></p>
+<p>The input to the DTM is a string \(x\in\Sigma^*\).</p>
+<p>All the tape squares initially contain the blank symbol \(b\).</p>
+<p>The string \(x\) is placed in tape squares 1 through \(|x|\).</p>
+<p>The program starts its operation in state \(q_0\), with the head scanning tape
+square \(1\).</p>
+<p>At each step:</p>
+<ul>
+<li>If the current state \(q\) is either \(q_Y\) or \(q_N\), then the
+computation has ended, with the answer being &quot;\(yes\)&quot; if \(q=q_Y\)
+or &quot;\(no\)&quot; if \(q=q_N\).</li>
+<li>Else we have \(q\in Q\backslash \{q_Y, q_N\}\) and there is a symbol
+\(s\) in the tape square being scanned. The value of
+\(\delta(q, s)=(q', s', \Delta)\). The <em>read write head</em> then replaces
+the symbol \(s\) by \(s'\) in the current square, it then moves one square
+right if \(\Delta=1\) or one square left if \(\Delta=-1\). The
+<em>finite state control</em> updates the state value from \(q\) to \(q'\).</li>
+</ul>
+<p><strong>Definition</strong></p>
+<p>We say that a DTM program \(M\) with input alphabet \(\Sigma\) <em>accepts</em>
+\(x\in\Sigma^*\) if and only if \(M\) halts in state \(q_Y\) when applied
+to input \(x\).</p>
+<p><strong>Definition</strong>
+: The language \(L_M\) recognized by the program \(M\) is given by
+\(L_M = \{x\in\Sigma^*: M \ accepts\ x\}\).</p>
+<p>If \(x\in(\Sigma^*\backslash L_M)\) then either the computation of \(M\) on
+\(x\) halts in state \(q_N\) or it does not halt <em>ie: continues forever</em>.</p>
+<p><strong>Definition</strong></p>
+<p>We say that a DTM program \(M\) <em>solves</em> the decision problem \(\Pi\) under
+encoding scheme \(e\) if \(M\) halts for all input strings under its input
+alphabet and \(L_M = L[\Pi, e]\).</p>
 <a class="header" href="print.html#proving-np-complete-results" id="proving-np-complete-results"><h1>Proving NP-Complete Results</h1></a>
-<a class="header" href="print.html#algorithms-and-data-structures-in-c" id="algorithms-and-data-structures-in-c"><h1>Algorithms and Data Structures in C</h1></a>
-<a class="header" href="print.html#c-language-primer" id="c-language-primer"><h1>C Language Primer</h1></a>
+<a class="header" href="print.html#algorithms-and-programming-in-c" id="algorithms-and-programming-in-c"><h1>Algorithms and Programming in C</h1></a>
+<a class="header" href="print.html#c-language-notes" id="c-language-notes"><h1>C Language Notes</h1></a>
+<p><strong>Hello World</strong></p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+int main(){
+    printf(&quot;Hello World\n&quot;);
+    return 0;
+}
+</code></pre>
+<p><strong>Read from Standard Input</strong></p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+int main(){
+    int x;
+    scanf(&quot;%d&quot;, &amp;x);
+    printf(&quot;You typed %d\n&quot;, x);
+    return 0;
+}
+</code></pre>
+<p><strong>Standard Data Types</strong></p>
+<pre><code class="language-c">int n; // integer
+float x; // float
+double y; // double
+char c; // char
+unsigned y; // unsigned: prefix to numeric types
+</code></pre>
+<p><strong>Conversions</strong></p>
+<pre><code class="language-c">int x = 3;
+double y = (double) x;
+</code></pre>
+<p><strong>Constants</strong></p>
+<pre><code class="language-c">#define PI 3.1415
+</code></pre>
+<p><strong>typedef</strong></p>
+<pre><code class="language-c">typedef char board[8][8]
+...
+board b; // still an 8x8 char array
+</code></pre>
 <a class="header" href="print.html#sorting" id="sorting"><h1>Sorting</h1></a>
 <a class="header" href="print.html#searching" id="searching"><h1>Searching</h1></a>
 <a class="header" href="print.html#linked-lists" id="linked-lists"><h1>Linked Lists</h1></a>
@@ -941,6 +1023,8 @@ polynome caractéristique de \(u\) (respectivement de \(A\)). On le note
         <script src="book.js"></script>
 
         <!-- Custom JS script -->
+        
+        <script type="text/javascript" src="highlightjs-line-numbers.js"></script>
         
 
     </body>

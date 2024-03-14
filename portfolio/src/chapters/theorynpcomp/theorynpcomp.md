@@ -148,4 +148,62 @@ the two encoding schemes.
 
 **Definition**
 
+A **Deterministic One-Tape Turing Machine** (DTM) is a model of computation
+which consists of a *finite state control*, a *read-write head* and a two-way 
+infinite *tape* of squares labeled (\\(..., -2, -1, 0, 1, 2, ...\\)).
 
+![img](https://www.tutorialspoint.com/design_and_analysis_of_algorithms/images/deterministic_turing_machine.jpg)
+
+**Definition**
+
+A *program* for a DTM specifies the following information:
+
+1. A finite set \\(\Gamma\\) of tape symbols, including a subset
+   \\(\Sigma\subset\Gamma\\) of *input* symbols and a distinguished
+   *blank symbol* \\(b\in\Gamma\backslash\Sigma\\);
+2. a finite set \\(Q\\) of *states*, including a distinguished *start-state*
+   \\(q_0\\) and two distinguished *halt-states* \\(q_Y\\) and \\(q_N\\);
+3. a *transition function*
+   \\(\delta: (Q\backslash\\{q_Y, q_N\\})\times\Gamma\rightarrow
+   Q\times\Gamma\times\\{-1, +1\\}\\).
+
+**Operation of a DTM program**
+
+The input to the DTM is a string \\(x\in\Sigma^*\\).
+
+All the tape squares initially contain the blank symbol \\(b\\).
+
+The string \\(x\\) is placed in tape squares 1 through \\(|x|\\).
+
+The program starts its operation in state \\(q_0\\), with the head scanning tape
+square \\(1\\).
+
+At each step:
+- If the current state \\(q\\) is either \\(q_Y\\) or \\(q_N\\), then the 
+  computation has ended, with the answer being "\\(yes\\)" if \\(q=q_Y\\)
+  or "\\(no\\)" if \\(q=q_N\\).
+- Else we have \\(q\in Q\backslash \\{q_Y, q_N\\}\\) and there is a symbol
+  \\(s\\) in the tape square being scanned. The value of 
+  \\(\delta(q, s)=(q', s', \Delta)\\). The *read write head* then replaces 
+  the symbol \\(s\\) by \\(s'\\) in the current square, it then moves one square
+  right if \\(\Delta=1\\) or one square left if \\(\Delta=-1\\). The
+  *finite state control* updates the state value from \\(q\\) to \\(q'\\).
+
+**Definition**
+
+We say that a DTM program \\(M\\) with input alphabet \\(\Sigma\\) *accepts*
+\\(x\in\Sigma^*\\) if and only if \\(M\\) halts in state \\(q_Y\\) when applied
+to input \\(x\\).
+
+**Definition**
+: The language \\(L_M\\) recognized by the program \\(M\\) is given by
+\\(L_M = \\{x\in\Sigma^*: M \\ accepts\\ x\\}\\).
+
+If \\(x\in(\Sigma^*\backslash L_M)\\) then either the computation of \\(M\\) on
+\\(x\\) halts in state \\(q_N\\) or it does not halt *ie: continues forever*.
+
+**Definition**
+
+We say that a DTM program \\(M\\) *solves* the decision problem \\(\Pi\\) under
+encoding scheme \\(e\\) if \\(M\\) halts for all input strings under its input
+alphabet and \\(L_M = L[\Pi, e]\\).

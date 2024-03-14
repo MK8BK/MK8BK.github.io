@@ -5,7 +5,9 @@ description = ""
 
 [output.html]
 mathjax-support = true
+additional-js = ["js/highlightjs-line-numbers.js"]
+# or
+# additional-js = ["js/highlightjs-line-numbers.min.js"]
 
 [output.html.print]
 enable = false # include support for printable output
-

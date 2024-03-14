@@ -213,6 +213,53 @@ algorithms for converting an encoding of an instance back and forth between
 the two encoding schemes.</p>
 <a class="header" href="chapters/theorynpcomp/theorynpcomp.html#deterministic-turing-machines-and-the-class-p" id="deterministic-turing-machines-and-the-class-p"><h2>Deterministic Turing Machines and the Class P</h2></a>
 <p><strong>Definition</strong></p>
+<p>A <strong>Deterministic One-Tape Turing Machine</strong> (DTM) is a model of computation
+which consists of a <em>finite state control</em>, a <em>read-write head</em> and a two-way
+infinite <em>tape</em> of squares labeled (\(..., -2, -1, 0, 1, 2, ...\)).</p>
+<p><img src="https://www.tutorialspoint.com/design_and_analysis_of_algorithms/images/deterministic_turing_machine.jpg" alt="img" /></p>
+<p><strong>Definition</strong></p>
+<p>A <em>program</em> for a DTM specifies the following information:</p>
+<ol>
+<li>A finite set \(\Gamma\) of tape symbols, including a subset
+\(\Sigma\subset\Gamma\) of <em>input</em> symbols and a distinguished
+<em>blank symbol</em> \(b\in\Gamma\backslash\Sigma\);</li>
+<li>a finite set \(Q\) of <em>states</em>, including a distinguished <em>start-state</em>
+\(q_0\) and two distinguished <em>halt-states</em> \(q_Y\) and \(q_N\);</li>
+<li>a <em>transition function</em>
+\(\delta: (Q\backslash\{q_Y, q_N\})\times\Gamma\rightarrow
+Q\times\Gamma\times\{-1, +1\}\).</li>
+</ol>
+<p><strong>Operation of a DTM program</strong></p>
+<p>The input to the DTM is a string \(x\in\Sigma^*\).</p>
+<p>All the tape squares initially contain the blank symbol \(b\).</p>
+<p>The string \(x\) is placed in tape squares 1 through \(|x|\).</p>
+<p>The program starts its operation in state \(q_0\), with the head scanning tape
+square \(1\).</p>
+<p>At each step:</p>
+<ul>
+<li>If the current state \(q\) is either \(q_Y\) or \(q_N\), then the
+computation has ended, with the answer being &quot;\(yes\)&quot; if \(q=q_Y\)
+or &quot;\(no\)&quot; if \(q=q_N\).</li>
+<li>Else we have \(q\in Q\backslash \{q_Y, q_N\}\) and there is a symbol
+\(s\) in the tape square being scanned. The value of
+\(\delta(q, s)=(q', s', \Delta)\). The <em>read write head</em> then replaces
+the symbol \(s\) by \(s'\) in the current square, it then moves one square
+right if \(\Delta=1\) or one square left if \(\Delta=-1\). The
+<em>finite state control</em> updates the state value from \(q\) to \(q'\).</li>
+</ul>
+<p><strong>Definition</strong></p>
+<p>We say that a DTM program \(M\) with input alphabet \(\Sigma\) <em>accepts</em>
+\(x\in\Sigma^*\) if and only if \(M\) halts in state \(q_Y\) when applied
+to input \(x\).</p>
+<p><strong>Definition</strong>
+: The language \(L_M\) recognized by the program \(M\) is given by
+\(L_M = \{x\in\Sigma^*: M \ accepts\ x\}\).</p>
+<p>If \(x\in(\Sigma^*\backslash L_M)\) then either the computation of \(M\) on
+\(x\) halts in state \(q_N\) or it does not halt <em>ie: continues forever</em>.</p>
+<p><strong>Definition</strong></p>
+<p>We say that a DTM program \(M\) <em>solves</em> the decision problem \(\Pi\) under
+encoding scheme \(e\) if \(M\) halts for all input strings under its input
+alphabet and \(L_M = L[\Pi, e]\).</p>
 
                 </div>
 
@@ -266,6 +313,8 @@ the two encoding schemes.</p>
         <script src="book.js"></script>
 
         <!-- Custom JS script -->
+        
+        <script type="text/javascript" src="highlightjs-line-numbers.js"></script>
         
 
     </body>
