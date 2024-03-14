@@ -161,11 +161,11 @@ A *program* for a DTM specifies the following information:
 1. A finite set \\(\Gamma\\) of tape symbols, including a subset
    \\(\Sigma\subset\Gamma\\) of *input* symbols and a distinguished
    *blank symbol* \\(b\in\Gamma\backslash\Sigma\\);
-2. a finite set \\(Q\\) of *states*, including a distinguished *start-state*
+2. a finite set \\(\mathcal{Q}\\) of *states*, including a distinguished *start-state*
    \\(q_0\\) and two distinguished *halt-states* \\(q_Y\\) and \\(q_N\\);
 3. a *transition function*
-   \\(\delta: (Q\backslash\\{q_Y, q_N\\})\times\Gamma\rightarrow
-   Q\times\Gamma\times\\{-1, +1\\}\\).
+   \\(\delta: (\mathcal{Q}\backslash\\{q_Y, q_N\\})\times\Gamma\rightarrow
+   \mathcal{Q}\times\Gamma\times\\{-1, +1\\}\\).
 
 **Operation of a DTM program**
 
@@ -182,8 +182,9 @@ At each step:
 - If the current state \\(q\\) is either \\(q_Y\\) or \\(q_N\\), then the 
   computation has ended, with the answer being "\\(yes\\)" if \\(q=q_Y\\)
   or "\\(no\\)" if \\(q=q_N\\).
-- Else we have \\(q\in Q\backslash \\{q_Y, q_N\\}\\) and there is a symbol
-  \\(s\\) in the tape square being scanned. The value of 
+- Else we have \\(q\in \mathcal{Q}\backslash \\{q_Y, q_N\\}\\) and there is a symbol
+  \\(s\\) in the tape square being scanned. The value of the *transition
+  function* can be computed: 
   \\(\delta(q, s)=(q', s', \Delta)\\). The *read write head* then replaces 
   the symbol \\(s\\) by \\(s'\\) in the current square, it then moves one square
   right if \\(\Delta=1\\) or one square left if \\(\Delta=-1\\). The
@@ -205,5 +206,53 @@ If \\(x\in(\Sigma^*\backslash L_M)\\) then either the computation of \\(M\\) on
 **Definition**
 
 We say that a DTM program \\(M\\) *solves* the decision problem \\(\Pi\\) under
-encoding scheme \\(e\\) if \\(M\\) halts for all input strings under its input
+encoding scheme \\(e\\) if \\(M\\) halts for all input strings over its input
 alphabet and \\(L_M = L[\Pi, e]\\).
+
+**Example**: Integer Divisibility by four.
+
+Instance: A positive integer \\(N\\).
+
+Question: Is there a positive integer \\(m\\) such that \\(N=4m\\)?
+
+Using the standard encoding scheme, the integer \\(N\\) is represented by the 
+string of  \\(0\\)'s and \\(1\\)'s that is its binary representation.
+
+\\[
+    \Gamma=\\{0, 1, b\\}, \Sigma=\\{0, 1\\} \\\\
+    \mathcal{Q}=\\{q_0, q_1, q_2, q_3, q_Y, q_N\\} \\\\
+    \delta(q_0, 0)=(q_0, 0, +1), \\
+    \delta(q_0, 1)=(q_0, 1, +1)\\\\
+    \delta(q_0, b)=(q_1, b, -1), \\
+    \delta(q_1, 0)=(q_2, b, -1)\\\\
+    \delta(q_1, 1)=(q_3, b, -1), \\
+    \delta(q_1, b)=(q_N, b, -1)\\\\
+    \delta(q_2, 0)=(q_Y, b, -1), \\
+    \delta(q_2, 1)=(q_N, b, -1)\\\\
+    \delta(q_2, b)=(q_N, b, -1), \\
+    \delta(q_3, 0)=(q_N, b, -1)\\\\
+    \delta(q_3, 1)=(q_N, b, -1), \\
+    \delta(q_3, b)=(q_N, b, -1)\\\\
+    M=(\Gamma, \mathcal{Q}, \delta).
+\\]
+
+Here as example of the execution of this program on the string
+\\(x=10100\\).
+
+![dtm execution diagram](media/dtmM.png)
+
+The language \\(L_M\\) recognized by the program \\(M\\) is given by
+\\(L_M = \\{x\in\Sigma^*: M\\ accepts \\ x\\}\\).
+
+It can be shown that \\(L_M\\) is exactly the language 
+
+\\[
+    \\{x\in\\{0, 1\\}^*: the \\ rightmost \\ two \\ symbols \\ of \\ x 
+    \\ are \\ both \\ 0 \\}.
+\\]
+
+Since an integer \\(N\\) is divisible by \\(4\\) if and only if the last two 
+digits of its binary representation are \\(0\\), the DTM program \\(M\\) solves
+the INTEGER DIVISIBILITY BY FOUR problem.
+
+**Remark**: A DTM program can compute functions. HOW???
