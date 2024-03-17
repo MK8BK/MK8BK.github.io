@@ -255,4 +255,38 @@ Since an integer \\(N\\) is divisible by \\(4\\) if and only if the last two
 digits of its binary representation are \\(0\\), the DTM program \\(M\\) solves
 the INTEGER DIVISIBILITY BY FOUR problem.
 
-**Remark**: A DTM program can compute functions. HOW???
+**Remark**: A DTM program can compute functions. 
+Suppose \\(M\\) is a DTM with input alphabet \\(\Sigma\\) and tape alphabet
+\\(\Gamma\\) that halts for all input strings from \\(\Sigma^\*\\).
+Then \\(M\\) computes the function \\(f_M : \Sigma^\* \rightarrow \Gamma^\*\\)
+where for each \\(x \in \Sigma^\*\\), \\(f_M(x)\\) is defined to be the 
+contiguous string obtained by running \\(M\\) on input \\(x\\) until it
+halts; from tape position 1 up to but not including the first blank symbol.
+
+The **time** used in the computation of a DTM program \\(M\\) on an input \\(x\\)
+is the number of steps occuring in that computation up until the first 
+halt state is entered.
+
+**Definition**
+For a DTM program \\(M\\) that halts on all inputs \\(x\in\Sigma^\*\\), its
+*time complexity function* \\(T_M: \mathbb{Z}^+\rightarrow\mathbb{Z}^+\\) 
+is given by:
+
+\\[
+    T_M(n) = max \\{m: there \\ is \\ a \\ string \\ x\in\Sigma^\* of \\ length
+    \\\\ \\
+    n \\ on \\ which \\ the \\ computation \\ of \\ M \\ takes \\ time \\ m \\}
+\\]
+
+**Remark** \\(M\\) is a *polynomial time DTM program* if there exists a 
+polynomial \\(p\\) such that \\(\forall n \in \mathbb{N} : T_M(n)\leq p(n)\\).
+
+**Definition**
+
+\\[
+    P = \\{L: there \\ exists \\ a \\ polynomial \\ time \\ DTM \\ program \\\\
+    \\ M \\ for \\ which \\ L=L_M\\}.
+\\]
+
+We say that a decision problem \\(\Pi\\) belongs to \\(P\\) under the encoding scheme \\(e\\) if \\(L[\Pi, e]\in P\\), *ie* there is a polynomial time DTM
+program that solves \\(\Pi\\) under the encoding \\(e\\).

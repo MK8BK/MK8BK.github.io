@@ -394,7 +394,34 @@ M=(\Gamma, \mathcal{Q}, \delta).
 <p>Since an integer \(N\) is divisible by \(4\) if and only if the last two
 digits of its binary representation are \(0\), the DTM program \(M\) solves
 the INTEGER DIVISIBILITY BY FOUR problem.</p>
-<p><strong>Remark</strong>: A DTM program can compute functions. HOW???</p>
+<p><strong>Remark</strong>: A DTM program can compute functions.
+Suppose \(M\) is a DTM with input alphabet \(\Sigma\) and tape alphabet
+\(\Gamma\) that halts for all input strings from \(\Sigma^*\).
+Then \(M\) computes the function \(f_M : \Sigma^* \rightarrow \Gamma^*\)
+where for each \(x \in \Sigma^*\), \(f_M(x)\) is defined to be the
+contiguous string obtained by running \(M\) on input \(x\) until it
+halts; from tape position 1 up to but not including the first blank symbol.</p>
+<p>The <strong>time</strong> used in the computation of a DTM program \(M\) on an input \(x\)
+is the number of steps occuring in that computation up until the first
+halt state is entered.</p>
+<p><strong>Definition</strong>
+For a DTM program \(M\) that halts on all inputs \(x\in\Sigma^*\), its
+<em>time complexity function</em> \(T_M: \mathbb{Z}^+\rightarrow\mathbb{Z}^+\)
+is given by:</p>
+<p>\[
+T_M(n) = max \{m: there \ is \ a \ string \ x\in\Sigma^* of \ length
+\\ \
+n \ on \ which \ the \ computation \ of \ M \ takes \ time \ m \}
+\]</p>
+<p><strong>Remark</strong> \(M\) is a <em>polynomial time DTM program</em> if there exists a
+polynomial \(p\) such that \(\forall n \in \mathbb{N} : T_M(n)\leq p(n)\).</p>
+<p><strong>Definition</strong></p>
+<p>\[
+P = \{L: there \ exists \ a \ polynomial \ time \ DTM \ program \\
+\ M \ for \ which \ L=L_M\}.
+\]</p>
+<p>We say that a decision problem \(\Pi\) belongs to \(P\) under the encoding scheme \(e\) if \(L[\Pi, e]\in P\), <em>ie</em> there is a polynomial time DTM
+program that solves \(\Pi\) under the encoding \(e\).</p>
 <a class="header" href="print.html#proving-np-complete-results" id="proving-np-complete-results"><h1>Proving NP-Complete Results</h1></a>
 <a class="header" href="print.html#algorithms-and-programming-in-c" id="algorithms-and-programming-in-c"><h1>Algorithms and Programming in C</h1></a>
 <a class="header" href="print.html#c-language-notes" id="c-language-notes"><h1>C Language Notes</h1></a>
@@ -1016,6 +1043,31 @@ polynome caractéristique de \(u\) (respectivement de \(A\)). On le note
 <a class="header" href="print.html#equations-differentielles" id="equations-differentielles"><h1>Equations Differentielles</h1></a>
 <a class="header" href="print.html#decompositions-de-matrices" id="decompositions-de-matrices"><h1>Decompositions de Matrices</h1></a>
 <a class="header" href="print.html#analyse-hilbertienne" id="analyse-hilbertienne"><h1>Analyse Hilbertienne</h1></a>
+<a class="header" href="print.html#bases-hilbertiennes" id="bases-hilbertiennes"><h2>Bases Hilbertiennes</h2></a>
+<p><strong>Defintion 9</strong></p>
+<p>Soit \(H\) un espace de Hilbert. Une famille \((u_i)_{i\in I}\in H^I\) est:</p>
+<ul>
+<li><em>Orthonormée</em> si
+\( \forall i, j\in I \ : \ \langle u_i, u_j \rangle =\delta_{i, j} \).</li>
+<li><em>Totale</em> si
+\( H = \overline{Vect(u_i)_{i\in I}} \).</li>
+<li>Une <em>base hilbetienne</em> de \(H\) si elle est à la fois totale et orthonormée.</li>
+</ul>
+<p><strong>Proposition 9</strong> Inégalité de Bessel</p>
+<p>Soient \(H\) un espace de Hilbert et \((u_n)_{n\in\mathbb{N}}\) une famille
+orthonormée. Pour tout \(f\in H\),</p>
+<p>\[
+\sum_{n=0}^{+\infty}{|\langle f, u_n \rangle|^2} \leq ||f||^2.
+\]</p>
+<p><strong>Rappel</strong> Séries à termes orthogonaux</p>
+<p>Soient \((E, || \cdot ||)\) un \( \mathbb{K} \)-espace vectoriel normé et
+\( (x_n)_{n \in \mathbb{N} } \in E^{ \mathbb{N} } \). On pose
+\( s_n = \sum_{k=0}^{n} {x_k} \).</p>
+<ul>
+<li>La série \(\sum_{n\geq 0}{x_n}\) est dite convergente si la suite
+\((s_n)_{n\in\mathbb{N}}\) converge dans \((E, ||\cdot||)\). La limite
+\(lim_{n\rightarrow\infty}\)</li>
+</ul>
 <a class="header" href="print.html#about" id="about"><h1>About</h1></a>
 
                 </div>
