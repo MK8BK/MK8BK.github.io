@@ -13,6 +13,8 @@
     - [Queues](chapters/algsInC/queue.md)
     - [Trees](chapters/algsInC/trees.md)
     - [Graphs](chapters/algsInC/graphs.md)
+- [Java Platform](chapters/java/intro.md)
+    - [Jakarta EE](chapters/java/jakartaee.md)
 - [Linear & Integer Programming](chapters/linprog/intro.md)
     - [Linear Programming](chapters/linprog/linear.md)
     - [Integer Programming](chapters/linprog/integer.md)

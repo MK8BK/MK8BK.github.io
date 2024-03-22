@@ -290,3 +290,119 @@ polynomial \\(p\\) such that \\(\forall n \in \mathbb{N} : T_M(n)\leq p(n)\\).
 
 We say that a decision problem \\(\Pi\\) belongs to \\(P\\) under the encoding scheme \\(e\\) if \\(L[\Pi, e]\in P\\), *ie* there is a polynomial time DTM
 program that solves \\(\Pi\\) under the encoding \\(e\\).
+
+If a decision problem \\(\Pi\in P\\) then its complementary problem is 
+also in \\(P\\), this is not necessarily the case for a problem in \\(NP\\).
+
+## Nondeterminstic Computation and the class NP
+
+The class \\(NP\\) is intended to isolate the notion of polynomial time
+"verifiability", which does not imply polynomial time solvability.
+
+A **nondeterministic algorithm** is composed of two separate stages, the first 
+being a *guessing stage* and the second a *checking stage*.
+Given a problem instance \\(I\\), the first stage *guesses* a structure \\(S\\).
+\\(I\\) and \\(S\\) are then passed as inputs to the checking stage, which 
+performs deterministic computations to verify if the structure \\(S\\)
+proves that the answer to \\(I\\) is "yes".
+
+A nondeterministic algorithm *solves* a decision problem \\(\Pi\\) iff :
+1. If \\(I\in Y_{\Pi}\\), then there exists some structure \\(S\\) that, when
+   guessed for input \\(I\\), will lead the checking stage to respond "yes" for
+   \\(I\\) and \\(S\\).
+2. If \\(I\notin Y_{\Pi}\\), then there exists some structure \\(S\\) that, when
+   guessed for input \\(I\\), will lead the checking stage to respond "yes" for
+   \\(I\\) and \\(S\\).
+
+**Definitions**
+
+A **NonDeterministic one-tape Turing Machine** (NDTM)
+is a computation model composed of a *finite state control*, a *read-write head*
+, a two-way infinite *tape* of squares labeled (\\(..., -2, -1, 0, 1, 2, ...\\))
+and a *guessing module* having a *write-only head*.
+
+![img](https://i.stack.imgur.com/lqJWu.png)
+
+An **NDTM program** is specified in exactly the same way as \\(DTM\\) program.
+This includes the tape alphabet \\(\Gamma\\), input alphabet \\(\Sigma\\), 
+blank symbol \\(b\\), state set \\(\mathcal{Q}\\), initial state \\(q_0\\), halt
+states \\(q_Y\\) and \\(q_N\\) and transition function 
+\\(\delta: (\mathcal{Q} \backslash \\{q_Y, q_N\\})\times\Gamma
+\rightarrow \mathcal{Q}\times\Gamma\times\\{-1, +1\\}\\)
+
+The **computation of an NDTM** on an input string \\(x\in\Sigma^\*\\) differs from
+that of a DTM in that it takes place in two distinct stages:
+- the *guessing stage*:
+  - the input string \\(x\\) is written in tapes \\(1\\) through \\(|x|\\).
+    All other squares contain the blank character.
+  - the read-write head is scanning square \\(1\\), while the write-only head is 
+    scanning square \\(-1\\), the finite state control is inactive.
+  - the guessing module then directs the write-only head, one step at a 
+    time, either to write some symbol from \\(\Gamma\\) in te tape square being
+    scanned and move one square to the left, or to stop, at which point the 
+    guessing module becomes inactive.
+
+The finite state control is then activated in state \\(q_0\\).
+
+- the *checking stage*:
+  - the guessing module and its write-only head are no longer involved, having
+    fulfilled their role by guessing a string on the tape.
+  - the computation proceeds solely under the direction of the NDTM program
+  according to exactly the same rules as for a DTM.
+  - the guessed string can (and usually will) be examined during this stage.
+  - The computation ceases when and if the finite state control enters one of 
+    the two halting states and is said to be an *accepting computation* if it 
+    halts in state \\(q_Y\\). All other computations, halting or not are 
+    classified as *non-accepting computations*.
+
+
+The choice of whether to remain active, and, if so, which symbol to write, is 
+made by the guessing module in a totally arbitrary manner. An important
+consequence is that the guessing module can write any string from
+\\(\Gamma^\*\\) before it halts (if it ever does).
+
+**Properties**
+
+An NDTM program \\(M\\) has an infinite number of possible computations for a 
+given input string \\(x\\), one for each possible guessed string from
+\\(\Gamma^\*\\).
+
+An NDTM program \\(M\\) accepts \\(x\\) if at least one of these is an accepting
+computation.
+
+The language recongnized by \\(M\\) is 
+\\[L_M = \\{x\in\Sigma^\* : M \\ accepts \\ x\\}\\]
+
+The *time* required by an NDTM program \\(M\\) to accept the string
+\\(x\in L_M\\) is the minimum, over all accepting computations of \\(M\\) for 
+\\(x\\) of the number of steps ocurring in the guessing and checking stages up
+until the halt state \\(q_Y\\) is entered.
+
+The *time complexity function* \\(T_M: \mathbb{Z}^+\rightarrow\mathbb{Z}^+\\) 
+for \\(M\\) is 
+\\[
+    T_M(n) = max (\\{1\\}\cup\\{m: \exists x\in\Sigma^\* with \\ |x|=n \\ \\ 
+    s.t. \\ the \\ time \\ to \\ accept \\ x \\ by \\ M \\ is \\ m
+    \\})
+\\]
+
+The time complexity function for \\(M\\) depends only on the number of steps
+occurring in *accepting computations*. By convention, \\(T_M(n)\\) is \\(1\\)
+for whenever no inputs of length \\(n\\) are accepted by \\(M\\).
+
+The NDTM program \\(M\\) is a *polynomial time NDTM program* if there exists a 
+polynomial \\(p\\) such that \\(\forall n\geq 1: \\ T_M(n)\leq p(n) \\).
+
+**Definition**
+\\[
+    NP = \\{L: there \\ is \\ a \\ polynomial \\ time \\ NDTM \\ program
+    \\ M \\ for \\ which \\ L_M=L\\}
+\\]
+
+A decision problem \\(\Pi\\) will be said to belong to \\(NP\\) under encoding
+scheme \\(e\\) if the language \\(L[\Pi, e]\in NP\\)
+
+**Heuristic** We identify \\(NP\\) with the class of all decision problems 
+"solvable" by polynomial time nondeterministic algorithms.
+
+## The Relationship between P and NP
