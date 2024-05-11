@@ -207,9 +207,141 @@ enum {f=10, t, d=2}; // f: 10, t: 11, d: 2
 </code></pre>
 <p>Constants and pointers</p>
 <pre><code class="language-c">int const  *ptr; 
-// ptr is a pointer to constant int -&gt; can't modify the pointed variable with this pointer.
-int *const ptr = &amp;x;  
-// ptr is a constant pointer to int -&gt; can't modify the address stored in this pointer.
+// ptr is a pointer to constant int -&gt; can't modify the pointed variable with this pointer
+int *const ptr = &amp;x; // constant pointer --&gt; needs initilization
+// ptr is a constant pointer to int -&gt; can't modify the address stored in this pointer
+</code></pre>
+<p>Prepend a variable declaration with the <code>volatile</code> keyword to inform the compiler
+that the variable may change without being explicitly reassigned; this disables any
+optimizations.</p>
+<p>Never use <code>volatile</code> with <code>const</code>.</p>
+<pre><code class="language-c">char x = 3;
+x = ~x; // The bitwise complement operator (unary)
+</code></pre>
+<p>The binary bitwise AND <code>&amp;</code> and OR <code>|</code> operators.</p>
+<p>The binary bitwise XOR <code>^</code> operator.</p>
+<pre><code class="language-c">int a = 1&lt;&lt;4; //The left-shift operator; left shift by 4, pad with 0's
+// k&lt;&lt;n is equivalent to multiplying by 2^n
+int a = 1&gt;&gt;4; //The right-shift operator; right shift by 4, pad with 0's
+// k&gt;&gt;n is equivalent to dividing by 2^n
+</code></pre>
+<p>If a variable <code>x</code> is of type <code>T</code>, the expression <code>&amp;x</code> is of type <code>T*</code>.</p>
+<p>If a variable <code>x</code> is of type <code>const T</code>, the expression <code>&amp;x</code> is of type <code>const T *</code>.</p>
+<p>Increasing numeric size types:</p>
+<ul>
+<li><code>char</code>, <code>short</code>, <code>int</code>, <code>long int</code>, <code>long long int</code>.</li>
+<li><code>float</code>, <code>double</code>, <code>long double</code>.</li>
+</ul>
+<p>The unsigned versions have the same sizes.</p>
+<pre><code class="language-cpp">void function(const int *p){
+    // this function won't use p to alter the pointed variable 
+    // (which might or might not actually be const)
+    int j = *p;
+    *p = 0; // error
+}
+</code></pre>
+<pre><code class="language-c">T a[s]; // an array `a` of size s and containing s elements with type `T`.
+T a[s][s2]; // an array of arrays. contains s arrays each of size s2.
+</code></pre>
+<p>Array initialization:</p>
+<pre><code class="language-c">int a[3] = {1, 2, 3};
+int b[] = {1, 2, 3, 4};
+double c[4] = {3}; // rest are set to zero
+int d[4] = {[0]=3, [3]=3}; // rest are set to zero
+char carr[] = &quot;bruh&quot;;
+</code></pre>
+<p>String manipulation in C</p>
+<pre><code class="language-c">#include &lt;string.h&gt;
+char a[12] = &quot;bruh&quot;;
+int length = strlen(a); // length = 4, due to \0 terminated value in a
+
+char b[12];
+strcpy(b, &quot;nonsense&quot;); // copy into b
+strcpy(a, b); // a now contains nonsense
+
+strcpy(b, &quot;no&quot;); // b = &quot;no&quot;
+strcat(b, &quot; nonsense&quot;); // b = &quot;no nonsense&quot;
+
+strcmp(t1, t2); // -&gt; ~ t1 codes - t2 codes
+
+char a[20];
+scanf(&quot;%s&quot;, a); // NOT &amp;a
+</code></pre>
+<p>All these functions consider the null terminator as the end of the string.</p>
+<p>Structs</p>
+<pre><code class="language-c">struct structure_name {
+    member_declarations;
+};
+
+struct Color{
+    int red;
+    int green;
+    int blue;
+};
+
+struct Color b;
+b.red = 0;
+b.green = 0;
+b.blue = 255;
+
+struct Color *pb;
+pb = &amp;b;
+
+(*pc).red = 255;
+pc-&gt;red = 255; // the two lines are equivalent
+
+struct Color c = {128, 200, 0};
+struct Color c = {.red=128, .green=200, .blue=0};
+
+struct Color d = c; // shallow copy (d.red = c.red, ...)
+</code></pre>
+<p>Unions (synonym for Useless)</p>
+<pre><code class="language-c">union union_name{
+    member_declarations;
+};
+</code></pre>
+<p>Can't return an array from a function.</p>
+<pre><code class="language-c">do {
+    nonsense();
+}while(!working());
+</code></pre>
+<p>Switch</p>
+<pre><code class="language-c">switch (selector){ // an int expression
+    case val1: // an int expression available at compile time
+    instructions1
+    break;
+    case val2:
+    instructions2
+    break;
+    ...
+    default:
+    default_instructions
+    break;
+}
+</code></pre>
+<p>A switch selects the matching case in constant time.</p>
+<p>Program arguments</p>
+<pre><code class="language-c">int main(int argc, int *argv[]){
+    // ...
+}
+// is equivalent to 
+int main(int argc, int **argv){
+    // ...
+}
+</code></pre>
+<p><code>argc</code> is the argument count, <strong>including the program name</strong></p>
+<p><code>argv</code> is the argument array, containing <code>argc</code> strings (<code>char*</code> delimited by <code>\0</code>)</p>
+<p>Send a different exit code to the os.</p>
+<pre><code class="language-c">#include &lt;stdlib.h&gt; // exit declaration
+
+void procedure(){
+    exit(17); // equivalent to having an immediate return 17 in main()
+}
+int main(){
+    procedure();
+    // ...
+    return 0;
+}
 </code></pre>
 <a class="header" href="print.html#theory-of-np-completeness" id="theory-of-np-completeness"><h1>Theory of NP-Completeness</h1></a>
 <p>This chapter is a summary of the book
@@ -1216,20 +1348,6 @@ orthonormée. Pour tout \(f\in H\),</p>
 
         <!-- Livereload script (if served using the cli tool) -->
         
-    <script type="text/javascript">
-        var socket = new WebSocket("ws://localhost:3001");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                socket.close();
-                location.reload(true); // force reload from server (not from cache)
-            }
-        };
-
-        window.onbeforeunload = function() {
-            socket.close();
-        }
-    </script>
-
 
         
 
