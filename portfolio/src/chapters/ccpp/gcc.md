@@ -25,7 +25,17 @@ gcc -o executable x.c y.c # intermediate object files are discarded
 # compile and link source files x.c and y.c into a single executable file
 # looks up any undefined symbols during linking in library named **libsomething**.
 gcc -o executable x.c y.c -lsomething # -lABC -> search in libABC
+
+# use the gcc preprocessor only
+gcc -E in.c -o in.i
+
+# see header file content
+gcc -include stddef.h -E -dM - </dev/null | less
+
+# check for memory leaks with valgring
+valgrind --leak-check=yes ./program_name # if not in PATH and in working dir
 ```
+
 ## C++
 ```bash
 g++ -c x.cpp # compile cpp source file into x.o object file

@@ -268,3 +268,273 @@ int main(){
     return 0;
 }
 ```
+
+```c
+#define PI 3.0
+// ... duh
+
+#define STRUCTURE \
+struct bruh\
+{\
+  double x;\
+  double y;\
+}
+// <=>
+#define STRUCTURE struct bruh {double x; double y;}
+
+// macro with no value, boolean flag
+#define INT32
+
+// function like macro
+#define MAX(a, b) a>b?a:b
+
+// variadic macros
+#define DEBUG(fmt, ...) fprintf(stdout, fmt, __VA_ARGS__);\
+                        fflush(stdout)
+```
+
+To avoid operator precedence problems, wrap each macro formal
+parameter in parentheses.
+
+NEVER USE AN OPERATION THAT PRODUCES SIDE EFFECTS AS A MACRO ARGUMENT. 
+no idea how many times it will be called.
+
+Macro names should ALWAYS be all uppercase.
+
+```c
+#define bruh 
+#undef bruh 
+// undefine macro named bruh
+```
+
+```c
+#define LOGLEVEL 1
+#if LOGLEVEL == 0
+// ...
+#elif LOGLEVEL == 1
+// ...
+// ...
+#elif LOGLEVEL == 4
+// ...
+#else
+// ...
+#endif
+```
+
+```c
+#define M1 bruh
+#define M2
+#ifdef M1 // evaluates to true
+// ...
+#endif
+#ifdef M2 // evaluates to true
+// ...
+#endif
+#ifndef M3 // also evaluates to true
+// ...
+#endif
+```
+
+The conventional way to include header files, using header guards
+```c
+// file: A.h
+#ifndef A_H
+#define A_H
+//...
+#endif
+```
+
+`#if expression` where
+
+*The expression is a constant expression, using only literals and identifiers,
+defined using #define directive. Any identifier, which is not literal, 
+non defined using #define directive, evaluates to 0.*
+
+The # operator transforms a formal macro parameter into a string.
+```c
+#define·DISPLAYCALC(x)·printf(#x·"·=·%d\n",·x)
+// ...
+int a = 4;
+DISPLAYCALC(a); // prints: a = 4\n
+DISPLAYCALC(a*a); // prints: a*a = 4\n
+```
+
+The ## operator concatenates two formal macro parameters or a formal macro parameter and a string.
+
+
+```c
+int k; // both a declaration and definition
+extern int j; // is a declaration but not a definition,
+              // j is defined in some other compilation unit.
+double square(double x) {return x*x;} // is both a declaration and definition
+double root2(double); // is a declaration but not a definition
+```
+
+To define a type alias, declare a variable of the desired type and prefix its
+declaration with typedef.
+
+```c
+// intermediate step
+char chess_board[8][8]; // models an 8x8 chess board, as a declaration 
+typedef char chess_board[8][8]; // is now a type alias, not a variable
+// can now use it to declare variables
+chess_board c1, c2;
+```
+
+For structures, take a similar approach
+```c
+struct point {
+    int x, y;
+};
+struct point p; // intermediate step, variable
+typedef struct point p; // final form of type alias
+// can now declare variable using p instead of struct point
+p point1, point2;
+```
+
+we can even combine the struct definition and alias
+
+```c
+typedef struct point{
+    int x, y;
+} p;
+
+struct point p1; // is ok
+p p1; // is also ok
+```
+
+More useful version with a single identifier consumed
+```c
+typedef struct {
+    int x, y;
+} p;
+
+struct point p1; // NOOOOOO STOOOUUUPID
+p p1; // is also ok
+```
+
+Parsing complex types
+
+| operator | sentence | priority |
+|---|---|---|
+| [] | array of ... | highest |
+| () | function returning ... | mid |
+| * | pointer to ... | lowest |
+
+```c
+int j = 3; // global variable is accessible to all functions
+static int k = 3; // static variable is only accessible to functions in the same
+// compilation unit ie same source file
+```
+
+```c
+char c = g() + 2; // NO, has to be a constant
+char k = 'i' + 2; // Ok, know at compile time
+
+int main(){
+    // ...
+}
+```
+
+Pointer p + int k = Pointer pointing k positions after p
+
+Pointer p - int k = Pointer pointing k positions before p
+
+Pointer p1 - Pointer p2 = number of elements in between the pointed elements
+
+(if homogenous, otherwise bruh)
+
+(Pointer p1 < Pointer p2) evaluates to 0 or 1
+(boolean result of numeric comparison)
+
+```c
+int x[3];
+// the following expressions are equivalent
+x <==> &x[0];
+x[i] <==> (&x[0])[i];
+*x <==> *(&x[0]) <==> x[0];
+*(x+i) <==> x[i]
+
+int t[4];
+int *pt = &t[0];
+// the following expressions are equivalent
+t[i] <==> pt[i] <==> *(t+i) <==> *(pt+i)
+```
+
+"an array identifier is a constant pointer to the first element of the array"
+
+```c
+char *word[]; // array of pointers to char NOT pointer to array of char
+```
+
+dynamic memory management
+```c
+// prototypes
+void *malloc(size_t size);
+void free(void *ptr);
+void *realloc(void *ptr, size_t size);
+```
+
+```c
+#include <stdlib.h>
+double *p;
+int n = 30;
+p = malloc(n*sizeof(double)); // in c void* can be assigned to a T*, in C++ NO
+
+for(int i=0; i<n; i++) p[i] = 0.0; // can be used syntactically as an array
+```
+
+malloc may fail to allocate a block of memory, in which case it will return a 
+null pointer.
+
+ALWAYS CHECK FOR NULL POINTER AFTER A CALL TO `malloc`.
+```c
+int *p = malloc(20*sizeof(int));
+if(p==NULL){
+  // fix it ... or fail catastrophically
+}else{
+  // go ahead
+}
+
+free(p); // free the allocated block
+```
+
+```c
+int *p = malloc(20*sizeof(int));
+// use, then find out it had an inappropriate size
+p = realloc(p, 30*sizeof(int));
+// yay, new size
+```
+
+`realloc` check-list:
+- allocate new block with the appropriate size (if no expansion possible)
+- copy data from the old block to the new (if could not just expand old block)
+- free the old block (if changed)
+- return pointer to the first element of the new block (if different)
+
+`realloc` safety
+```c
+double *realloc_safe(double *p, size_t newsize, int *ok){
+  *ok = 1; // all is good for now
+  int *q = realloc(p, newsize);
+  if(q) p = q;
+  else *ok = 0; // not good, inform the caller
+  return p;
+}
+```
+these checks insure that p is always a valid pointer regardless of the success
+of the reallocation.
+
+Advice:
+- DO NOT TRY TO INFER THE SUCCESS OF THE OPERATION BY COMPARING THE NEW AND OLD
+POINTER ADDRESSES. A SUCCESSFULL REALLOCATION CAN KEEP THE SAME ADDRESS.
+- ALWAYS FREE ALLOCATED BLOCKS
+- NEVER USE A POINTER AFTER FREEING ITS POINTED BLOCK
+- NEVER FREE MORE THAN ONCE (including realloc with 0 size)
+- NEVER ACCESS MEMORY BEYOND THE ALLOCATED LIMIT
+(even worse than array out of bound access)
+
+
+
+
+

@@ -1,6 +1,9 @@
 # Summary
 
 - [Introduction](intro.md)
+- [Linux Command Line](chapters/linux/intro.md)
+    - [scripting](chapters/linux/bash.md)
+    - [utilities](chapters/linux/utils.md)
 - [C/C++ Notes](chapters/ccpp/intro.md)
     - [gcc](chapters/ccpp/gcc.md)
     - [C](chapters/ccpp/c.md)
