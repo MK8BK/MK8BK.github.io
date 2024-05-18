@@ -49,5 +49,5 @@ g++ -o executable x.cpp y.cpp # intermediate object files are discarded
 g++ -o executable x.cpp y.cpp -lsomething # -lABC -> search in libABC
 
 # specify C++ standard -> use -std=bruh flag
-g++ -o prog main.cpp -std=c++17
+g++ -o prog main.cpp -std=c++2a # use c++ 20 with gcc, not fully implemented yet
 ```

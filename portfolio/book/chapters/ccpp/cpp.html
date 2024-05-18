@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>C++ - The Guides</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+        <!-- MathJax -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('mdbook-theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('mdbook-sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li><a href="intro.html"><strong>1.</strong> Introduction</a></li><li><a href="chapters/linux/intro.html"><strong>2.</strong> Linux Command Line</a></li><li><ul class="section"><li><a href="chapters/linux/vim.html"><strong>2.1.</strong> vim</a></li><li><a href="chapters/linux/bash.html"><strong>2.2.</strong> scripting</a></li><li><a href="chapters/linux/utils.html"><strong>2.3.</strong> utilities</a></li></ul></li><li><a href="chapters/ccpp/intro.html"><strong>3.</strong> C/C++ Notes</a></li><li><ul class="section"><li><a href="chapters/ccpp/gcc.html"><strong>3.1.</strong> gcc</a></li><li><a href="chapters/ccpp/c.html"><strong>3.2.</strong> C</a></li><li><a href="chapters/ccpp/cpp.html" class="active"><strong>3.3.</strong> C++</a></li></ul></li><li><a href="chapters/theorynpcomp/intro.html"><strong>4.</strong> Theory of NP-Completeness</a></li><li><ul class="section"><li><a href="chapters/theorynpcomp/theorynpcomp.html"><strong>4.1.</strong> The Theory of NP-Completeness</a></li><li><a href="chapters/theorynpcomp/proofnpcomp.html"><strong>4.2.</strong> Proving NP-Complete Results</a></li></ul></li><li><a href="chapters/ocaml/intro.html"><strong>5.</strong> OCaml Functional Programming</a></li><li><ul class="section"><li><a href="chapters/ocaml/n99exercises.html"><strong>5.1.</strong> 99 Excercises in OCaml</a></li><li><a href="chapters/ocaml/lambdacalc.html"><strong>5.2.</strong> Lambda Calcul</a></li></ul></li><li><a href="chapters/umath/intro.html"><strong>6.</strong> Maths de 1er cycle</a></li><li><ul class="section"><li><a href="chapters/umath/reduction.html"><strong>6.1.</strong> Reduction des Endomorphismes</a></li></ul></li><li><a href="chapters/about/whoami.html"><strong>7.</strong> About</a></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                    </div>
+
+                    <h1 class="menu-title">The Guides</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html">
+                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="chapters/ccpp/cpp.html#c" id="c"><h1>C++</h1></a>
+<p>In C++, a true <code>bool</code> type is available with only <code>true</code> and <code>false</code> values.</p>
+<p>In C, <code>'x'</code> and <code>'\n'</code> are of type <code>int</code>. In C++, they are of type <code>char</code>.</p>
+<p>Can decorate <code>1000000</code> as <code>1'000'000</code>.</p>
+<table><thead><tr><th> C header file </th><th> C++ header file </th></tr></thead><tbody>
+<tr><td> <code>assert.h</code> </td><td> <code>cassert</code> </td></tr>
+<tr><td> <code>ctype.h</code> </td><td> <code>cctype</code> </td></tr>
+<tr><td> <code>errno.h</code> </td><td> <code>cerrno</code> </td></tr>
+<tr><td> <code>float.h</code> </td><td> <code>cfloat</code> </td></tr>
+<tr><td> <code>limits.h</code> </td><td> <code>climits</code> </td></tr>
+<tr><td> <code>math.h</code> </td><td> <code>cmath</code> </td></tr>
+<tr><td> <code>stdarg.h</code> </td><td> <code>cstdarg</code> </td></tr>
+<tr><td> <code>stddef.h</code> </td><td> <code>cstddef</code> </td></tr>
+<tr><td> <code>stdint.h</code> </td><td> <code>cstdint</code> </td></tr>
+<tr><td> <code>stdio.h</code> </td><td> <code>cstdio</code> </td></tr>
+<tr><td> <code>stdlib.h</code> </td><td> <code>cstdlib</code> </td></tr>
+<tr><td> <code>string.h</code> </td><td> <code>cstring</code> </td></tr>
+<tr><td> <code>time.h</code> </td><td> <code>ctime</code> </td></tr>
+</tbody></table>
+<p>Use C function in C++, if function is a common library function or was compiled
+by a c compiler.</p>
+<pre><code class="language-c">// in.c
+#include &lt;stdio.h&gt;
+
+void my_printer(char *s){
+  printf(&quot;%s\n&quot;, s);
+}
+</code></pre>
+<p>compile with</p>
+<pre><code class="language-bash">gcc -c in.c
+</code></pre>
+<pre><code class="language-cpp">// extern.cpp
+#include &lt;iostream&gt;
+
+extern &quot;C&quot; double sin(double);
+
+extern &quot;C&quot;
+{
+  double cos(double);
+  double tan(double);
+  void my_printer(char*);
+}
+
+int main(){
+  std::cout &lt;&lt; sin(1.0) &lt;&lt; std::endl;
+  std::cout &lt;&lt; cos(1.0) &lt;&lt; std::endl;
+  std::cout &lt;&lt; tan(1.0) &lt;&lt; std::endl;
+  char a[] = {'c', ' ', 'c', 'o', 'd', 'e'};
+  my_printer(a);
+  return 0;
+}
+</code></pre>
+<p>compile with</p>
+<pre><code class="language-bash">g++ -o extern extern.cpp in.o
+</code></pre>
+<p>In C++ a function can be oveloaded: same name, different signatures
+and definitions.</p>
+<p>If an overloaded function can handle <code>int</code> and <code>double</code> arguments, a compiler
+error occurs if it is invoked on a <code>long</code> value \(\rightarrow\) the compiler
+can't know to which type it should cast the <code>long</code>. Do an explicit cast.</p>
+<p>Formal paramaters having default values should only be present in the function
+declaration. They should not be followed by formal parameters having no default
+values.</p>
+<p>A namespace declaration can only contain declarations and no definitions, use
+extern for namespace variable to avoid defining it and breaking the One
+Definition Rule.</p>
+<p>Extracting namespace component for use inside of a single compilation unit.</p>
+<pre><code class="language-cpp">// ...
+y = Math::power(x, 3)*Math::pi;
+</code></pre>
+<p>becomes</p>
+<pre><code class="language-cpp">using Math::power;
+using Math::pi;
+// ...
+y = power(x, 3)*pi;
+</code></pre>
+<p>Extracting all namespace components, USE ONLY IF A FEW NAMESPACES ARE USED.</p>
+<pre><code class="language-cpp">using namespace Math;
+</code></pre>
+<p>Explicitly use a function in the globale namespace (<em>ie: not declared in any
+namespace</em>)</p>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+
+int main(){
+    ::printf(&quot;bruh\n&quot;);
+    return 0;
+}
+</code></pre>
+<p>Anonymous Namespaces can only contain definitions (any declarations cannot
+be accessed bruh). These definitions can only be used in the current compilation
+unit.</p>
+<pre><code class="language-cpp">namespace {
+    int f(n) {return n*n;}
+}
+</code></pre>
+<p>has the same effect as</p>
+<pre><code class="language-cpp">static int f(n) {return n*n;}
+</code></pre>
+<p>all references must be initialized</p>
+<pre><code class="language-cpp">double x, y;
+double &amp;r = x; // r is a reference to the variable x
+r = y; // the variable x now contains the value of the variable y
+</code></pre>
+<p>Never return a reference to a local variable or to a parameter not
+passed by reference (<em>ie passed by value</em>).</p>
+<pre><code class="language-cpp">// OK
+double&amp; maximum(double&amp; a, double&amp; b){
+    return (a&gt;=b)?a:b;
+}
+// STOOPID
+double&amp; maximum(double a, double b){
+    return (a&gt;=b)?a:b;
+}
+</code></pre>
+<p>A lot to unpack, but the common idiom is to declare a function receiving const
+references and returning a const reference, and an overloaded version which
+receives non const references and returns a non const reference.</p>
+<pre><code class="language-cpp">double&amp; maxi(double&amp; a, double&amp; b){
+    return (a&gt;b) ? a : b;
+}
+const double&amp; maxi(const double&amp; a, const double&amp; b){
+    return (a&gt;b) ? a : b;
+}
+</code></pre>
+<p>a reference must always be initialized or declared extern (<em>initialized in an
+other compilation unit</em>).</p>
+<pre><code class="language-cpp">double&amp; r1; // NOOOOO
+extern double&amp; r2; // OK, make sure it's defined elsewhere
+</code></pre>
+<p>&quot;References behave like constant pointers who are automatically dereferenced&quot;</p>
+<pre><code class="language-cpp">auto i = ... ; // let the compiler deduce the appropriate type
+decltype(expr) j = ... ; // declare the variable j as having the same type as expr
+</code></pre>
+<p>use <code>using</code> instead of <code>typedef</code> in C++</p>
+<pre><code class="language-cpp">using txtptr = const char * (*) (double);
+using y = x; // y is the new (hopefully more intuitive) name for the type x
+</code></pre>
+<p>Use <code>nullptr</code> (of type <code>nullptr_t</code>) instead of <code>0</code> or <code>NULL</code>.</p>
+<p>Favor the four kinds of modern C++ casts to standard C casts.</p>
+<pre><code class="language-cpp">static_cast&lt;new_type&gt;(expr); // use for numeric types
+const_cast&lt;new_type&gt;(expr); // get something non constant or non volatile
+reinterpret_cast&lt;new_type&gt;(expr); // use for pointer cast, often nonsensical
+dynamic_cast&lt;new_type&gt;(expr); // stoopid oop nonsense
+</code></pre>
+<p>A function whose result is declared to be constexr can be evaluated at compile
+time if its arguments are const, constexpr or litterals.</p>
+<p><img src="media/constexpr_func.png" alt="" /></p>
+<p><code>consteval</code> - specifies that a function is an immediate function, that is,
+every call to the function must produce a compile-time constant.</p>
+<p><img src="media/consteval.png" alt="" /></p>
+<p>Conditionally compile with <code>if constexpr(expr)</code> where <code>expr</code> is an expression
+known at compile time.</p>
+<pre><code class="language-cpp">static_assert(expr, &quot;message&quot;); // expr must be evaluated at compile time
+</code></pre>
+<pre><code class="language-cpp">double a[30];
+for(double x : a)
+    x = 0; // STOOPID, x is a copy of an element of a
+for(double&amp; x : a)
+    x = 0; // OK, will modify, since x references an element of a
+// if large elements, and no modification needed, favor a constant reference
+for(const double&amp; x : a) // or const auto&amp;
+    std::cout &lt;&lt; x;
+</code></pre>
+<pre><code class="language-cpp">double *p;
+p = new double; // uninitialized
+double *x = new double(5); // initialized to value 5
+double *y = new double{6}; // initialized to value 6
+double *z = new double(); // initialized to 0
+
+double *p = new double[n]; // pointer to first element of
+                           // array dynamically allocated
+double *p = new double[3]{1.0, 3.0, 3.0}; // initialized version
+delete p; // ok
+double *q = reinterpret_cast&lt;double*&gt;(malloc(sizeof(int)));
+delete q; // NOOOOO, STOOPID
+</code></pre>
+<p>Anything declared with <code>new[]</code> must be deleted with <code>delete[]</code>.
+U.B. .
+If a type <code>T</code> aliases an array type, any allocated <code>new T</code> must be unallocated
+with <code>delete[]</code></p>
+<pre><code class="language-cpp">class TClass {
+    private:
+    // ... //
+    protected:
+    // ... //
+    public:
+    // ... //
+}
+// if absent, private
+// can repeat sections
+</code></pre>
+<p>In C, <code>struct X</code> declares a type <code>struct X</code>, in C++ it declares a type <code>X</code>
+(similar to <code>class X</code>).</p>
+<p>Always place class declaration in <code>.h</code> header file with the same name as the
+class, place the implementation in a <code>.cpp</code> file with the same filename.</p>
+<p><code>this</code> is a constant pointer to the object, it is automatically added to member
+methods by compilers.</p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="chapters/ccpp/c.html" class="mobile-nav-chapters previous" title="Previous chapter">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="chapters/theorynpcomp/intro.html" class="mobile-nav-chapters next" title="Next chapter">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="chapters/ccpp/c.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="chapters/theorynpcomp/intro.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS script -->
+        
+        <script type="text/javascript" src="highlightjs-line-numbers.js"></script>
+        
+
+    </body>
+</html>

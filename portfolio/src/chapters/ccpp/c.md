@@ -1,7 +1,7 @@
 # C
 
-A `char` type is always encoded using 8 bits \\(\rightarrow\\) just an integer type
-with a fixed range.
+A `char` type is always encoded using 8 bits (single byte) \\(\rightarrow\\)
+just an integer type with a fixed range.
 
 An `int` type usually has the same size as the processor's registers. 
 
@@ -243,11 +243,11 @@ A switch selects the matching case in constant time.
 
 Program arguments
 ```c
-int main(int argc, int *argv[]){
+int main(int argc, char *argv[]){
     // ...
 }
 // is equivalent to 
-int main(int argc, int **argv){
+int main(int argc, char **argv){
     // ...
 }
 ```
@@ -536,5 +536,52 @@ POINTER ADDRESSES. A SUCCESSFULL REALLOCATION CAN KEEP THE SAME ADDRESS.
 
 
 
+```c
+// Generate all permutations of an array
+#include <stdio.h>
 
+void swap(int *a, int *b){
+  int t = *a;
+  *a = *b;
+  *b = t;
+}
 
+void printarray(int n, int *a){
+  for(int i=0; i<n; i++)
+    printf("%d ", a[i]);
+  printf("\n");
+}
+
+void auxperm(int n, int k, int *a){
+  if(n==k) {printarray(n, a); return;}
+  for(int i=k; i<n; i++){
+    swap(a+i, a+k);
+    auxperm(n, k+1, a);
+    swap(a+i, a+k);
+  }
+}
+
+void perm(int n, int *a){
+  auxperm(n, 0, a);
+}
+
+int main(){
+  int n = 5;
+  int a[n];
+  for(int i=1; i<=n; i++) a[i-1] = i;
+
+  perm(n, a);
+
+  return 0;
+}
+```
+
+```c
+typedef const char *(*txtptr)(double);
+```
+`txtptr` is the type "pointer to function taking a double and returning a
+pointer to a constant char".
+
+```c
+assert(("message", expr)); // efficient use of the comma operator
+```
