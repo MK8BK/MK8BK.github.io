@@ -256,3 +256,260 @@ class, place the implementation in a `.cpp` file with the same filename.
 
 `this` is a constant pointer to the object, it is automatically added to member
 methods by compilers.
+
+For a setter, returning `*this` allows method chaining.
+
+```cpp
+class T{
+  public:
+    RT method(params) const; // this method won't modify the object 
+};
+```
+
+If a method does not modify its calling object, declare it `const`.
+
+A `const` method cannot call a non `const` method. It can however call a `static`
+method.
+
+Functions who are friends of a class can access all fields and methods of this 
+class.
+
+Inline functions must be declared and defined (below) in header files.
+The compiler needs the definition.
+
+A method defined in the class declaration is implicitly inline.
+
+Inline functions can't be recursive.
+
+The default constructor is invoked automatically if an object is not initialized.
+
+If fields are initialized (using constants), the default constructor and all
+other constructors will not have to initialize the fields. (... helpfull)
+
+If a constructor with parameters exists, the compiler won't provide the default
+parameterless constructor. To specifically request it, use:
+```cpp
+class S{
+    public:
+      S() = default; // request the default parameterless constructor
+};
+```
+
+```cpp
+class X{
+    public:
+      X(const X& x); // cloning constructor
+};
+```
+
+```cpp
+X x;
+X y(x); // same as
+X y = x; // this
+X y{x}; // same as
+```
+
+Always provide a cloning constructor for classes that have dynamically allocated
+fields (pointers, new nonsense ... etc). A cloner for class `T` has `T(const T&)`
+for a signature.
+
+
+```cpp
+class Z{
+  // assumed to have a parameterless AND a cloning constructor
+  // assumed to be assignable: Z z1, z2; ...; z1 = z2;
+};
+class X{
+  private:
+    int k_;
+    Z z_;
+    X(int k, const Z& z); // constructor
+};
+
+// NO, STOOPID
+X::X(int k, const Z& z){
+  k_ = k;
+  z_ = z; // here z_ is initialized first with the parameterless constructor
+  // it is then reaffected using the cloning constructor
+}
+
+// CHAD
+X::X(int k, const Z& z):k_(k), z_(z){ // call the cloning constructor first
+}
+```
+
+```cpp
+class C{
+    public:
+      ~C(); // Destructor
+};
+```
+
+the `delete` operator calls the destructor before freeing the memory dynamically 
+allocated with `new`.
+
+> The expression `const_cast<T>(v)` can be used to change the `const` or `volatile`
+qualifiers of pointers or references. (Among new-style casts, only `const_cast<>`
+can remove const qualifiers.) `T` must be a pointer, reference, or
+pointer-to-member type. 
+
+If an object can have multiple equivalent physical representations, consider
+using the `mutable` qualifier on fields that should be modifiable even if the 
+object is declared `const`. 
+
+`mutable` vs `const_cast<...>(this)` : EPIC FIGHT
+- `const_cast`: make all fields modifiable, just now
+- `mutable`: permits modification of the class member declared mutable even if
+  the containing object is declared const.
+
+Operators that cannot be overloaded: `::`, `.*`, `.`, `?:`, `sizeof`.
+
+`=`, `[]`, `()`, `->`: always overload these operators with methods.
+
+`T& operator=(const T&);` is the proper signature for the overloaded assignement
+operator.
+
+`ostream& operator<<(ostream&, const T&)` is the (only) proper signature for
+the overloaded `<<` operator.
+
+`istream& operator<<(ostream&, T&)` is the (only) proper signature for
+the overloaded `>>` operator.
+
+Call a method from within these two overloaded operators; this allows for
+subclasses to define their own standards for stream operations \\(\rightarrow\\)
+polymorphism.
+
+`x[j]` is equivalent to `x.operator[](j)`
+
+`explicit` specifies that a constructor is explicit, that is, it cannot be
+used for implicit conversions and copy-initialization.
+
+To convert an instance of class `T` into an instance of type `X`:
+```cpp
+T t;
+X x;
+x = t; // is equivalent to 
+x = t.operator X(); // this
+T.operator X() // -> convert the instance of type T into an equivalent instance of type X
+```
+
+```cpp
+class A 
+{
+    public:
+       int x;
+    protected:
+       int y;
+    private:
+       int z;
+};
+
+class B : public A
+{
+    // x is public
+    // y is protected
+    // z is not accessible from B
+};
+
+class C : protected A
+{
+    // x is protected
+    // y is protected
+    // z is not accessible from C
+};
+
+class D : private A    // 'private' is default for classes
+{
+    // x is private
+    // y is private
+    // z is not accessible from D
+};
+```
+
+Constructors are never inherited.
+
+Always call the parent constructor in the inherited constructor.
+
+```cpp
+class Y{
+  private:
+  T1 t1_;
+  public:
+  Y(T1 t1);
+};
+
+Y::Y(T1 t1){
+  t1_ = t1;
+}
+
+class X : public Y{
+  private:
+  T2 t2_;
+  public: 
+    X(T1 t1, T2 t2);
+};
+
+X::X(T1 t1, T2 t2) : Y(t1){
+  t2_ = t2;
+}
+```
+
+```cpp
+// multiple inheritance
+class Child: public parent1, private parent2 {};
+```
+
+A pointer (or reference) to class `T` used to call method `m()`
+uses the definition of `m` in the class `T`, even if the pointed instance is of 
+a subclass of `T` which overrides `m`.
+```cpp
+#include <iostream>
+using namespace std;
+
+class X {
+public:
+  void do_smthg();
+  virtual void do_smthg_else();
+};
+
+class Y : public X{
+public:
+  void do_smthg();
+  void do_smthg_else() override;
+};
+
+void Y::do_smthg(){
+  cout << "y do\n";
+}
+
+void Y::do_smthg_else(){
+  cout << "y do\n";
+}
+
+void X::do_smthg(){
+  cout << "x do\n";
+}
+
+void X::do_smthg_else(){
+  cout << "x do\n";
+}
+
+int main(){
+  X *a[3];
+  a[0] = new Y();
+  a[0]->do_smthg(); // x do: static dispatch
+  a[0]->do_smthg_else(); // y do: dynamic dispatch
+  return 0;
+}
+```
+
+use `virtual` on base type, `virtual` or preferrably `override` on the child
+type.
+
+`static` methods (class methods) and constructors cannot be virtual.
+
+A call to a virtual method in the constructor of a base class uses the definition
+of the method in the base class. Avoid calling virtual methods in a constructor.
+
+If polymorphism is used, USE A VIRTUAL DESTRUCTOR. Why ? Because.
+

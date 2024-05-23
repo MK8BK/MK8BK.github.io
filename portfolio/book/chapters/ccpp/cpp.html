@@ -66,7 +66,7 @@
         </script>
 
         <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="intro.html"><strong>1.</strong> Introduction</a></li><li><a href="chapters/linux/intro.html"><strong>2.</strong> Linux Command Line</a></li><li><ul class="section"><li><a href="chapters/linux/vim.html"><strong>2.1.</strong> vim</a></li><li><a href="chapters/linux/bash.html"><strong>2.2.</strong> scripting</a></li><li><a href="chapters/linux/utils.html"><strong>2.3.</strong> utilities</a></li></ul></li><li><a href="chapters/ccpp/intro.html"><strong>3.</strong> C/C++ Notes</a></li><li><ul class="section"><li><a href="chapters/ccpp/gcc.html"><strong>3.1.</strong> gcc</a></li><li><a href="chapters/ccpp/c.html"><strong>3.2.</strong> C</a></li><li><a href="chapters/ccpp/cpp.html" class="active"><strong>3.3.</strong> C++</a></li></ul></li><li><a href="chapters/theorynpcomp/intro.html"><strong>4.</strong> Theory of NP-Completeness</a></li><li><ul class="section"><li><a href="chapters/theorynpcomp/theorynpcomp.html"><strong>4.1.</strong> The Theory of NP-Completeness</a></li><li><a href="chapters/theorynpcomp/proofnpcomp.html"><strong>4.2.</strong> Proving NP-Complete Results</a></li></ul></li><li><a href="chapters/ocaml/intro.html"><strong>5.</strong> OCaml Functional Programming</a></li><li><ul class="section"><li><a href="chapters/ocaml/n99exercises.html"><strong>5.1.</strong> 99 Excercises in OCaml</a></li><li><a href="chapters/ocaml/lambdacalc.html"><strong>5.2.</strong> Lambda Calcul</a></li></ul></li><li><a href="chapters/umath/intro.html"><strong>6.</strong> Maths de 1er cycle</a></li><li><ul class="section"><li><a href="chapters/umath/reduction.html"><strong>6.1.</strong> Reduction des Endomorphismes</a></li></ul></li><li><a href="chapters/about/whoami.html"><strong>7.</strong> About</a></li></ul>
+            <ul class="chapter"><li><a href="intro.html"><strong>1.</strong> Introduction</a></li><li><a href="chapters/linux/intro.html"><strong>2.</strong> Linux Command Line</a></li><li><ul class="section"><li><a href="chapters/linux/vim.html"><strong>2.1.</strong> vim</a></li><li><a href="chapters/linux/bash.html"><strong>2.2.</strong> scripting</a></li><li><a href="chapters/linux/utils.html"><strong>2.3.</strong> utilities</a></li></ul></li><li><a href="chapters/ccpp/intro.html"><strong>3.</strong> C/C++ Notes</a></li><li><ul class="section"><li><a href="chapters/ccpp/gcc.html"><strong>3.1.</strong> gcc</a></li><li><a href="chapters/ccpp/c.html"><strong>3.2.</strong> C</a></li><li><a href="chapters/ccpp/cpp.html" class="active"><strong>3.3.</strong> C++</a></li></ul></li><li><a href="chapters/algs/intro.html"><strong>4.</strong> Algorithms &amp; Data Structures</a></li><li><ul class="section"><li><a href="chapters/algs/lds.html"><strong>4.1.</strong> Linear Data Structures</a></li><li><a href="chapters/algs/sorting.html"><strong>4.2.</strong> Sorting</a></li><li><a href="chapters/algs/searching.html"><strong>4.3.</strong> Searching</a></li><li><a href="chapters/algs/trees.html"><strong>4.4.</strong> Trees</a></li><li><a href="chapters/algs/graphs.html"><strong>4.5.</strong> Graphs</a></li><li><a href="chapters/algs/dnc.html"><strong>4.6.</strong> Divide &amp; Conquer</a></li><li><a href="chapters/algs/greedy.html"><strong>4.7.</strong> Greedy Algorithms</a></li><li><a href="chapters/algs/dynprog.html"><strong>4.8.</strong> Dynamic Programming</a></li><li><a href="chapters/algs/algs_graphs.html"><strong>4.9.</strong> Graph Algorithms</a></li><li><a href="chapters/algs/linprog.html"><strong>4.10.</strong> Linear Programming</a></li><li><a href="chapters/algs/algs_string.html"><strong>4.11.</strong> String Algorithms</a></li></ul></li><li><a href="chapters/leetcode/main.html"><strong>5.</strong> LeetCode Catalog</a></li><li><a href="chapters/theorynpcomp/intro.html"><strong>6.</strong> Theory of NP-Completeness</a></li><li><ul class="section"><li><a href="chapters/theorynpcomp/theorynpcomp.html"><strong>6.1.</strong> The Theory of NP-Completeness</a></li><li><a href="chapters/theorynpcomp/proofnpcomp.html"><strong>6.2.</strong> Proving NP-Complete Results</a></li></ul></li><li><a href="chapters/ocaml/intro.html"><strong>7.</strong> OCaml Functional Programming</a></li><li><ul class="section"><li><a href="chapters/ocaml/n99exercises.html"><strong>7.1.</strong> 99 Excercises in OCaml</a></li><li><a href="chapters/ocaml/lambdacalc.html"><strong>7.2.</strong> Lambda Calcul</a></li></ul></li><li><a href="chapters/umath/intro.html"><strong>8.</strong> Maths de 1er cycle</a></li><li><ul class="section"><li><a href="chapters/umath/reduction.html"><strong>8.1.</strong> Reduction des Endomorphismes</a></li></ul></li><li><a href="chapters/about/whoami.html"><strong>9.</strong> About</a></li></ul>
         </div>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -286,6 +286,215 @@ with <code>delete[]</code></p>
 class, place the implementation in a <code>.cpp</code> file with the same filename.</p>
 <p><code>this</code> is a constant pointer to the object, it is automatically added to member
 methods by compilers.</p>
+<p>For a setter, returning <code>*this</code> allows method chaining.</p>
+<pre><code class="language-cpp">class T{
+  public:
+    RT method(params) const; // this method won't modify the object 
+};
+</code></pre>
+<p>If a method does not modify its calling object, declare it <code>const</code>.</p>
+<p>A <code>const</code> method cannot call a non <code>const</code> method. It can however call a <code>static</code>
+method.</p>
+<p>Functions who are friends of a class can access all fields and methods of this
+class.</p>
+<p>Inline functions must be declared and defined (below) in header files.
+The compiler needs the definition.</p>
+<p>A method defined in the class declaration is implicitly inline.</p>
+<p>Inline functions can't be recursive.</p>
+<p>The default constructor is invoked automatically if an object is not initialized.</p>
+<p>If fields are initialized (using constants), the default constructor and all
+other constructors will not have to initialize the fields. (... helpfull)</p>
+<p>If a constructor with parameters exists, the compiler won't provide the default
+parameterless constructor. To specifically request it, use:</p>
+<pre><code class="language-cpp">class S{
+    public:
+      S() = default; // request the default parameterless constructor
+};
+</code></pre>
+<pre><code class="language-cpp">class X{
+    public:
+      X(const X&amp; x); // cloning constructor
+};
+</code></pre>
+<pre><code class="language-cpp">X x;
+X y(x); // same as
+X y = x; // this
+X y{x}; // same as
+</code></pre>
+<p>Always provide a cloning constructor for classes that have dynamically allocated
+fields (pointers, new nonsense ... etc). A cloner for class <code>T</code> has <code>T(const T&amp;)</code>
+for a signature.</p>
+<pre><code class="language-cpp">class Z{
+  // assumed to have a parameterless AND a cloning constructor
+  // assumed to be assignable: Z z1, z2; ...; z1 = z2;
+};
+class X{
+  private:
+    int k_;
+    Z z_;
+    X(int k, const Z&amp; z); // constructor
+};
+
+// NO, STOOPID
+X::X(int k, const Z&amp; z){
+  k_ = k;
+  z_ = z; // here z_ is initialized first with the parameterless constructor
+  // it is then reaffected using the cloning constructor
+}
+
+// CHAD
+X::X(int k, const Z&amp; z):k_(k), z_(z){ // call the cloning constructor first
+}
+</code></pre>
+<pre><code class="language-cpp">class C{
+    public:
+      ~C(); // Destructor
+};
+</code></pre>
+<p>the <code>delete</code> operator calls the destructor before freeing the memory dynamically
+allocated with <code>new</code>.</p>
+<blockquote>
+<p>The expression <code>const_cast&lt;T&gt;(v)</code> can be used to change the <code>const</code> or <code>volatile</code>
+qualifiers of pointers or references. (Among new-style casts, only <code>const_cast&lt;&gt;</code>
+can remove const qualifiers.) <code>T</code> must be a pointer, reference, or
+pointer-to-member type.</p>
+</blockquote>
+<p>If an object can have multiple equivalent physical representations, consider
+using the <code>mutable</code> qualifier on fields that should be modifiable even if the
+object is declared <code>const</code>.</p>
+<p><code>mutable</code> vs <code>const_cast&lt;...&gt;(this)</code> : EPIC FIGHT</p>
+<ul>
+<li><code>const_cast</code>: make all fields modifiable, just now</li>
+<li><code>mutable</code>: permits modification of the class member declared mutable even if
+the containing object is declared const.</li>
+</ul>
+<p>Operators that cannot be overloaded: <code>::</code>, <code>.*</code>, <code>.</code>, <code>?:</code>, <code>sizeof</code>.</p>
+<p><code>=</code>, <code>[]</code>, <code>()</code>, <code>-&gt;</code>: always overload these operators with methods.</p>
+<p><code>T&amp; operator=(const T&amp;);</code> is the proper signature for the overloaded assignement
+operator.</p>
+<p><code>ostream&amp; operator&lt;&lt;(ostream&amp;, const T&amp;)</code> is the (only) proper signature for
+the overloaded <code>&lt;&lt;</code> operator.</p>
+<p><code>istream&amp; operator&lt;&lt;(ostream&amp;, T&amp;)</code> is the (only) proper signature for
+the overloaded <code>&gt;&gt;</code> operator.</p>
+<p>Call a method from within these two overloaded operators; this allows for
+subclasses to define their own standards for stream operations \(\rightarrow\)
+polymorphism.</p>
+<p><code>x[j]</code> is equivalent to <code>x.operator[](j)</code></p>
+<p><code>explicit</code> specifies that a constructor is explicit, that is, it cannot be
+used for implicit conversions and copy-initialization.</p>
+<p>To convert an instance of class <code>T</code> into an instance of type <code>X</code>:</p>
+<pre><code class="language-cpp">T t;
+X x;
+x = t; // is equivalent to 
+x = t.operator X(); // this
+T.operator X() // -&gt; convert the instance of type T into an equivalent instance of type X
+</code></pre>
+<pre><code class="language-cpp">class A 
+{
+    public:
+       int x;
+    protected:
+       int y;
+    private:
+       int z;
+};
+
+class B : public A
+{
+    // x is public
+    // y is protected
+    // z is not accessible from B
+};
+
+class C : protected A
+{
+    // x is protected
+    // y is protected
+    // z is not accessible from C
+};
+
+class D : private A    // 'private' is default for classes
+{
+    // x is private
+    // y is private
+    // z is not accessible from D
+};
+</code></pre>
+<p>Constructors are never inherited.</p>
+<p>Always call the parent constructor in the inherited constructor.</p>
+<pre><code class="language-cpp">class Y{
+  private:
+  T1 t1_;
+  public:
+  Y(T1 t1);
+};
+
+Y::Y(T1 t1){
+  t1_ = t1;
+}
+
+class X : public Y{
+  private:
+  T2 t2_;
+  public: 
+    X(T1 t1, T2 t2);
+};
+
+X::X(T1 t1, T2 t2) : Y(t1){
+  t2_ = t2;
+}
+</code></pre>
+<pre><code class="language-cpp">// multiple inheritance
+class Child: public parent1, private parent2 {};
+</code></pre>
+<p>A pointer (or reference) to class <code>T</code> used to call method <code>m()</code>
+uses the definition of <code>m</code> in the class <code>T</code>, even if the pointed instance is of
+a subclass of <code>T</code> which overrides <code>m</code>.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+class X {
+public:
+  void do_smthg();
+  virtual void do_smthg_else();
+};
+
+class Y : public X{
+public:
+  void do_smthg();
+  void do_smthg_else() override;
+};
+
+void Y::do_smthg(){
+  cout &lt;&lt; &quot;y do\n&quot;;
+}
+
+void Y::do_smthg_else(){
+  cout &lt;&lt; &quot;y do\n&quot;;
+}
+
+void X::do_smthg(){
+  cout &lt;&lt; &quot;x do\n&quot;;
+}
+
+void X::do_smthg_else(){
+  cout &lt;&lt; &quot;x do\n&quot;;
+}
+
+int main(){
+  X *a[3];
+  a[0] = new Y();
+  a[0]-&gt;do_smthg(); // x do: static dispatch
+  a[0]-&gt;do_smthg_else(); // y do: dynamic dispatch
+  return 0;
+}
+</code></pre>
+<p>use <code>virtual</code> on base type, <code>virtual</code> or preferrably <code>override</code> on the child
+type.</p>
+<p><code>static</code> methods (class methods) and constructors cannot be virtual.</p>
+<p>A call to a virtual method in the constructor of a base class uses the definition
+of the method in the base class. Avoid calling virtual methods in a constructor.</p>
+<p>If polymorphism is used, USE A VIRTUAL DESTRUCTOR. Why ? Because.</p>
 
                 </div>
 
@@ -297,7 +506,7 @@ methods by compilers.</p>
                 
 
                 
-                    <a rel="next" href="chapters/theorynpcomp/intro.html" class="mobile-nav-chapters next" title="Next chapter">
+                    <a rel="next" href="chapters/algs/intro.html" class="mobile-nav-chapters next" title="Next chapter">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -311,7 +520,7 @@ methods by compilers.</p>
             
 
             
-                <a href="chapters/theorynpcomp/intro.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                <a href="chapters/algs/intro.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
                     <i class="fa fa-angle-right"></i>
                 </a>
             

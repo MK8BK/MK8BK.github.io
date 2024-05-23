@@ -51,3 +51,7 @@ g++ -o executable x.cpp y.cpp -lsomething # -lABC -> search in libABC
 # specify C++ standard -> use -std=bruh flag
 g++ -o prog main.cpp -std=c++2a # use c++ 20 with gcc, not fully implemented yet
 ```
+
+
+
+debugging tip: undefined reference to smthg \\(\rightarrow\\) `-o ALL.o files`
