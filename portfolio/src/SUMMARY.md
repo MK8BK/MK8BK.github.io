@@ -2,7 +2,7 @@
 
 - [Introduction](intro.md)
 - [Linux Command Line](chapters/linux/intro.md)
-    - [vim](chapters/linux/vim.md)
+    - [vim & neovim](chapters/linux/vim.md)
     - [scripting](chapters/linux/bash.md)
     - [utilities](chapters/linux/utils.md)
 - [C/C++ Notes](chapters/ccpp/intro.md)

@@ -585,3 +585,40 @@ pointer to a constant char".
 ```c
 assert(("message", expr)); // efficient use of the comma operator
 ```
+
+
+C function name nonsense
+```c
+#include <stdio.h>
+
+void printchar(char c){
+  printf("%c", c);
+}
+
+int main(){
+  printchar('M'); // prints: M
+  (*printchar)('M'); // compiles, prints: M 
+  printf("\n");
+  return 0;
+}
+```
+Functions readily decay into pointers to themselves, see more on 
+[`reddit`](https://www.reddit.com/r/C_Programming/comments/1az5qnz/comment/krz6bnr/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)
+.
+
+staticrap
+```c
+void foo() {
+    static int x = 5; // assigns value of 5 only once, at compile time
+    x++;
+    printf("%d", x);
+}
+
+int main() {
+    foo(); // x = 6
+    foo(); // x = 7
+    return 0;
+}
+```
+See more on [`StackOverflow`](https://stackoverflow.com/a/23777789).
+
