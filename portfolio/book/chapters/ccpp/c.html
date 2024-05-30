@@ -584,6 +584,15 @@ int main() {
 }
 </code></pre>
 <p>See more on <a href="https://stackoverflow.com/a/23777789"><code>StackOverflow</code></a>.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+int main() {
+  int nv[] = {1, 2, 3};
+  // common idiom to get the number of elements in an array in c
+  int n = sizeof(nv) / sizeof(*nv);
+  printf(&quot;%d\n&quot;, n); // prints: 3
+  return 0;
+}
+</code></pre>
 
                 </div>
 

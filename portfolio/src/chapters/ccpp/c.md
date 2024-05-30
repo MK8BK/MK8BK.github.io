@@ -622,3 +622,13 @@ int main() {
 ```
 See more on [`StackOverflow`](https://stackoverflow.com/a/23777789).
 
+```c
+#include <stdio.h>
+int main() {
+  int nv[] = {1, 2, 3};
+  // common idiom to get the number of elements in an array in c
+  int n = sizeof(nv) / sizeof(*nv);
+  printf("%d\n", n); // prints: 3
+  return 0;
+}
+```

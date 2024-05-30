@@ -189,12 +189,12 @@ dynamic_cast<new_type>(expr); // stoopid oop nonsense
 A function whose result is declared to be constexr can be evaluated at compile
 time if its arguments are const, constexpr or litterals.
 
-![](media/constexpr_func.png)
+<img src="media/constexpr_func.png" width=600/>
 
 `consteval` - specifies that a function is an immediate function, that is,
 every call to the function must produce a compile-time constant.
 
-![](media/consteval.png)
+<img src="media/consteval.png" width=600/>
 
 Conditionally compile with `if constexpr(expr)` where `expr` is an expression
 known at compile time.
@@ -662,11 +662,11 @@ Throwing an exception should never cause a memory leak, use RAII.
 
 IOS INBREEDING
 
-![](media/family1.png)
-![](media/family2.png)
-![](media/family3.png)
-![](media/family4.png)
-![](media/iostream_fam.png)
+<img src="media/family1.png" width=300 height=200/>
+<img src="media/family2.png" width=300 height=200/>
+<img src="media/family3.png" width=300 height=200/>
+<img src="media/family4.png" width=300 height=200/>
+<img src="media/iostream_fam.png" width=600 />
 
 `std::cout`, `std::cerr` and `std::clog` are all instances of `std::ostream`,
 *ie:* `std::basic_ostream<char>`.
@@ -777,7 +777,7 @@ Used to ckeck if a file opened for reading exists.
 
 
 
-[stackoverflow:](https://stackoverflow.com/questions/4872361/why-are-there-two-different-getline-functions-if-indeed-there-are)
+[`stackoverflow`](https://stackoverflow.com/questions/4872361/why-are-there-two-different-getline-functions-if-indeed-there-are)
 > The global getline() function works with C++ std::string objects.
   The istream::getline() methods work with "classic" C strings (pointers to char).
 
@@ -1146,8 +1146,759 @@ A lambda can access all global and `static` local variables in the scope in
 which it is defined. To capture a (nonstatic!) variable in the local context, 
 use the `[]` operator to specify what local entities to capture:
 ```cpp
+#include <iostream>
+
+int main() {
+  int x = 1, y = 2, w = 3;
+  auto impure = [=]() {
+    std::cout << x << std::endl;
+  }; // total capture, can use x, y, w and any variable defined in main are
+     // accessible to impure
+  impure(); // prints: 1
+  auto heathen = [w, y](int k = 0) {
+    std::cout << w + k << y + k << std::endl;
+  }; // selective capture, can only use w, y and global or static local
+     // variables.
+  heathen(2); // prints: 54
+  // auto stoopid = [x, w]() {
+  //   return x + y;
+  // }; // has no access to y, so skoozy no compilo, no habla ingles
+  x = 3;
+  impure(); // prints: 1
+  // x was captured with value 1, at the definition of impure, not at this call
+  auto smort = [k = x, n = y]() {
+    std::cout << k << n << std::endl;
+  }; // rename param
+  smort(); // prints: 3
+
+  auto modx = [&]() { x = 7; }; // total reference capture, can modify all
+                                // variables in the calling context.
+  std::cout << x << std::endl;
+  modx(); // modifies x
+  std::cout << x << std::endl;
+
+  int nonsense1 = 2, nonsense2 = 1;
+  auto affine = [&a = nonsense1, &b = nonsense2](int x) {
+    return a * x + b;
+  }; // selective reference capture with renaming
+  std::cout << affine(0) << std::endl; // prints: 1
+  std::cout << affine(3) << std::endl; // prints: 7
+
+  return 0;
+}
 ```
 
-413
+Reference captures can cause UB.
+```cpp
+double *nonsense = new double(3);
+auto mulNonsense = [&a = *nonsense](double x) { return a * x; };
+std::cout << mulNonsense(4.0) << std::endl; // prints: 12.0
+delete nonsense;
+std::cout << mulNonsense(4.0)
+          << std::endl; // UB, dangling reference used in lambda
+```
 
+Avoid three things with lambdas:
+- functions that return lambdas that capture by reference
+  any elements of the function context.
+- a lambda capturing references of the current context is stored for futher use
+  (using the generic 
+  [`function`](https://en.cppreference.com/w/cpp/utility/functional/function)
+  wrapper for example).
+- thread shenanigans with lambdas capturing by reference.
+
+```cpp
+// an example of a mixed capture
+#include <iostream>
+
+int main() {
+  int x = 32, y = 3;
+  std::cout << "x=" << x << " y=" << y << std::endl; // prints: x=32 y=3
+  [&a = x, b = y]() { a = b;}();
+  std::cout << "x=" << x << " y=" << y << std::endl; // prints: x=3 y=3
+  return 0;
+}
+```
+
+An example of relevant uses of lambdas:
+```cpp
+#include <iostream>
+
+// the common reduce function common in the functional paradigm
+// T is a type, BinF is a callable object with the parameters (T,T) which return a T
+template <typename T, typename F> 
+// init is the initial value, list contains the other values in the calculation
+T reduce(T list[], int n, T init, F f) { 
+  for (int i = 0; i < n; i++){
+    init = f(init, list[i]);
+  }
+  return init;
+}
+int main() {
+  int v[] = {1, 2, 3, 4, 5, 6, 7, 8};
+  int nv = sizeof(v) / sizeof(*v); // number of values in v
+  int r1 = reduce(v, nv, 0, [](int a, int b) { return a + b; });
+  // performs summations, prints: 36
+  int r2 = reduce(v, nv, 1, [](int a, int b) { return a * b; });
+  // performs products, prints: 40320
+  int r3 = reduce(v, nv, 0, [](int a, int b) { return a ^ b; });
+  // performs consecutive xor's (checksum), prints: 8
+  std::cout << r1 << " " << r2 << " " << r3 << std::endl;
+  return 0;
+}
+```
+
+Let `M` > `N` and `f` be a function of `M` parameters. Currying is the 
+process of creating a function `g` of `N` parameters by fixing `M-N` parameters 
+in `f`.
+
+example: 
+
+```cpp
+#include <iostream>
+
+int main() {
+  // lambda returning lambda
+  auto in = [](auto min, decltype(min) max) {
+    return [min, max](decltype(min) valeur) -> bool {
+      return valeur >= min && valeur <= max;
+    };
+  };
+
+  auto lowercase = in('a', 'z');
+  std::cout << std::boolalpha << lowercase('v') << std::endl; // prints: true
+  std::cout << lowercase('V') << std::endl;                   // prints: false
+
+  auto proba = in(0.0, 1); // is a valid probability value
+  std::cout << proba(2) << std::endl; // prints: false
+  std::cout << proba(0) << std::endl; // prints: true
+  std::cout << proba(1) << std::endl; // prints: true
+  std::cout << proba(0.4) << std::endl; // prints: true
+  return 0;
+}
+```
+
+The Standard Template Library contains
+- Algorithms
+- Containers (~15 class templates)
+- Iterators
+
+[`std::list`](https://en.cppreference.com/w/cpp/container/list) implements a 
+bidirectional linked list.
+
+An iterator is a pointer-like object used to cycle through all
+the elements stored in a container.
+Iterators are a standard way to access a container. Each container type `X`
+provides a type `X::iterator` to access its elements. The `begin()` method
+returns an iterator that points to the first element of the container. Its value
+can be accessed by using the `*` operator as if it was a pointer dereference.
+The `++` operator applied (suffix or prefix) to an iterator goes to the next 
+element in the container.
+
+ITERATORS ARE NOT POINTERS.
+
+All containers offer at least the `begin()` and `end()` methods.
+
+Careful, The `end()` method returns an iterator to the element
+following the last element, not the last element.
+
+NEVER DEREFERENCE THE OPERATOR RETURNED BY `end()`.
+
+However, one can compare that iterator with another iterator of the same type
+and pointing to an element of the same container.
+
+We can iterate through a container by using an iterator that goes through
+\\([c.begin(), c.end()[\\)
+
+Application
+```cpp
+#include <iostream>
+#include <list>
+#include <vector>
+
+template <typename C> void displayAll(C &c) {
+  // C::iterator it; // does'nt work, compiler does'nt know that C::iterator is
+  // a type and not a member of class C
+  typename C::iterator it; // specify explicitly that C::iterator is a type, and
+                           // declare it to be of that type
+  for (it = c.begin(); it != c.end(); it++)
+    std::cout << *it << " ";
+  // // or in C++11 onward:
+  // for(auto it = c.begin(); it!=c.end(); it++)
+  //   std::cout << *it << " ";
+  std::cout << std::endl;
+}
+
+int main() {
+  std::list<double> li = {1, 2, 3, 4};
+  std::vector<double> ve = {20, 30, 70};
+  displayAll(li); // prints: 1 2 3 4
+  displayAll(ve); // prints: 20 30 70
+  return 0;
+}
+```
+
+There is not necessarily an order relation between iterators, USE `!=c.end()` and
+not `<c.end()`.
+
+If there is no need to modify the container elements, use a 
+[`const_iterator`](https://en.cppreference.com/w/cpp/iterator/basic_const_iterator)
+```cpp
+template <typename C> void displayAll(const C &c) {
+  for(auto it = c.begin(); it!=c.end(); it++) // it is a const_iterator
+    std::cout << *it << " ";
+  std::cout << std::endl;
+}
+```
+
+| Iterator form | Description |
+|--|--|
+| input iterator | Read only, forward moving |
+| output iterator | Write only, forward moving |
+| forward iterator | Both read and write, forward moving |
+| bidirectional iterator | Read and write, forward and backward moving |
+| random access iterator | Read and write, Red and write, random access |
+
+<img src="media/iterator_examples.png" width=400 />
+
+
+There are three principal types of iterators:
+- Iterators that move forward (
+  [`input_iterator`](https://en.cppreference.com/w/cpp/iterator/input_iterator),
+  [`output_iterator`](https://en.cppreference.com/w/cpp/iterator/output_iterator) and
+  [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator)
+  ) and the associated named requirements. operators: `++`, `*`, `==`, `!=`.
+  More details on the 
+  [`forward_iterator`](https://en.cppreference.com/w/cpp/iterator/forward_iterator)
+  can be found on
+  [`Quora`](https://www.quora.com/Whats-the-difference-between-an-InputIterator-and-a-ForwardIterator),
+  [`Oracle Docs`](https://docs.oracle.com/cd/E19422-01/819-3703/2_2.htm) and 
+  [`CPlusPlus.com`](https://cplusplus.com/reference/iterator/ForwardIterator/).
+- Bidirectional Iterators  like 
+  [`bidirectional_iterator`](https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator)
+  also implement the `--` operator.
+- Random Access Iterators implement the `[]`, `+`, `+=`, `-`, `-=`, `<`, `<=`,
+  `>` , `>=` on top of the other usual operators. There exists an order relation
+  among Random Access Iterators of a container.
+  An example is the the `std::vector::iterator` class and 
+  [`std::random_access_iterator`](https://en.cppreference.com/w/cpp/iterator/random_access_iterator).
+
+Output iterators are never constant, and input iterators always are.
+
+Ordinary pointers are random access iterators, which are a superset of output
+iterators.
+
+See [`CPlusPlus.com`](https://cplusplus.com/reference/iterator/),
+[`Oracle Docs`](https://docs.oracle.com/cd/E19422-01/819-3703/2.htm) and
+[`CPlusPlus.com`](https://cplusplus.com/reference/iterator/) for a general
+view of iterators. (especially the Oracle Docs, good stuff).
+
+
+ <!-- VECTOR -->
+
+
+[`std::vector`](https://en.cppreference.com/w/cpp/container/vector) is a dynamic
+size array.
+
+`Vector<T, A>` T is the type of the elements stored, A is the type of the allocators
+that can manage the memory of the elements.
+
+Useful constuctors of the `vector` class:
+
+```cpp
+// empty vector
+std::vector<int> vi;
+// vector initialized with 7 elements equal to 3
+std::vector<int> vd(7, 3);
+// vector initialized with initializer list
+std::vector<int> vil({1,2,3,4});
+// vector initialized with initializer list 
+std::vector<int> wil = {1,2,3,4};
+// vector initialized with the copy constructor
+std::vector<int> cwil=wil;
+// vector initialized with the copy constructor (same)
+std::vector<int> c2wil(wil);
+```
+
+```cpp
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+class X {
+  double x_;
+  char c_;
+
+public:
+  X(double x, char c = 'c') : x_(x), c_(c) {}
+  friend std::ostream &operator<<(std::ostream &os, const X &x) {
+    return os << x.c_ << ":" << x.x_;
+  }
+};
+
+template <typename T>
+std::ostream &operator<<(std::ostream &os, std::vector<T> v) {
+  os << "{";
+  for (auto val = v.begin(); val != v.end(); val++) {
+    os << *val << ",";
+  }
+  return os << "}";
+}
+
+int main() {
+  std::vector<X> v;
+  // construct at the end of the vector
+  v.emplace_back(2, '3');
+  std::cout << v << std::endl; // prints: {3:2,}
+  // insert at the end of the vector
+  v.push_back(X(2));
+  std::cout << v << std::endl; // prints: {3:2, c:2}
+  // insert using a back insert iterator,
+  std::back_insert_iterator<std::vector<X>> i(v);
+  // litteraly just calls push_back according to the doc
+  *i++ = X(3.14);
+  *i++ = X(1. / 2);
+  std::cout << v << std::endl; // prints: {3:2,c:2,c:3.14,c:0.5,}
+  
+  // insert using an insert iterator, start inserting at start+2
+  std::insert_iterator<std::vector<X>> ia(v, v.begin()+2);
+  // litteraly just calls insert at 2 according to the doc
+  *ia++ = X(13);
+  std::cout << v << std::endl; // prints: {3:2,c:2,c:13,c:3.14,c:0.5,}
+  return 0;
+}
+```
+
+[`emplace_back`](https://en.cppreference.com/w/cpp/container/vector/emplace_back)
+passes its arguments to the constructor of the class, it creates a new object and 
+appends it. This saves the cost of copying an intermediary object.
+
+See more on the 
+[`back_insert_iterator`](https://en.cppreference.com/w/cpp/iterator/back_insert_iterator)
+and
+[`insert_iterator`](https://en.cppreference.com/w/cpp/iterator/insert_iterator).
+
+Vector elements can be accessed:
+- with the 
+  [`at`](https://en.cppreference.com/w/cpp/container/vector/at)
+  method; accessess the elements at the specified index, it returns a reference to 
+  it. throws an 
+  [`std::out_of_range`](https://en.cppreference.com/w/cpp/error/out_of_range)
+  exception if incompatible index.
+- the `[]` operator; UB if index incompatible index.
+- by dereferencing an iterator pointing to some vector element. UB if invalid.
+- using a range based for loop (C++>=11)
+- using the
+  [`front`](https://en.cppreference.com/w/cpp/container/vector/front) and 
+  [`back`](https://en.cppreference.com/w/cpp/container/vector/back) methods
+  which return references to the first and last element in the vector.
+
+```cpp
+std::vector<int> v(3,5);
+for(const auto& val : v) // uses iterators in the background
+  std::cout << val << std::endl;
+```
+
+Vector elements are necessarily contiguous in memory (dictated by the C++
+standard). 
+```cpp
+std::vector<int> v({1,2,3,4,5});
+int *p = v.data();
+std::cout << *p << std::endl; // prints: 1
+p = &v[3];
+std::cout << *p << std::endl; // prints: 4
+std::cout << *(&v[0] + 3) << std::endl; // prints: 4
+```
+Use the 
+[`capacity()`](https://en.cppreference.com/w/cpp/container/vector/front) method
+to get the storage size of that array (always >= #elems).
+
+Use the 
+[`resize(newsize, optional filler)`](https://en.cppreference.com/w/cpp/container/vector/resize)
+method to resize the vector container and fill the new elements with a filler
+default value.
+
+Application: using a pointer to traverse a vector
+```cpp
+std::vector<int> v({1,2,3,4,5});
+auto p = &v[0];
+auto pmax = p+v.size();
+for(; p!=pmax; p++)
+  std::cout << *p << " "; // prints: 1 2 3 4 5
+```
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) |
+|insertion at the front|\\(\propto N\\) |
+|insertion at the back| Constant (and cheap)|
+|insertion at position \\(p\\)| \\(\propto (N-p)\\)|
+|deletion at the front|\\(\propto N\\) |
+|deletion at the back| Constant (and cheap)|
+|deletion at position \\(p\\)| \\(\propto (N-p)\\)|
+|access via index| Constant (and very cheap)|
+|reference and pointer invalidation on modification| YES ⚠️ |
+|iterator invalidation on modification| YES ⚠️ |
+
+
+ <!-- DEQUE -->
+
+[`std::deque`](https://en.cppreference.com/w/cpp/container/deque)
+is double-ended
+queue. Insertions and deletions at the front and back are constant time.
+
+The elements of a deque are not contiguous in memory \\( \rightarrow \\) can't
+iterate with a pointer.
+
+Some useful constructors for a deque
+```cpp
+// empty deque
+std::deque<int> di;
+// deque containing 10 elements all with value 5
+std::deque<int> dd(10, 5);
+// deque initialized with an initializer_list
+std::deque<int> dil1({1, 2, 3, 4, 5});
+// deque initialized with an initializer_list (same)
+std::deque<int> dil2 = {1, 2, 3, 4, 5};
+// cloning constructor
+std::deque<int> dc1(di);
+// cloning constructor (same)
+std::deque<int> dc2=di;
+```
+
+`deque` provides the 
+[`push_back`](https://en.cppreference.com/w/cpp/container/deque/push_back),
+[`emplace_back`](https://en.cppreference.com/w/cpp/container/deque/emplace_back),
+[`push_front`](https://en.cppreference.com/w/cpp/container/deque/push_front) and the
+[`emplace_front`](https://en.cppreference.com/w/cpp/container/deque/emplace_front)
+methods.
+
+we can also use 
+[`back_insert_iterator`](https://en.cppreference.com/w/cpp/iterator/back_insert_iterator),
+[`front_insert_iterator`](https://en.cppreference.com/w/cpp/iterator/front_insert_iterator),
+[`insert_iterator`](https://en.cppreference.com/w/cpp/iterator/insert_iterator),
+for example:
+```cpp
+// assume di is an empty deque<int>
+std::back_insert_iterator<std::deque<int>> i(di); 
+*i++ = 100;
+*i++ = 299;
+for (const auto &val : di)
+  std::cout << val << " "; // prints: 100 299
+std::cout << std::endl;
+
+std::front_insert_iterator<std::deque<int>> fi(di); 
+*fi++ = 0;
+*fi++ = 1;
+for (const auto &val : di)
+  std::cout << val << " "; // prints: 1 0 100 299
+std::cout << std::endl;
+
+std::insert_iterator<std::deque<int>> ii(di, di.begin()+2);
+*ii++ = -1;
+*ii++ = -2;
+for (const auto &val : di)
+  std::cout << val << " "; // prints: 1 0 -1 -2 100 299
+std::cout << std::endl;
+```
+
+Deque elements can be accessed:
+- using the 
+  [`at`](https://en.cppreference.com/w/cpp/container/deque/at)
+  method; accessess the elements at the specified index, it returns a reference to 
+  it. throws an 
+  [`std::out_of_range`](https://en.cppreference.com/w/cpp/error/out_of_range)
+  exception if incompatible index.
+- using the `[]` operator; UB if index incompatible index.
+- by dereferencing an iterator pointing to some vector element. UB if invalid.
+- using a range based for loop (C++>=11) // same as with vector, no example here
+- using the
+  [`front`](https://en.cppreference.com/w/cpp/container/deque/front) and 
+  [`back`](https://en.cppreference.com/w/cpp/container/deque/back) methods
+  which return references to the first and last element in the deque.
+
+
+// not done
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) (> vector) |
+|insertion at the front|Constant (and cheap) |
+|insertion at the back| Constant (and cheap)|
+|insertion at position \\(p\\)| \\(\propto N\\)|
+|deletion at the front| Constant (and cheap)|
+|deletion at the back| Constant (and cheap)|
+|deletion at position \\(p\\)| \\(\propto N\\)|
+|access via index| Constant (>vector)|
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| YES ⚠️ |
+
+Use a deque when operations at the front are common and the number of elements 
+is high.
+
+An [`std::array<T, N>`](https://en.cppreference.com/w/cpp/container/array)
+cannot be extended.
+
+Useful constructors:
+```cpp
+std::array<int,5> a0;
+for(const auto& x:a0) std::cout << x << " "; 
+// prints: whatever was stored there before, garbage
+std::cout << std::endl;
+
+std::array<int,5> a1 = {1,2,3,4};
+// std::array<int,5> a1({1,2,3,4}); // equivalent
+for(const auto& x:a1) std::cout << x << " ";
+// prints: 1 2 3 4 0
+std::cout << std::endl;
+
+// std::array<int, 5> a2 = {1,2,3,4,5,6}; // compilation error
+
+std::array<int, 5> c(a1); // cloning constructor
+for(const auto& x:c) std::cout << x << " ";
+// prints: 1 2 3 4 0
+std::cout << std::endl;
+```
+
+The logical size of an `array` is always equal to its physical size.
+Can't insert elements, can overwrite.
+
+
+
+Array elements can be accessed:
+- using the 
+  [`at`](https://en.cppreference.com/w/cpp/container/array/at)
+  method; accessess the elements at the specified index, it returns a reference to 
+  it. throws an 
+  [`std::out_of_range`](https://en.cppreference.com/w/cpp/error/out_of_range)
+  exception if incompatible index.
+- using the `[]` operator; UB if index incompatible index.
+- by dereferencing an iterator pointing to some array element, UB if invalid.
+- using a range based for loop (C++>=11)
+- using the
+  [`front`](https://en.cppreference.com/w/cpp/container/array/front) and 
+  [`back`](https://en.cppreference.com/w/cpp/container/array/back) methods
+  which return references to the first and last element in the array.
+- using the 
+  [`data`](https://en.cppreference.com/w/cpp/container/array/data) method, which:
+  returns a pointer to the underlying array serving as element storage.
+  The pointer is such that range `[data(), data() + size()]` is always a valid
+  range, even if the container is empty (`data()` is not dereferenceable
+  in that case). 
+
+Contrary to a C style array, an `std::array` object is not automatically converted
+to a pointer to its first element; for a function to receive an `std::array<T, N>`
+use a formal parameter of type `std::array<T, N>` or `std::array<T,N>&` but never
+`T*`.
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\)|
+|insertions and deletions|NO ES POSIBLE!|
+|access via index| Constant |
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| NO ✅️ |
+
+The `std::array<T,N>` container is NEVER REALLOCATED.
+
+Use an `array` if you want to use C style arrays with an OO interface.
+
+`std::array::size()` is `constexpr`. Two arrays of different sizes don't even
+have the same type (bcoz template param `N` is the size).
+
+[`std::basic_string<C,T,A>`](https://en.cppreference.com/w/cpp/string/basic_string)
+- `C` is the character type
+- `T` is the traits type (used to manipulate objects of type `C`)
+- `A` is the allocater type for type `C`
+
+classes defined in `<string>`:
+
+|name|definition|encoding|
+|---|---|---|
+|string|basic_string<char>|ASCII|
+|wstring|basic_string<wchar_t>|unicode 16 or 32|
+|u16string|basic_string<char16_t>|unicode 16|
+|u32string|basic_string<char32_t>|unicode 32|
+
+characters in the string class are stored contiguously.
+
+some useful constructors of `std::string`
+```cpp
+std::string s1;
+std::cout << "[" << s1 << "]" << std::endl; // []
+std::string s2 = "abcdf fjd";
+std::cout << "[" << s2 << "]" << std::endl; // [abcdf fjd]
+std::string s3 = s2;
+std::cout << "[" << s3 << "]" << std::endl; // [abcdf fjd]
+std::string s4(s2, 4, 3);
+std::cout << "[" << s4 << "]" << std::endl; // [f f]
+std::string s5 = {'a', 'e', 'i', 'o', 'u', 'y'};
+std::cout << "[" << s5 << "]" << std::endl; // [aeiouy]
+std::string s6(6, '-');
+std::cout << "[" << s6 << "]" << std::endl; // [------]
+```
+
+
+
+String characters can be accessed:
+- using the 
+  [`at`](https://en.cppreference.com/w/cpp/string/basic_string/at)
+  method; accessess the elements at the specified index, it returns a reference to 
+  it. throws an 
+  [`std::out_of_range`](https://en.cppreference.com/w/cpp/error/out_of_range)
+  exception if incompatible index.
+- using the `[]` operator; UB if index incompatible index.
+- by dereferencing an iterator pointing to some character in the string,
+  UB if invalid.
+- using a range based for loop (C++>=11)
+- using the
+  [`front`](https://en.cppreference.com/w/cpp/string/basic_string/front) and 
+  [`back`](https://en.cppreference.com/w/cpp/string/basic_string/back) methods
+  which return references to the first and last characters in the string.
+- using the 
+  [`c_str`](https://en.cppreference.com/w/cpp/string/basic_string/c_str) method,
+  which: returns a pointer to a null-terminated character array with data
+  equivalent to those stored in the string (*ie:* an equivalent C style string).
+
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\)|
+|insertions and deletions at the end|Constant|
+|insertions and deletions at the beginning|\\(\propto N\\)|
+|insertions and deletions at the position \\(p\\)|\\(\propto (N-p)\\)|
+|access via index| Constant |
+|reference and pointer invalidation on modification| YES ⚠️ |
+|iterator invalidation on modification| YES ⚠️|
+
+`void f(const string&);` accepts the parameter `"c style string"`, convesion
+by constructor: `f (string("c style string"))`. To get a `string` instance
+directly, use the suffix `s` after the `"`. `f("real string instance"s)`,
+this way no data needs to be copied.
+
+[`list<T,A>`](https://en.cppreference.com/w/cpp/container/list) and 
+[`forward_list<T,A>`](https://en.cppreference.com/w/cpp/container/forward_list)
+are declared in the `<list>` and `<forward_list>` headers respectively.
+They are both parametrised by:
+- `T` the type of elements stored.
+- `A` the type of allocators used for 'T' (default is 
+  [`std::allocator<T>`](https://en.cppreference.com/w/cpp/memory/allocator)
+  ).
+
+
+typical implementation of a list (doubly linked list):
+
+<img src="media/list.png" width=400/>
+
+typical implementation of a forward_list (linked list):
+
+<img src="media/forward_list.png" width=400/>
+
+The implementations are non intrusive: the stored elements don't need to store 
+pointers to ther successors and predecessors.
+
+
+```cpp
+#include <iostream>
+#include <list>
+#include <string>
+
+template <typename T> void printList(const std::list<T> &l) {
+  std::cout << '[';
+  for (const T &e : l)
+    std::cout << e << " ";
+  std::cout << ']' << std::endl;
+}
+
+int main() {
+  std::list<int> li1;
+  printList(li1); // prints: []
+  std::list<std::string> li2 = {"first", "second"};
+  printList(li2); // prints: [first second ]
+  std::list<std::string> li3 = li2;
+  printList(li3); // prints: [first second ]
+
+  auto istart_li2 = li2.begin();
+  auto iend_li2 = li2.end();
+  // can't just do li2.begin()+1 , list has a bidirectional operator, which
+  // is not a random access iterator
+  istart_li2++; // ignore first element of li2
+  std::list<std::string> li4(istart_li2, iend_li2);
+  printList(li4); // prints: [second ]
+
+  std::list<double> li5(4, 3.14159);
+  printList(li5); // prints: [3.14159 3.14159 3.14159 3.14159 ]
+
+  return 0;
+}
+```
+
+
+List elements can be accessed by
+- dereferencing an iterator pointing to some list element. UB if invalid.
+- using a range based for loop (C++>=11).
+- using the
+  [`list::front`](https://en.cppreference.com/w/cpp/container/list/front) and 
+  [`list::back`](https://en.cppreference.com/w/cpp/container/list/back) methods
+  which return references to the first and last element in the list.
+  (analogous methods are provided for `forward_list` ... RTFD)
+
+NO RANDOM ACCESS
+
+To delete all elements in a list, use the 
+[`list::clear`](https://en.cppreference.com/w/cpp/container/list/clear) and
+[`forward_list::clear`](https://en.cppreference.com/w/cpp/container/forward_list/clear)
+methods.
+
+
+Insert elements before an iterator's position using the 
+[`insert`](https://en.cppreference.com/w/cpp/container/list/insert) method.
+
+For a `foward_list`, it is inefficient to insert before a specified item, thus 
+the [`insert_after`](https://en.cppreference.com/w/cpp/container/forward_list/insert_after)
+method is provided.
+
+The 
+[`emplace`](https://en.cppreference.com/w/cpp/container/list/emplace) and 
+[`emplace_after`](https://en.cppreference.com/w/cpp/container/forward_list/emplace_after)
+methods play analogous roles, the elements are constructed in-place,
+*i.e.* no copy or move operations are performed.
+The constructor of the element is called with exactly the same arguments,
+as supplied to the function.
+
+The 
+[`list::push_back`](https://en.cppreference.com/w/cpp/container/list/push_back),
+[`list::emplace_back`](https://en.cppreference.com/w/cpp/container/list/emplace_back),
+[`forward_list::push_back`](https://en.cppreference.com/w/cpp/container/forward_list/push_back)
+and 
+[`forward_list::emplace_back`](https://en.cppreference.com/w/cpp/container/forward_list/emplace_back)
+methods can be used to add an element to the end of a list (or construct one).
+
+The 
+[`list::pop_back`](https://en.cppreference.com/w/cpp/container/list/pop_back),
+methods can be used to remove the last element in the list.
+
+The 
+[`list::push_front`](https://en.cppreference.com/w/cpp/container/list/push_front),
+[`list::emplace_front`](https://en.cppreference.com/w/cpp/container/list/emplace_front),
+[`list::pop_front`](https://en.cppreference.com/w/cpp/container/list/pop_front),
+[`forward_list::push_front`](https://en.cppreference.com/w/cpp/container/forward_list/push_front),
+[`forward_list::emplace_front`](https://en.cppreference.com/w/cpp/container/forward_list/emplace_front)
+and
+[`forward_list::pop_front`](https://en.cppreference.com/w/cpp/container/forward_list/pop_front)
+methods can respectively: add, construct and remove the first element in a list
+or forward_list.
+
+// not done 448
+Some algorithms provided as methods for lists and forward_lists:
+- the
+[`list::merge`](https://en.cppreference.com/w/cpp/container/list/merge) and 
+[`forward_list::merge`](https://en.cppreference.com/w/cpp/container/forward_list/merge)
+can merge two sorted lists. No elements are copied, and the passed in container
+becomes empty after the merge.
+- the
+[`list::merge`](https://en.cppreference.com/w/cpp/container/list/merge) and 
+[`forward_list::merge`](https://en.cppreference.com/w/cpp/container/forward_list/merge)
+can merge two sorted lists. No elements are copied, and the passed in container
+becomes empty after the merge.
 

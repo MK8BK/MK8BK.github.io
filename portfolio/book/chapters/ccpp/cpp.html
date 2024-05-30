@@ -235,10 +235,10 @@ dynamic_cast&lt;new_type&gt;(expr); // stoopid oop nonsense
 </code></pre>
 <p>A function whose result is declared to be constexr can be evaluated at compile
 time if its arguments are const, constexpr or litterals.</p>
-<p><img src="media/constexpr_func.png" alt="" /></p>
+<p><img src="media/constexpr_func.png" width=600/></p>
 <p><code>consteval</code> - specifies that a function is an immediate function, that is,
 every call to the function must produce a compile-time constant.</p>
-<p><img src="media/consteval.png" alt="" /></p>
+<p><img src="media/consteval.png" width=600/></p>
 <p>Conditionally compile with <code>if constexpr(expr)</code> where <code>expr</code> is an expression
 known at compile time.</p>
 <pre><code class="language-cpp">static_assert(expr, &quot;message&quot;); // expr must be evaluated at compile time
@@ -613,11 +613,11 @@ if superclass), its block is executed. The other <code>catch</code> blocks are a
 , even when the parameters match. ORDEEEER!</p>
 <p>Throwing an exception should never cause a memory leak, use RAII.</p>
 <p>IOS INBREEDING</p>
-<p><img src="media/family1.png" alt="" />
-<img src="media/family2.png" alt="" />
-<img src="media/family3.png" alt="" />
-<img src="media/family4.png" alt="" />
-<img src="media/iostream_fam.png" alt="" /></p>
+<p><img src="media/family1.png" width=300 height=200/>
+<img src="media/family2.png" width=300 height=200/>
+<img src="media/family3.png" width=300 height=200/>
+<img src="media/family4.png" width=300 height=200/>
+<img src="media/iostream_fam.png" width=600 /></p>
 <p><code>std::cout</code>, <code>std::cerr</code> and <code>std::clog</code> are all instances of <code>std::ostream</code>,
 <em>ie:</em> <code>std::basic_ostream&lt;char&gt;</code>.</p>
 <p><code>std::cin</code> is an instance of <code>std::istream</code>,
@@ -711,7 +711,7 @@ object goes out of scope and is not usually invoked directly.
 <p>The method <code>bool is_open()</code> checks if the file stream has an associated file.
 <a href="https://en.cppreference.com/w/cpp/io/basic_fstream/is_open">CppReference</a>.
 Used to ckeck if a file opened for reading exists.</p>
-<p><a href="https://stackoverflow.com/questions/4872361/why-are-there-two-different-getline-functions-if-indeed-there-are">stackoverflow:</a></p>
+<p><a href="https://stackoverflow.com/questions/4872361/why-are-there-two-different-getline-functions-if-indeed-there-are"><code>stackoverflow</code></a></p>
 <blockquote>
 <p>The global getline() function works with C++ std::string objects.
 The istream::getline() methods work with &quot;classic&quot; C strings (pointers to char).</p>
@@ -1046,8 +1046,670 @@ std::cout &lt;&lt; div3(43) &lt;&lt; std::endl; // prints: 0
 <p>A lambda can access all global and <code>static</code> local variables in the scope in
 which it is defined. To capture a (nonstatic!) variable in the local context,
 use the <code>[]</code> operator to specify what local entities to capture:</p>
-<pre><code class="language-cpp"></code></pre>
-<p>413</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+int main() {
+  int x = 1, y = 2, w = 3;
+  auto impure = [=]() {
+    std::cout &lt;&lt; x &lt;&lt; std::endl;
+  }; // total capture, can use x, y, w and any variable defined in main are
+     // accessible to impure
+  impure(); // prints: 1
+  auto heathen = [w, y](int k = 0) {
+    std::cout &lt;&lt; w + k &lt;&lt; y + k &lt;&lt; std::endl;
+  }; // selective capture, can only use w, y and global or static local
+     // variables.
+  heathen(2); // prints: 54
+  // auto stoopid = [x, w]() {
+  //   return x + y;
+  // }; // has no access to y, so skoozy no compilo, no habla ingles
+  x = 3;
+  impure(); // prints: 1
+  // x was captured with value 1, at the definition of impure, not at this call
+  auto smort = [k = x, n = y]() {
+    std::cout &lt;&lt; k &lt;&lt; n &lt;&lt; std::endl;
+  }; // rename param
+  smort(); // prints: 3
+
+  auto modx = [&amp;]() { x = 7; }; // total reference capture, can modify all
+                                // variables in the calling context.
+  std::cout &lt;&lt; x &lt;&lt; std::endl;
+  modx(); // modifies x
+  std::cout &lt;&lt; x &lt;&lt; std::endl;
+
+  int nonsense1 = 2, nonsense2 = 1;
+  auto affine = [&amp;a = nonsense1, &amp;b = nonsense2](int x) {
+    return a * x + b;
+  }; // selective reference capture with renaming
+  std::cout &lt;&lt; affine(0) &lt;&lt; std::endl; // prints: 1
+  std::cout &lt;&lt; affine(3) &lt;&lt; std::endl; // prints: 7
+
+  return 0;
+}
+</code></pre>
+<p>Reference captures can cause UB.</p>
+<pre><code class="language-cpp">double *nonsense = new double(3);
+auto mulNonsense = [&amp;a = *nonsense](double x) { return a * x; };
+std::cout &lt;&lt; mulNonsense(4.0) &lt;&lt; std::endl; // prints: 12.0
+delete nonsense;
+std::cout &lt;&lt; mulNonsense(4.0)
+          &lt;&lt; std::endl; // UB, dangling reference used in lambda
+</code></pre>
+<p>Avoid three things with lambdas:</p>
+<ul>
+<li>functions that return lambdas that capture by reference
+any elements of the function context.</li>
+<li>a lambda capturing references of the current context is stored for futher use
+(using the generic
+<a href="https://en.cppreference.com/w/cpp/utility/functional/function"><code>function</code></a>
+wrapper for example).</li>
+<li>thread shenanigans with lambdas capturing by reference.</li>
+</ul>
+<pre><code class="language-cpp">// an example of a mixed capture
+#include &lt;iostream&gt;
+
+int main() {
+  int x = 32, y = 3;
+  std::cout &lt;&lt; &quot;x=&quot; &lt;&lt; x &lt;&lt; &quot; y=&quot; &lt;&lt; y &lt;&lt; std::endl; // prints: x=32 y=3
+  [&amp;a = x, b = y]() { a = b;}();
+  std::cout &lt;&lt; &quot;x=&quot; &lt;&lt; x &lt;&lt; &quot; y=&quot; &lt;&lt; y &lt;&lt; std::endl; // prints: x=3 y=3
+  return 0;
+}
+</code></pre>
+<p>An example of relevant uses of lambdas:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+// the common reduce function common in the functional paradigm
+// T is a type, BinF is a callable object with the parameters (T,T) which return a T
+template &lt;typename T, typename F&gt; 
+// init is the initial value, list contains the other values in the calculation
+T reduce(T list[], int n, T init, F f) { 
+  for (int i = 0; i &lt; n; i++){
+    init = f(init, list[i]);
+  }
+  return init;
+}
+int main() {
+  int v[] = {1, 2, 3, 4, 5, 6, 7, 8};
+  int nv = sizeof(v) / sizeof(*v); // number of values in v
+  int r1 = reduce(v, nv, 0, [](int a, int b) { return a + b; });
+  // performs summations, prints: 36
+  int r2 = reduce(v, nv, 1, [](int a, int b) { return a * b; });
+  // performs products, prints: 40320
+  int r3 = reduce(v, nv, 0, [](int a, int b) { return a ^ b; });
+  // performs consecutive xor's (checksum), prints: 8
+  std::cout &lt;&lt; r1 &lt;&lt; &quot; &quot; &lt;&lt; r2 &lt;&lt; &quot; &quot; &lt;&lt; r3 &lt;&lt; std::endl;
+  return 0;
+}
+</code></pre>
+<p>Let <code>M</code> &gt; <code>N</code> and <code>f</code> be a function of <code>M</code> parameters. Currying is the
+process of creating a function <code>g</code> of <code>N</code> parameters by fixing <code>M-N</code> parameters
+in <code>f</code>.</p>
+<p>example:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+
+int main() {
+  // lambda returning lambda
+  auto in = [](auto min, decltype(min) max) {
+    return [min, max](decltype(min) valeur) -&gt; bool {
+      return valeur &gt;= min &amp;&amp; valeur &lt;= max;
+    };
+  };
+
+  auto lowercase = in('a', 'z');
+  std::cout &lt;&lt; std::boolalpha &lt;&lt; lowercase('v') &lt;&lt; std::endl; // prints: true
+  std::cout &lt;&lt; lowercase('V') &lt;&lt; std::endl;                   // prints: false
+
+  auto proba = in(0.0, 1); // is a valid probability value
+  std::cout &lt;&lt; proba(2) &lt;&lt; std::endl; // prints: false
+  std::cout &lt;&lt; proba(0) &lt;&lt; std::endl; // prints: true
+  std::cout &lt;&lt; proba(1) &lt;&lt; std::endl; // prints: true
+  std::cout &lt;&lt; proba(0.4) &lt;&lt; std::endl; // prints: true
+  return 0;
+}
+</code></pre>
+<p>The Standard Template Library contains</p>
+<ul>
+<li>Algorithms</li>
+<li>Containers (~15 class templates)</li>
+<li>Iterators</li>
+</ul>
+<p><a href="https://en.cppreference.com/w/cpp/container/list"><code>std::list</code></a> implements a
+bidirectional linked list.</p>
+<p>An iterator is a pointer-like object used to cycle through all
+the elements stored in a container.
+Iterators are a standard way to access a container. Each container type <code>X</code>
+provides a type <code>X::iterator</code> to access its elements. The <code>begin()</code> method
+returns an iterator that points to the first element of the container. Its value
+can be accessed by using the <code>*</code> operator as if it was a pointer dereference.
+The <code>++</code> operator applied (suffix or prefix) to an iterator goes to the next
+element in the container.</p>
+<p>ITERATORS ARE NOT POINTERS.</p>
+<p>All containers offer at least the <code>begin()</code> and <code>end()</code> methods.</p>
+<p>Careful, The <code>end()</code> method returns an iterator to the element
+following the last element, not the last element.</p>
+<p>NEVER DEREFERENCE THE OPERATOR RETURNED BY <code>end()</code>.</p>
+<p>However, one can compare that iterator with another iterator of the same type
+and pointing to an element of the same container.</p>
+<p>We can iterate through a container by using an iterator that goes through
+\([c.begin(), c.end()[\)</p>
+<p>Application</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;list&gt;
+#include &lt;vector&gt;
+
+template &lt;typename C&gt; void displayAll(C &amp;c) {
+  // C::iterator it; // does'nt work, compiler does'nt know that C::iterator is
+  // a type and not a member of class C
+  typename C::iterator it; // specify explicitly that C::iterator is a type, and
+                           // declare it to be of that type
+  for (it = c.begin(); it != c.end(); it++)
+    std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+  // // or in C++11 onward:
+  // for(auto it = c.begin(); it!=c.end(); it++)
+  //   std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+  std::cout &lt;&lt; std::endl;
+}
+
+int main() {
+  std::list&lt;double&gt; li = {1, 2, 3, 4};
+  std::vector&lt;double&gt; ve = {20, 30, 70};
+  displayAll(li); // prints: 1 2 3 4
+  displayAll(ve); // prints: 20 30 70
+  return 0;
+}
+</code></pre>
+<p>There is not necessarily an order relation between iterators, USE <code>!=c.end()</code> and
+not <code>&lt;c.end()</code>.</p>
+<p>If there is no need to modify the container elements, use a
+<a href="https://en.cppreference.com/w/cpp/iterator/basic_const_iterator"><code>const_iterator</code></a></p>
+<pre><code class="language-cpp">template &lt;typename C&gt; void displayAll(const C &amp;c) {
+  for(auto it = c.begin(); it!=c.end(); it++) // it is a const_iterator
+    std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+  std::cout &lt;&lt; std::endl;
+}
+</code></pre>
+<table><thead><tr><th> Iterator form </th><th> Description </th></tr></thead><tbody>
+<tr><td> input iterator </td><td> Read only, forward moving </td></tr>
+<tr><td> output iterator </td><td> Write only, forward moving </td></tr>
+<tr><td> forward iterator </td><td> Both read and write, forward moving </td></tr>
+<tr><td> bidirectional iterator </td><td> Read and write, forward and backward moving </td></tr>
+<tr><td> random access iterator </td><td> Read and write, Red and write, random access </td></tr>
+</tbody></table>
+<p><img src="media/iterator_examples.png" width=400 /></p>
+<p>There are three principal types of iterators:</p>
+<ul>
+<li>Iterators that move forward (
+<a href="https://en.cppreference.com/w/cpp/iterator/input_iterator"><code>input_iterator</code></a>,
+<a href="https://en.cppreference.com/w/cpp/iterator/output_iterator"><code>output_iterator</code></a> and
+<a href="https://en.cppreference.com/w/cpp/iterator/forward_iterator"><code>forward_iterator</code></a>
+) and the associated named requirements. operators: <code>++</code>, <code>*</code>, <code>==</code>, <code>!=</code>.
+More details on the
+<a href="https://en.cppreference.com/w/cpp/iterator/forward_iterator"><code>forward_iterator</code></a>
+can be found on
+<a href="https://www.quora.com/Whats-the-difference-between-an-InputIterator-and-a-ForwardIterator"><code>Quora</code></a>,
+<a href="https://docs.oracle.com/cd/E19422-01/819-3703/2_2.htm"><code>Oracle Docs</code></a> and
+<a href="https://cplusplus.com/reference/iterator/ForwardIterator/"><code>CPlusPlus.com</code></a>.</li>
+<li>Bidirectional Iterators  like
+<a href="https://en.cppreference.com/w/cpp/iterator/bidirectional_iterator"><code>bidirectional_iterator</code></a>
+also implement the <code>--</code> operator.</li>
+<li>Random Access Iterators implement the <code>[]</code>, <code>+</code>, <code>+=</code>, <code>-</code>, <code>-=</code>, <code>&lt;</code>, <code>&lt;=</code>,
+<code>&gt;</code> , <code>&gt;=</code> on top of the other usual operators. There exists an order relation
+among Random Access Iterators of a container.
+An example is the the <code>std::vector::iterator</code> class and
+<a href="https://en.cppreference.com/w/cpp/iterator/random_access_iterator"><code>std::random_access_iterator</code></a>.</li>
+</ul>
+<p>Output iterators are never constant, and input iterators always are.</p>
+<p>Ordinary pointers are random access iterators, which are a superset of output
+iterators.</p>
+<p>See <a href="https://cplusplus.com/reference/iterator/"><code>CPlusPlus.com</code></a>,
+<a href="https://docs.oracle.com/cd/E19422-01/819-3703/2.htm"><code>Oracle Docs</code></a> and
+<a href="https://cplusplus.com/reference/iterator/"><code>CPlusPlus.com</code></a> for a general
+view of iterators. (especially the Oracle Docs, good stuff).</p>
+ <!-- VECTOR -->
+<p><a href="https://en.cppreference.com/w/cpp/container/vector"><code>std::vector</code></a> is a dynamic
+size array.</p>
+<p><code>Vector&lt;T, A&gt;</code> T is the type of the elements stored, A is the type of the allocators
+that can manage the memory of the elements.</p>
+<p>Useful constuctors of the <code>vector</code> class:</p>
+<pre><code class="language-cpp">// empty vector
+std::vector&lt;int&gt; vi;
+// vector initialized with 7 elements equal to 3
+std::vector&lt;int&gt; vd(7, 3);
+// vector initialized with initializer list
+std::vector&lt;int&gt; vil({1,2,3,4});
+// vector initialized with initializer list 
+std::vector&lt;int&gt; wil = {1,2,3,4};
+// vector initialized with the copy constructor
+std::vector&lt;int&gt; cwil=wil;
+// vector initialized with the copy constructor (same)
+std::vector&lt;int&gt; c2wil(wil);
+</code></pre>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;iterator&gt;
+#include &lt;vector&gt;
+
+class X {
+  double x_;
+  char c_;
+
+public:
+  X(double x, char c = 'c') : x_(x), c_(c) {}
+  friend std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, const X &amp;x) {
+    return os &lt;&lt; x.c_ &lt;&lt; &quot;:&quot; &lt;&lt; x.x_;
+  }
+};
+
+template &lt;typename T&gt;
+std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, std::vector&lt;T&gt; v) {
+  os &lt;&lt; &quot;{&quot;;
+  for (auto val = v.begin(); val != v.end(); val++) {
+    os &lt;&lt; *val &lt;&lt; &quot;,&quot;;
+  }
+  return os &lt;&lt; &quot;}&quot;;
+}
+
+int main() {
+  std::vector&lt;X&gt; v;
+  // construct at the end of the vector
+  v.emplace_back(2, '3');
+  std::cout &lt;&lt; v &lt;&lt; std::endl; // prints: {3:2,}
+  // insert at the end of the vector
+  v.push_back(X(2));
+  std::cout &lt;&lt; v &lt;&lt; std::endl; // prints: {3:2, c:2}
+  // insert using a back insert iterator,
+  std::back_insert_iterator&lt;std::vector&lt;X&gt;&gt; i(v);
+  // litteraly just calls push_back according to the doc
+  *i++ = X(3.14);
+  *i++ = X(1. / 2);
+  std::cout &lt;&lt; v &lt;&lt; std::endl; // prints: {3:2,c:2,c:3.14,c:0.5,}
+  
+  // insert using an insert iterator, start inserting at start+2
+  std::insert_iterator&lt;std::vector&lt;X&gt;&gt; ia(v, v.begin()+2);
+  // litteraly just calls insert at 2 according to the doc
+  *ia++ = X(13);
+  std::cout &lt;&lt; v &lt;&lt; std::endl; // prints: {3:2,c:2,c:13,c:3.14,c:0.5,}
+  return 0;
+}
+</code></pre>
+<p><a href="https://en.cppreference.com/w/cpp/container/vector/emplace_back"><code>emplace_back</code></a>
+passes its arguments to the constructor of the class, it creates a new object and
+appends it. This saves the cost of copying an intermediary object.</p>
+<p>See more on the
+<a href="https://en.cppreference.com/w/cpp/iterator/back_insert_iterator"><code>back_insert_iterator</code></a>
+and
+<a href="https://en.cppreference.com/w/cpp/iterator/insert_iterator"><code>insert_iterator</code></a>.</p>
+<p>Vector elements can be accessed:</p>
+<ul>
+<li>with the
+<a href="https://en.cppreference.com/w/cpp/container/vector/at"><code>at</code></a>
+method; accessess the elements at the specified index, it returns a reference to
+it. throws an
+<a href="https://en.cppreference.com/w/cpp/error/out_of_range"><code>std::out_of_range</code></a>
+exception if incompatible index.</li>
+<li>the <code>[]</code> operator; UB if index incompatible index.</li>
+<li>by dereferencing an iterator pointing to some vector element. UB if invalid.</li>
+<li>using a range based for loop (C++&gt;=11)</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/vector/front"><code>front</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/vector/back"><code>back</code></a> methods
+which return references to the first and last element in the vector.</li>
+</ul>
+<pre><code class="language-cpp">std::vector&lt;int&gt; v(3,5);
+for(const auto&amp; val : v) // uses iterators in the background
+  std::cout &lt;&lt; val &lt;&lt; std::endl;
+</code></pre>
+<p>Vector elements are necessarily contiguous in memory (dictated by the C++
+standard).</p>
+<pre><code class="language-cpp">std::vector&lt;int&gt; v({1,2,3,4,5});
+int *p = v.data();
+std::cout &lt;&lt; *p &lt;&lt; std::endl; // prints: 1
+p = &amp;v[3];
+std::cout &lt;&lt; *p &lt;&lt; std::endl; // prints: 4
+std::cout &lt;&lt; *(&amp;v[0] + 3) &lt;&lt; std::endl; // prints: 4
+</code></pre>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/vector/front"><code>capacity()</code></a> method
+to get the storage size of that array (always &gt;= #elems).</p>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/vector/resize"><code>resize(newsize, optional filler)</code></a>
+method to resize the vector container and fill the new elements with a filler
+default value.</p>
+<p>Application: using a pointer to traverse a vector</p>
+<pre><code class="language-cpp">std::vector&lt;int&gt; v({1,2,3,4,5});
+auto p = &amp;v[0];
+auto pmax = p+v.size();
+for(; p!=pmax; p++)
+  std::cout &lt;&lt; *p &lt;&lt; &quot; &quot;; // prints: 1 2 3 4 5
+</code></pre>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\) </td></tr>
+<tr><td>insertion at the front</td><td>\(\propto N\) </td></tr>
+<tr><td>insertion at the back</td><td> Constant (and cheap)</td></tr>
+<tr><td>insertion at position \(p\)</td><td> \(\propto (N-p)\)</td></tr>
+<tr><td>deletion at the front</td><td>\(\propto N\) </td></tr>
+<tr><td>deletion at the back</td><td> Constant (and cheap)</td></tr>
+<tr><td>deletion at position \(p\)</td><td> \(\propto (N-p)\)</td></tr>
+<tr><td>access via index</td><td> Constant (and very cheap)</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> YES ⚠️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+</tbody></table>
+ <!-- DEQUE -->
+<p><a href="https://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a>
+is double-ended
+queue. Insertions and deletions at the front and back are constant time.</p>
+<p>The elements of a deque are not contiguous in memory \( \rightarrow \) can't
+iterate with a pointer.</p>
+<p>Some useful constructors for a deque</p>
+<pre><code class="language-cpp">// empty deque
+std::deque&lt;int&gt; di;
+// deque containing 10 elements all with value 5
+std::deque&lt;int&gt; dd(10, 5);
+// deque initialized with an initializer_list
+std::deque&lt;int&gt; dil1({1, 2, 3, 4, 5});
+// deque initialized with an initializer_list (same)
+std::deque&lt;int&gt; dil2 = {1, 2, 3, 4, 5};
+// cloning constructor
+std::deque&lt;int&gt; dc1(di);
+// cloning constructor (same)
+std::deque&lt;int&gt; dc2=di;
+</code></pre>
+<p><code>deque</code> provides the
+<a href="https://en.cppreference.com/w/cpp/container/deque/push_back"><code>push_back</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/deque/emplace_back"><code>emplace_back</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/deque/push_front"><code>push_front</code></a> and the
+<a href="https://en.cppreference.com/w/cpp/container/deque/emplace_front"><code>emplace_front</code></a>
+methods.</p>
+<p>we can also use
+<a href="https://en.cppreference.com/w/cpp/iterator/back_insert_iterator"><code>back_insert_iterator</code></a>,
+<a href="https://en.cppreference.com/w/cpp/iterator/front_insert_iterator"><code>front_insert_iterator</code></a>,
+<a href="https://en.cppreference.com/w/cpp/iterator/insert_iterator"><code>insert_iterator</code></a>,
+for example:</p>
+<pre><code class="language-cpp">// assume di is an empty deque&lt;int&gt;
+std::back_insert_iterator&lt;std::deque&lt;int&gt;&gt; i(di); 
+*i++ = 100;
+*i++ = 299;
+for (const auto &amp;val : di)
+  std::cout &lt;&lt; val &lt;&lt; &quot; &quot;; // prints: 100 299
+std::cout &lt;&lt; std::endl;
+
+std::front_insert_iterator&lt;std::deque&lt;int&gt;&gt; fi(di); 
+*fi++ = 0;
+*fi++ = 1;
+for (const auto &amp;val : di)
+  std::cout &lt;&lt; val &lt;&lt; &quot; &quot;; // prints: 1 0 100 299
+std::cout &lt;&lt; std::endl;
+
+std::insert_iterator&lt;std::deque&lt;int&gt;&gt; ii(di, di.begin()+2);
+*ii++ = -1;
+*ii++ = -2;
+for (const auto &amp;val : di)
+  std::cout &lt;&lt; val &lt;&lt; &quot; &quot;; // prints: 1 0 -1 -2 100 299
+std::cout &lt;&lt; std::endl;
+</code></pre>
+<p>Deque elements can be accessed:</p>
+<ul>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/deque/at"><code>at</code></a>
+method; accessess the elements at the specified index, it returns a reference to
+it. throws an
+<a href="https://en.cppreference.com/w/cpp/error/out_of_range"><code>std::out_of_range</code></a>
+exception if incompatible index.</li>
+<li>using the <code>[]</code> operator; UB if index incompatible index.</li>
+<li>by dereferencing an iterator pointing to some vector element. UB if invalid.</li>
+<li>using a range based for loop (C++&gt;=11) // same as with vector, no example here</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/deque/front"><code>front</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/deque/back"><code>back</code></a> methods
+which return references to the first and last element in the deque.</li>
+</ul>
+<p>// not done</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\) (&gt; vector) </td></tr>
+<tr><td>insertion at the front</td><td>Constant (and cheap) </td></tr>
+<tr><td>insertion at the back</td><td> Constant (and cheap)</td></tr>
+<tr><td>insertion at position \(p\)</td><td> \(\propto N\)</td></tr>
+<tr><td>deletion at the front</td><td> Constant (and cheap)</td></tr>
+<tr><td>deletion at the back</td><td> Constant (and cheap)</td></tr>
+<tr><td>deletion at position \(p\)</td><td> \(\propto N\)</td></tr>
+<tr><td>access via index</td><td> Constant (&gt;vector)</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+</tbody></table>
+<p>Use a deque when operations at the front are common and the number of elements
+is high.</p>
+<p>An <a href="https://en.cppreference.com/w/cpp/container/array"><code>std::array&lt;T, N&gt;</code></a>
+cannot be extended.</p>
+<p>Useful constructors:</p>
+<pre><code class="language-cpp">std::array&lt;int,5&gt; a0;
+for(const auto&amp; x:a0) std::cout &lt;&lt; x &lt;&lt; &quot; &quot;; 
+// prints: whatever was stored there before, garbage
+std::cout &lt;&lt; std::endl;
+
+std::array&lt;int,5&gt; a1 = {1,2,3,4};
+// std::array&lt;int,5&gt; a1({1,2,3,4}); // equivalent
+for(const auto&amp; x:a1) std::cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+// prints: 1 2 3 4 0
+std::cout &lt;&lt; std::endl;
+
+// std::array&lt;int, 5&gt; a2 = {1,2,3,4,5,6}; // compilation error
+
+std::array&lt;int, 5&gt; c(a1); // cloning constructor
+for(const auto&amp; x:c) std::cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+// prints: 1 2 3 4 0
+std::cout &lt;&lt; std::endl;
+</code></pre>
+<p>The logical size of an <code>array</code> is always equal to its physical size.
+Can't insert elements, can overwrite.</p>
+<p>Array elements can be accessed:</p>
+<ul>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/array/at"><code>at</code></a>
+method; accessess the elements at the specified index, it returns a reference to
+it. throws an
+<a href="https://en.cppreference.com/w/cpp/error/out_of_range"><code>std::out_of_range</code></a>
+exception if incompatible index.</li>
+<li>using the <code>[]</code> operator; UB if index incompatible index.</li>
+<li>by dereferencing an iterator pointing to some array element, UB if invalid.</li>
+<li>using a range based for loop (C++&gt;=11)</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/array/front"><code>front</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/array/back"><code>back</code></a> methods
+which return references to the first and last element in the array.</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/array/data"><code>data</code></a> method, which:
+returns a pointer to the underlying array serving as element storage.
+The pointer is such that range <code>[data(), data() + size()]</code> is always a valid
+range, even if the container is empty (<code>data()</code> is not dereferenceable
+in that case).</li>
+</ul>
+<p>Contrary to a C style array, an <code>std::array</code> object is not automatically converted
+to a pointer to its first element; for a function to receive an <code>std::array&lt;T, N&gt;</code>
+use a formal parameter of type <code>std::array&lt;T, N&gt;</code> or <code>std::array&lt;T,N&gt;&amp;</code> but never
+<code>T*</code>.</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\)</td></tr>
+<tr><td>insertions and deletions</td><td>NO ES POSIBLE!</td></tr>
+<tr><td>access via index</td><td> Constant </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> NO ✅️ </td></tr>
+</tbody></table>
+<p>The <code>std::array&lt;T,N&gt;</code> container is NEVER REALLOCATED.</p>
+<p>Use an <code>array</code> if you want to use C style arrays with an OO interface.</p>
+<p><code>std::array::size()</code> is <code>constexpr</code>. Two arrays of different sizes don't even
+have the same type (bcoz template param <code>N</code> is the size).</p>
+<p><a href="https://en.cppreference.com/w/cpp/string/basic_string"><code>std::basic_string&lt;C,T,A&gt;</code></a></p>
+<ul>
+<li><code>C</code> is the character type</li>
+<li><code>T</code> is the traits type (used to manipulate objects of type <code>C</code>)</li>
+<li><code>A</code> is the allocater type for type <code>C</code></li>
+</ul>
+<p>classes defined in <code>&lt;string&gt;</code>:</p>
+<table><thead><tr><th>name</th><th>definition</th><th>encoding</th></tr></thead><tbody>
+<tr><td>string</td><td>basic_string<char></td><td>ASCII</td></tr>
+<tr><td>wstring</td><td>basic_string&lt;wchar_t&gt;</td><td>unicode 16 or 32</td></tr>
+<tr><td>u16string</td><td>basic_string&lt;char16_t&gt;</td><td>unicode 16</td></tr>
+<tr><td>u32string</td><td>basic_string&lt;char32_t&gt;</td><td>unicode 32</td></tr>
+</tbody></table>
+<p>characters in the string class are stored contiguously.</p>
+<p>some useful constructors of <code>std::string</code></p>
+<pre><code class="language-cpp">std::string s1;
+std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s1 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // []
+std::string s2 = &quot;abcdf fjd&quot;;
+std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s2 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [abcdf fjd]
+std::string s3 = s2;
+std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s3 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [abcdf fjd]
+std::string s4(s2, 4, 3);
+std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s4 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [f f]
+std::string s5 = {'a', 'e', 'i', 'o', 'u', 'y'};
+std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s5 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [aeiouy]
+std::string s6(6, '-');
+std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s6 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [------]
+</code></pre>
+<p>String characters can be accessed:</p>
+<ul>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/string/basic_string/at"><code>at</code></a>
+method; accessess the elements at the specified index, it returns a reference to
+it. throws an
+<a href="https://en.cppreference.com/w/cpp/error/out_of_range"><code>std::out_of_range</code></a>
+exception if incompatible index.</li>
+<li>using the <code>[]</code> operator; UB if index incompatible index.</li>
+<li>by dereferencing an iterator pointing to some character in the string,
+UB if invalid.</li>
+<li>using a range based for loop (C++&gt;=11)</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/string/basic_string/front"><code>front</code></a> and
+<a href="https://en.cppreference.com/w/cpp/string/basic_string/back"><code>back</code></a> methods
+which return references to the first and last characters in the string.</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/string/basic_string/c_str"><code>c_str</code></a> method,
+which: returns a pointer to a null-terminated character array with data
+equivalent to those stored in the string (<em>ie:</em> an equivalent C style string).</li>
+</ul>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\)</td></tr>
+<tr><td>insertions and deletions at the end</td><td>Constant</td></tr>
+<tr><td>insertions and deletions at the beginning</td><td>\(\propto N\)</td></tr>
+<tr><td>insertions and deletions at the position \(p\)</td><td>\(\propto (N-p)\)</td></tr>
+<tr><td>access via index</td><td> Constant </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> YES ⚠️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> YES ⚠️</td></tr>
+</tbody></table>
+<p><code>void f(const string&amp;);</code> accepts the parameter <code>&quot;c style string&quot;</code>, convesion
+by constructor: <code>f (string(&quot;c style string&quot;))</code>. To get a <code>string</code> instance
+directly, use the suffix <code>s</code> after the <code>&quot;</code>. <code>f(&quot;real string instance&quot;s)</code>,
+this way no data needs to be copied.</p>
+<p><a href="https://en.cppreference.com/w/cpp/container/list"><code>list&lt;T,A&gt;</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list"><code>forward_list&lt;T,A&gt;</code></a>
+are declared in the <code>&lt;list&gt;</code> and <code>&lt;forward_list&gt;</code> headers respectively.
+They are both parametrised by:</p>
+<ul>
+<li><code>T</code> the type of elements stored.</li>
+<li><code>A</code> the type of allocators used for 'T' (default is
+<a href="https://en.cppreference.com/w/cpp/memory/allocator"><code>std::allocator&lt;T&gt;</code></a>
+).</li>
+</ul>
+<p>typical implementation of a list (doubly linked list):</p>
+<p><img src="media/list.png" width=400/></p>
+<p>typical implementation of a forward_list (linked list):</p>
+<p><img src="media/forward_list.png" width=400/></p>
+<p>The implementations are non intrusive: the stored elements don't need to store
+pointers to ther successors and predecessors.</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;list&gt;
+#include &lt;string&gt;
+
+template &lt;typename T&gt; void printList(const std::list&lt;T&gt; &amp;l) {
+  std::cout &lt;&lt; '[';
+  for (const T &amp;e : l)
+    std::cout &lt;&lt; e &lt;&lt; &quot; &quot;;
+  std::cout &lt;&lt; ']' &lt;&lt; std::endl;
+}
+
+int main() {
+  std::list&lt;int&gt; li1;
+  printList(li1); // prints: []
+  std::list&lt;std::string&gt; li2 = {&quot;first&quot;, &quot;second&quot;};
+  printList(li2); // prints: [first second ]
+  std::list&lt;std::string&gt; li3 = li2;
+  printList(li3); // prints: [first second ]
+
+  auto istart_li2 = li2.begin();
+  auto iend_li2 = li2.end();
+  // can't just do li2.begin()+1 , list has a bidirectional operator, which
+  // is not a random access iterator
+  istart_li2++; // ignore first element of li2
+  std::list&lt;std::string&gt; li4(istart_li2, iend_li2);
+  printList(li4); // prints: [second ]
+
+  std::list&lt;double&gt; li5(4, 3.14159);
+  printList(li5); // prints: [3.14159 3.14159 3.14159 3.14159 ]
+
+  return 0;
+}
+</code></pre>
+<p>List elements can be accessed by</p>
+<ul>
+<li>dereferencing an iterator pointing to some list element. UB if invalid.</li>
+<li>using a range based for loop (C++&gt;=11).</li>
+<li>using the
+<a href="https://en.cppreference.com/w/cpp/container/list/front"><code>list::front</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/list/back"><code>list::back</code></a> methods
+which return references to the first and last element in the list.
+(analogous methods are provided for <code>forward_list</code> ... RTFD)</li>
+</ul>
+<p>NO RANDOM ACCESS</p>
+<p>To delete all elements in a list, use the
+<a href="https://en.cppreference.com/w/cpp/container/list/clear"><code>list::clear</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/clear"><code>forward_list::clear</code></a>
+methods.</p>
+<p>Insert elements before an iterator's position using the
+<a href="https://en.cppreference.com/w/cpp/container/list/insert"><code>insert</code></a> method.</p>
+<p>For a <code>foward_list</code>, it is inefficient to insert before a specified item, thus
+the <a href="https://en.cppreference.com/w/cpp/container/forward_list/insert_after"><code>insert_after</code></a>
+method is provided.</p>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/list/emplace"><code>emplace</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/emplace_after"><code>emplace_after</code></a>
+methods play analogous roles, the elements are constructed in-place,
+<em>i.e.</em> no copy or move operations are performed.
+The constructor of the element is called with exactly the same arguments,
+as supplied to the function.</p>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/list/push_back"><code>list::push_back</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/list/emplace_back"><code>list::emplace_back</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/push_back"><code>forward_list::push_back</code></a>
+and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/emplace_back"><code>forward_list::emplace_back</code></a>
+methods can be used to add an element to the end of a list (or construct one).</p>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/list/pop_back"><code>list::pop_back</code></a>,
+methods can be used to remove the last element in the list.</p>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/list/push_front"><code>list::push_front</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/list/emplace_front"><code>list::emplace_front</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/list/pop_front"><code>list::pop_front</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/push_front"><code>forward_list::push_front</code></a>,
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/emplace_front"><code>forward_list::emplace_front</code></a>
+and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/pop_front"><code>forward_list::pop_front</code></a>
+methods can respectively: add, construct and remove the first element in a list
+or forward_list.</p>
+<p>// not done 448
+Some algorithms provided as methods for lists and forward_lists:</p>
+<ul>
+<li>the
+<a href="https://en.cppreference.com/w/cpp/container/list/merge"><code>list::merge</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/merge"><code>forward_list::merge</code></a>
+can merge two sorted lists. No elements are copied, and the passed in container
+becomes empty after the merge.</li>
+<li>the
+<a href="https://en.cppreference.com/w/cpp/container/list/merge"><code>list::merge</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/forward_list/merge"><code>forward_list::merge</code></a>
+can merge two sorted lists. No elements are copied, and the passed in container
+becomes empty after the merge.</li>
+</ul>
 
                 </div>
 
