@@ -547,8 +547,8 @@ If a method is supposed to override a virtual method in a base class, use the
 To overload a method in a base class, reinject it into the scope
 `using Base::method;`.
 See unqualified name lookup in 
-[StackOverflow](https://stackoverflow.com/questions/35870081/c-base-class-function-overloading-in-a-subclass)
-and [cppreference](https://en.cppreference.com/w/cpp/language/unqualified_lookup).
+[`StackOverflow`](https://stackoverflow.com/questions/35870081/c-base-class-function-overloading-in-a-subclass)
+and [`cppreference`](https://en.cppreference.com/w/cpp/language/unqualified_lookup).
 
 Templates
 ```cpp
@@ -702,7 +702,7 @@ A stream's openmode is of type `std::ios_base::openmode`. It is a bitmask type
 *ie:* can be combined with `|`; 
 ex: `(ios_base::in | ios_base::out | ios_base::binary )`
 
-See [CppReference](https://en.cppreference.com/w/cpp/io/ios_base/openmode) for
+See [`cppreference`](https://en.cppreference.com/w/cpp/io/ios_base/openmode) for
 more information.
 
 Input Stream Methods
@@ -726,16 +726,16 @@ also returns the stream.
 - `is::peek()` -> returns the next character in the stream, does not read it.
 - `getline(input_stream, string_storage, delimiter)` ->  reads until delimiter
   or EOF and writes into string until length is reached.
-  see [CppReference](https://en.cppreference.com/w/cpp/string/basic_string/getline).
+  see [`cppreference`](https://en.cppreference.com/w/cpp/string/basic_string/getline).
 - `is::read(char* storage, count)` -> reads and stores into storage until count
   or EOF is reached.
-  See [CppReference](https://en.cppreference.com/w/cpp/io/basic_istream/read).
+  See [`cppreference`](https://en.cppreference.com/w/cpp/io/basic_istream/read).
 - `basic_istream& ignore(std::streamsize count=1, int_type delim=Traits::eof());`
   bruh look it [up](https://en.cppreference.com/w/cpp/io/basic_istream/ignore).
 
 Some input streams (non interactive ones, unline std::cin) support positioning
-with the [tellg()](https://en.cppreference.com/w/cpp/io/basic_istream/tellg)
-[seekg(pos | offset, seekdir)](https://en.cppreference.com/w/cpp/io/basic_istream/seekg)
+with the [`tellg()`](https://en.cppreference.com/w/cpp/io/basic_istream/tellg) and
+[`seekg(pos | offset, seekdir)`](https://en.cppreference.com/w/cpp/io/basic_istream/seekg)
 functions.
 
 `seekdir` can be `ios_base::beg`, `ios_base::end` or `ios_base::cur`.
@@ -744,11 +744,11 @@ Positioning often requires a stream to be open in `std::io_base::binary`.
 
 `std::ifstream` follows RAII idiom, its constructor takes a file name as a string
 and an optional (default = `std::ios_base::in`) `std::ios_base::openmode`; 
-see more on [CppReference](https://en.cppreference.com/w/cpp/io/basic_ifstream/basic_ifstream).
+see more on [`cppreference`](https://en.cppreference.com/w/cpp/io/basic_ifstream/basic_ifstream).
 
 The `rdbuf()` method returns a pointer to the stream_buffer associated with the
 basic_ios.
-[CppReference](https://en.cppreference.com/w/cpp/io/basic_ios/rdbuf).
+[`cppreference`](https://en.cppreference.com/w/cpp/io/basic_ios/rdbuf).
 ```cpp
 #include <fstream>
 #include <iostream>
@@ -763,16 +763,16 @@ int main(){
 
 The `void open( const char* filename,std::ios_base::openmode mode=std::ios_base::in)`
 method opens and associates the file with name `filename` with the file stream. 
-See [CppReference](https://en.cppreference.com/w/cpp/io/basic_ifstream/open) for more
+See [`cppreference`](https://en.cppreference.com/w/cpp/io/basic_ifstream/open) for more
 details.
 
 The `void close()` method of `ifstream` closes the associated file.
 This function is called by the destructor of basic_fstream when the stream
 object goes out of scope and is not usually invoked directly.
-[CppReference](https://en.cppreference.com/w/cpp/io/basic_fstream/close).
+[`cppreference`](https://en.cppreference.com/w/cpp/io/basic_fstream/close).
 
 The method `bool is_open()` checks if the file stream has an associated file.
-[CppReference](https://en.cppreference.com/w/cpp/io/basic_fstream/is_open).
+[`cppreference`](https://en.cppreference.com/w/cpp/io/basic_fstream/is_open).
 Used to ckeck if a file opened for reading exists.
 
 
@@ -966,12 +966,12 @@ int main() {
 enables or disables automatic flushing of the output stream after any 
 output operation. 
 
-The oracle at [stackoverflow](https://stackoverflow.com/a/6027938) informs us
+The oracle at [`stackoverflow`](https://stackoverflow.com/a/6027938) informs us
 that [`cerr/wcerr`](https://en.cppreference.com/w/cpp/io/cerr) default to
 `unitbuf`. You do want to see the errors if a crash happens.
 
 What's the difference between `ws` and `skipws` ? 
-[\[🔮\]](https://stackoverflow.com/a/68341644)
+[`🔮`](https://stackoverflow.com/a/68341644)
 
 - [`skipws`](https://en.cppreference.com/w/cpp/io/manip/skipws) enables or
 disables skipping of leading whitespace by the formatted input functions.
@@ -986,7 +986,7 @@ whitespace from an input stream \\(\rightarrow\\)
   (file, string, whatever else), `unitbuf` performs a flush after each operation.
 - [`endl`](https://en.cppreference.com/w/cpp/io/manip/endl)
   inserts a newline character into the output stream and flushes it.
-- [ends](https://en.cppreference.com/w/cpp/io/manip/ends)
+- [`ends`](https://en.cppreference.com/w/cpp/io/manip/ends)
   inserts a null character into the output stream, does not flush.
 
 [`setw(n)`](https://en.cppreference.com/w/cpp/io/manip/setw)
@@ -1897,8 +1897,297 @@ Some algorithms provided as methods for lists and forward_lists:
 can merge two sorted lists. No elements are copied, and the passed in container
 becomes empty after the merge.
 - the
-[`list::merge`](https://en.cppreference.com/w/cpp/container/list/merge) and 
-[`forward_list::merge`](https://en.cppreference.com/w/cpp/container/forward_list/merge)
-can merge two sorted lists. No elements are copied, and the passed in container
-becomes empty after the merge.
+[`list::splice`](https://en.cppreference.com/w/cpp/container/list/splice) and 
+[`forward_list::splice_after`](https://en.cppreference.com/w/cpp/container/forward_list/splice_after)
+methods transfer elements from one list to another.
+No elements are copied or moved, only the internal pointers of the list nodes
+are re-pointed. The elements are inserted respectively before and after the
+element pointed to by the passed in iterator .
+- the
+[`list::sort`](https://en.cppreference.com/w/cpp/container/list/sort) and 
+[`forward_list::sort`](https://en.cppreference.com/w/cpp/container/forward_list/sort)
+methods sort the list elements while preserving the order of equivalent elements.
+Uses the `operator<` or the passed in `compare` parameter, which has to satisfy
+the [`Compare`](https://en.cppreference.com/w/cpp/named_req/Compare) named
+requirement.
+- the
+[`list::remove`](https://en.cppreference.com/w/cpp/container/list/remove),
+[`forward_list::remove`](https://en.cppreference.com/w/cpp/container/forward_list/remove),
+[`list::remove_if`](https://en.cppreference.com/w/cpp/container/list/remove) and
+[`forward_list::remove_if`](https://en.cppreference.com/w/cpp/container/forward_list/remove)
+methods remove all elements that are `==` to the passed in value, or satisfy the
+passed in `UnaryPredicate` parameter which must satisfy the 
+[`Predicate`](https://en.cppreference.com/w/cpp/named_req/Predicate) named requirement.
+- the
+[`list::reverse`](https://en.cppreference.com/w/cpp/container/list/reverse) and 
+[`forward_list::reverse`](https://en.cppreference.com/w/cpp/container/forward_list/reverse)
+methods reverse the order of the elements in the list. No references or iterators
+become invalidated.
+- the
+[`list::unique`](https://en.cppreference.com/w/cpp/container/list/unique) and 
+[`forward_list::unique`](https://en.cppreference.com/w/cpp/container/forward_list/unique)
+methods remove all consecutive duplicate elements from the list.
+Only the first element in each group of equal elements is left.
+Invalidates only the iterators and references to the removed elements. 
+
+Example:
+
+```cpp
+#include <iostream>
+#include <list>
+
+int main() {
+  std::list<int> l({2, 3, 4, 4, 3, 4, 4, 4, 5, 6, 1, 1, 1, 1, 2});
+  for (const auto &val : l)
+    std::cout << val << " ";
+  std::cout << std::endl;
+  // prints: 2 3 4 4 3 4 4 4 5 6 1 1 1 1 2
+
+  l.unique();
+
+  for (const auto &val : l)
+    std::cout << val << " ";
+  std::cout << std::endl;
+  // prints: 2 3 4 3 4 5 6 1 2
+
+  return 0;
+}
+```
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) (> vector)|
+|insertion and deletion at each point|constant|
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| NO ✅️ |
+
+Use `list` and `forward_list` if the insertion and deletion operations not to
+the front and back of the container are frequent.
+
+The
+[`map<K,V,C,A>`](https://en.cppreference.com/w/cpp/container/map) and 
+[`multimap<K,V,C,A>`](https://en.cppreference.com/w/cpp/container/multimap)
+structures are associative containers parametrized by
+- `K` is the type of the keys.
+- `V` is the type of the values.
+- `C` is the type of the comparator of the keys (`default=std::less<K>`).
+- `A` is the type of the allocator of the of the elements
+  (`default=std::allocator<std::pair<const K, V>>`).
+
+The elements in a `map` or multimap are `std::pair<const K, V>`.
+
+`map` and `multimap` structures are often implemented using
+[`red-black trees`](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree).
+
+Why is `std::map` implemented using a red black tree and not hash table ?
+[`bcoz`](https://stackoverflow.com/questions/22665902/why-stdmap-is-red-black-tree-and-not-hash-table)
+(history and deadlines).
+
+Example usage:
+```cpp
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std::literals;
+
+int main() {
+  // using an initializer_list<pair<const K, V>>
+  std::map<int, std::string> dep = {{2, "item 2"s},
+                                    {1, "item 1"s},
+                                    {3, "item 3"s},
+                                    {4, "item 4"s},
+                                    {5, "item 5"s}};
+  for (const auto &d : dep)
+    std::cout << d.second << "->" << d.first << std::endl;
+  std::cout << dep[4] << std::endl;
+
+  // prints:
+  //  item 1->1
+  //  item 2->2
+  //  item 3->3
+  //  item 4->4
+  //  item 5->5
+  //  item 4
+
+  return 0;
+}
+```
+
+Two keys `a` and `b` are equal if `!(a<b) && !(b<a)` \\(\iff\\)
+`!comp(a,b) && !comp(b,a)`. `comp` has to be a strict order relation for
+equality to be well defined this way. 
+
+Always use a strict order comparator in `map` and `multimap`, otherwise the 
+equality will not be well defined.
+
+std::multimap is an associative container that contains a sorted list of
+key-value pairs, while permitting multiple entries with the same key.
+
+Sorting is done according to the comparison function Compare, applied to the
+keys. Search, insertion, and removal operations have logarithmic complexity. 
+
+The order of the key-value pairs whose keys compare equivalent is the order of
+insertion and does not change. 
+
+The 
+[`std::map::operator[]`](https://en.cppreference.com/w/cpp/container/map/operator_at)
+returns a reference to the value that is mapped to a key equivalent to key or
+x respectively, performing an insertion if such key does not already exist. No
+equivalent exists for a `multimap`.
+
+The 
+[`std::multimap::find`](https://en.cppreference.com/w/cpp/container/multimap/find)
+and 
+[`std::multimap::insert`](https://en.cppreference.com/w/cpp/container/multimap/insert)
+methods are sometimes useful.
+
+Useful map (and multimap) constructors:
+- with no params: empty map.
+- using an `initializer_list<pair<const K, V>>`.
+- using the cloning constructor.
+- using two iterators: partial copy of range.
+
+Inserting elements into a `map<K,V>` (elements are `pair<K,V>`).
+- using the 
+[`std::map::operator[]`](https://en.cppreference.com/w/cpp/container/map/operator_at)
+.
+- using the 
+[`std::map::insert`](https://en.cppreference.com/w/cpp/container/map/insert)
+method (pass in a `pair<K,V>` instance).
+- using the 
+[`std::map::emplace`](https://en.cppreference.com/w/cpp/container/map/emplace)
+method (pass in the arguments of the constructor of `pair<K,V>`); constructs
+the element in-place in the map, saves the cost of a copy.
+
+```cpp
+#include <iostream>
+#include <map>
+#include <string>
+#include <utility>
+#include <vector>
+using namespace std::literals;
+
+int main() {
+  std::vector<std::pair<std::string, int>> nonsense({{"first item"s, 1},
+                                                     {"second item"s, 2},
+                                                     {"third item"s, 3},
+                                                     {"fourth item"s, 4}});
+// use override (7) for map insert
+  std::map<std::string, int> copnonsense(nonsense.begin(), nonsense.end());
+  for (const auto &val : copnonsense)
+    std::cout << val.first << ":" << val.second << std::endl;
+  //  prints:
+  //    first item:1
+  //    fourth item:4
+  //    second item:2
+  //    third item:3
+  return 0;
+}
+```
+
+- using the 
+[`std::map::merge`](https://en.cppreference.com/w/cpp/container/map/merge)
+method merges two the passed in `map` into the support map, the passed in map
+is empty by the end. No elements are copied or moved, only the internal
+pointers of the container nodes are repointed. If there is an element in
+`*this` with key equivalent to the key of an element from source, then
+that element is not extracted from source.
+
+
+Access the elements in a map:
+- using the 
+[`std::map::operator[]`](https://en.cppreference.com/w/cpp/container/map/operator_at)
+method. ⚠️ if element does not exist, create it.
+- using the 
+[`std::map::at`](https://en.cppreference.com/w/cpp/container/map/at)
+method. If the element does not exist, throws `std::out_of_range` exception.
+- using the
+[`std::map::find`](https://en.cppreference.com/w/cpp/container/map/find)
+and 
+[`std::multimap::find`](https://en.cppreference.com/w/cpp/container/multimap/find)
+methods which finds an element by passed in key and returns an iterator pointing
+to the associated element of `end()` if not found. For a `multimap`: if there
+are several elements with the requested key in the container, any of
+them may be returned.
+- using the 
+[`std::map::equal_range`](https://en.cppreference.com/w/cpp/container/map/equal_range)
+and
+[`std::multimap::equal_range`](https://en.cppreference.com/w/cpp/container/multimap/equal_range)
+method returns a range containing all elements with the given key in the
+container. The range is defined by two iterators, one pointing to the first 
+element that is not less than key and another pointing to the first element
+greater than key. Alternatively, the first iterator may be obtained with 
+`lower_bound()`, and the second with `upper_bound()`.
+If there are no elements not less than key, past-the-end (see end()) iterator
+is returned as the first element. Similarly if there are no elements greater
+than key, past-the-end iterator is returned as the second element. 
+- using a rang-based for loop ... duh.
+
+```cpp
+#include <iostream>
+#include <map>
+ 
+int main(){
+  std::multimap<int, char> dict
+  {
+    {1, 'A'},
+    {2, 'B'},
+    {2, 'C'},
+    {2, 'D'},
+    {4, 'E'},
+    {3, 'F'}
+  };
+ 
+  auto range = dict.equal_range(2);
+ 
+  for (auto i = range.first; i != range.second; ++i)
+    std::cout << i->first << ": " << i->second << '\n';
+  // prints:
+  //   2: B
+  //   2: C
+  //   2: D
+}
+```
+why does `map` also have an `equal_range` method if there can be no duplicate keys
+? [`bcoz 🔮`](https://stackoverflow.com/a/53521124) (consistency and generic
+usage of containers).
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) (> list)|
+|element access time|\\(\propto log_2(N)\\)|
+|insertion and deletion EVERYWHERE|Constant|
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| NO ✅️ |
+
+Careful with the memory consumption of map. If associative access is required
+but `log_2(N)` is too inefficient (lots of reads), favor an `unordered_map`.
+Also, `map` and `multimap` are unusable if no strict order relation can be 
+established among the would be keys.
+
+An
+[`unordered_map<K,V,H,C,A>`](https://en.cppreference.com/w/cpp/container/unordered_map)
+is an associative container that contains key-value pairs with unique keys.
+Search, insertion, and removal of elements have average constant-time complexity. 
+
+An
+[`unordered_multimap<K,V,H,C,A>`](https://en.cppreference.com/w/cpp/container/unordered_multimap)
+std::unordered_map is an associative container that contains key-value pairs
+with unique keys. Search, insertion, and removal of elements have average
+constant-time complexity. 
+
+Both are implemented with hash tables (contrast with RB-Trees for the ordered 
+versions of theses data structures).
+
+These classes are parametrised by 5 types:
+- `K` the type of the keys.
+- `V` the type of the values.
+- `H` the type of the hash function.
+- `C` the type of the comparator indicating if two keys are equal.
+- `A` the type of the .
+
+
+460
+
+🔮
 
