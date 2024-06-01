@@ -1463,7 +1463,6 @@ exception if incompatible index.</li>
 <a href="https://en.cppreference.com/w/cpp/container/deque/back"><code>back</code></a> methods
 which return references to the first and last element in the deque.</li>
 </ul>
-<p>// not done</p>
 <table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\) (&gt; vector) </td></tr>
 <tr><td>insertion at the front</td><td>Constant (and cheap) </td></tr>
@@ -1478,6 +1477,34 @@ which return references to the first and last element in the deque.</li>
 </tbody></table>
 <p>Use a deque when operations at the front are common and the number of elements
 is high.</p>
+<blockquote>
+<p><code>std::deque</code> (double-ended queue) is an indexed sequence container that allows
+fast insertion and deletion at both its beginning and its end. In addition,
+insertion and deletion at either end of a deque never invalidates pointers
+or references to the rest of the elements.</p>
+</blockquote>
+<blockquote>
+<p>As opposed to std::vector, the elements of a deque are not stored contiguously:
+typical implementations use a sequence of individually allocated fixed-size
+arrays, with additional bookkeeping, which means indexed access to deque
+must perform two pointer dereferences, compared to vector's indexed access
+which performs only one.</p>
+</blockquote>
+<blockquote>
+<p>The storage of a deque is automatically expanded and contracted as needed.
+Expansion of a deque is cheaper than the expansion of a std::vector because
+it does not involve copying of the existing elements to a new memory location.
+On the other hand, deques typically have large minimal memory cost; a
+deque holding just one element has to allocate its full internal array
+(e.g. 8 times the object size on 64-bit libstdc++; 16 times the object size
+or 4096 bytes, whichever is larger, on 64-bit libc++).</p>
+</blockquote>
+<p>The complexity (efficiency) of common operations on deques is as follows:
+Random access - constant O(1).
+Insertion or removal of elements at the end or beginning - constant O(1).
+Insertion or removal of elements - linear O(n).</p>
+<p>How deque is implemented:
+<a href="https://stackoverflow.com/questions/6292332/what-really-is-a-deque-in-stl"><code>stackoverflow</code></a></p>
 <p>An <a href="https://en.cppreference.com/w/cpp/container/array"><code>std::array&lt;T, N&gt;</code></a>
 cannot be extended.</p>
 <p>Useful constructors:</p>
@@ -1969,11 +1996,190 @@ versions of theses data structures).</p>
 <ul>
 <li><code>K</code> the type of the keys.</li>
 <li><code>V</code> the type of the values.</li>
-<li><code>H</code> the type of the hash function.</li>
-<li><code>C</code> the type of the comparator indicating if two keys are equal.</li>
-<li><code>A</code> the type of the .</li>
+<li><code>H</code> the type of the hash function; <code>default=std::hash&lt;K&gt;</code></li>
+<li><code>C</code> the type of the comparator indicating if two keys are equal;
+<code>default=std::equal_to&lt;K&gt;</code></li>
+<li><code>A</code> the type of the element allocator;
+<code>default=std::allocator&lt;std::pair&lt;const K, V&gt;&gt;</code></li>
 </ul>
-<p>460</p>
+<p>The <code>operator[]</code> is only defined for an <code>unordered_map</code>; use
+<code>find</code>, <code>insert</code> and <code>equal_range</code> for an <code>unordered_multimap</code>.</p>
+<p>Constructors:</p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;unordered_map&gt;
+
+int main(){
+  std::unordered_map&lt;std::string,int&gt; a; // empty
+  a[&quot;item 1&quot;] = 1;
+  a[&quot;item 2&quot;] = 2;
+  a[&quot;item 3&quot;] = 3;
+  for(const auto&amp; k : a) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  // item 3 3
+  // item 2 2
+  // item 1 1
+
+  std::unordered_map&lt;std::string,int&gt; b(a);
+  for(const auto&amp; k : b) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  // item 3 3
+  // item 2 2
+  // item 1 1
+
+  auto ib = a.begin(); 
+  ib++;
+  std::unordered_map&lt;std::string,int&gt; c(ib, a.end());
+  for(const auto&amp; k : c) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  // item 1 1
+  // item 2 2
+
+  std::unordered_map&lt;std::string, int&gt; d = {{&quot;nonsense 1&quot;, 1},{&quot;nonsense 2&quot;, 2}};
+  for(const auto&amp; k : d) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  // nonsense 2 2
+  // nonsense 1 1
+
+  return 0;
+}
+</code></pre>
+<p>The difference between <code>begin</code> and <code>cbegin</code> ?
+<a href="https://stackoverflow.com/a/31208681">🔮</a></p>
+<blockquote>
+<p><code>begin</code> will return an <code>iterator</code> or a <code>const_iterator</code> depending on the
+const-qualification of the object it is called on. <code>cbegin</code> will return a
+<code>const_iterator</code> unconditionally. It's for flexibility. If you know you need
+a <code>const_iterator</code>, call <code>cbegin</code>. If you know you need an <code>iterator</code>, call <code>begin</code>
+and you'll get an error if it's not valid. If you don't care, call <code>begin</code>.</p>
+</blockquote>
+<p>Definining a
+<a href="https://stackoverflow.com/questions/15810620/unordered-map-with-custom-hashing-equal-functions-functions-dont-get-called"><code>custom hash function</code></a>
+.</p>
+<p>If the <code>H</code> (hash function-like), <code>C</code> (equal comparator) or <code>A</code> (allocator) types
+are specified in the <code>unordered_map&lt;...&gt;</code> template parameters, provide
+the bucket_count as first parameter to the constructor, and instances of the
+specified type to be used:</p>
+<pre><code class="language-cpp">// Option 3: Use lambdas
+// Note that the initial bucket count has to be passed to the constructor
+struct Goo { int val; };
+auto hash = [](const Goo &amp;g){ return std::hash&lt;int&gt;{}(g.val); };
+auto comp = [](const Goo &amp;l, const Goo &amp;r){ return l.val == r.val; };
+std::unordered_map&lt;Goo, double, decltype(hash), decltype(comp)&gt; m8(10, hash, comp);
+</code></pre>
+<p>See
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/unordered_map"><code>unordered_map::unordered_map</code></a>
+constructor example on cppreference for more details.</p>
+<p>The main methods used to insert or add elements in an
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/"><code>unordered_map</code></a> or
+<a href="https://en.cppreference.com/w/cpp/container/unordered_multimap/"><code>unordered_multimap</code></a>
+are:</p>
+<ul>
+<li>the
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/operator_at"><code>operator[k]</code></a>
+which returns a reference to the element with key <code>k</code> or creates it if does not exist.</li>
+<li>the
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/insert"><code>insert</code></a>
+method which inserts an element (or elements) and returns a pair containing
+an iterator pointing to the inserted element and a boolean indicating whether or
+not the insertion succeded.</li>
+<li>the
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/insert_or_assign"><code>insert_or_assign</code></a>
+method which inserts an element or assigns it if it already exist.
+Still no idea what the difference is between <code>insert_or_assign</code> and <code>operator[]</code>.</li>
+</ul>
+<p>The main methods to access elements in an
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/"><code>unordered_map</code></a> or
+<a href="https://en.cppreference.com/w/cpp/container/unordered_multimap/"><code>unordered_multimap</code></a>
+are:</p>
+<ul>
+<li><a href="https://en.cppreference.com/w/cpp/container/unordered_map/at"><code>at</code></a>
+method; returns a reference to the element at the specified key
+throws an
+<a href="https://en.cppreference.com/w/cpp/error/out_of_range"><code>std::out_of_range</code></a>
+exception if element does not exist.</li>
+<li>the
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/operator_at"><code>operator[k]</code></a>
+which returns a reference to the element with key <code>k</code> or creates it if does not exist.</li>
+<li>by dereferencing an iterator pointing to some <code>unordered_map</code> element. UB if invalid.</li>
+<li>using a range based for loop.</li>
+</ul>
+<p>NO FRONT AND BACK METHODS : unordered, it's in the name.</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\) (&gt; map)</td></tr>
+<tr><td>element access time</td><td>Constant</td></tr>
+<tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+</tbody></table>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/set"><code>set&lt;K,C,A&gt;</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/multiset"><code>multiset&lt;K,C,A&gt;</code></a>
+are associative containers that contain sorted sets of objects of type K.
+Contrary to <code>set</code>, <code>multiset</code> allows duplicate keys.</p>
+<p>These generic classes are parametrised by 5 types:</p>
+<ul>
+<li><code>K</code> the type of the keys.</li>
+<li><code>C</code> the type of the comparator indicating if two keys are equal;
+<code>default=std::less&lt;K&gt;</code></li>
+<li><code>A</code> the type of the element allocator;
+<code>default=std::allocator&lt;K&gt;</code></li>
+</ul>
+<p>They are usually represented as
+<a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree"><code>red-black trees</code></a>.</p>
+<p>These two structures have an interface very similar to <code>map</code> and <code>multimap</code>.
+(except no Values associated with keys,
+<a href="https://en.cppreference.com/w/cpp/container/set/find"><code>set::find</code></a>
+returns an iterator pointing to a key, while
+<a href="https://en.cppreference.com/w/cpp/container/map/find"><code>map::find</code></a>
+return an iterator pointing to a <code>pair&lt;key, value&gt;</code>).</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\) (&gt; list)</td></tr>
+<tr><td>element access time</td><td>\(\propto log_2(N)\)</td></tr>
+<tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> NO ✅️ </td></tr>
+</tbody></table>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/unordered_set"><code>unordered_set&lt;K,C,A&gt;</code></a> and
+<a href="https://en.cppreference.com/w/cpp/container/unordered_multiset"><code>unordered_multiset&lt;K,C,A&gt;</code></a>
+are associative containers that contain sets of objects of type K.
+Contrary to <code>set</code>, <code>multiset</code> allows duplicate keys.</p>
+<p>These generic classes are parametrised by 5 types:</p>
+<ul>
+<li><code>K</code> the type of the keys.</li>
+<li><code>H</code> the type of the hash function; <code>default=std::hash&lt;K&gt;</code></li>
+<li><code>C</code> the type of the comparator indicating if two keys are equal;
+<code>default=std::equal_to&lt;K&gt;</code></li>
+<li><code>A</code> the type of the element allocator;
+<code>default=std::allocator&lt;K&gt;</code></li>
+</ul>
+<p>Both are implemented with hash tables (contrast with RB-Trees for the ordered
+versions of theses data structures).</p>
+<p>These two structures have an interface very similar to <code>unordered_map</code> and <code>unordered_multimap</code>.
+(except no Values associated with keys,
+<a href="https://en.cppreference.com/w/cpp/container/unordered_set/find"><code>unordered_set::find</code></a>
+returns an iterator pointing to a key, while
+<a href="https://en.cppreference.com/w/cpp/container/unordered_map/find"><code>unordered_map::find</code></a>
+return an iterator pointing to a <code>pair&lt;key, value&gt;</code>).</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\) (&gt; map)</td></tr>
+<tr><td>element access time</td><td>Constant</td></tr>
+<tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+</tbody></table>
+<p><a href="https://en.cppreference.com/w/cpp/container/stack"><code>std::stack&lt;T,Cont&gt;</code></a> is a LIFO
+(last-in, first-out) data structure.
+It is a generic class parametrized by two types:</p>
+<ul>
+<li><code>T</code> is the type of the stored elements.</li>
+<li><code>Cont</code> is the type of the container used to implement the stack.
+(<code>default = std::deque&lt;T&gt;</code>)</li>
+</ul>
+<p>Notice that <code>std::stack</code> is not a container, rather it is a
+<a href="https://en.cppreference.com/w/cpp/container#Container_adaptors"><code>container adaptor</code></a>
+.</p>
+<p>Use a container that provides efficient access, insertion and removal at the
+back (<code>vector</code>, <code>list</code>, <code>string</code> and especially <code>deque</code>);</p>
+<p>Difference between <code>deque</code> and <code>list</code> implementations:
+<a href="https://stackoverflow.com/a/1436418"><code>🔮</code></a></p>
 <p>🔮</p>
 
                 </div>

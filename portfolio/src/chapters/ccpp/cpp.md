@@ -1618,8 +1618,6 @@ Deque elements can be accessed:
   which return references to the first and last element in the deque.
 
 
-// not done
-
 |operation|cost|
 |---|---|
 |memory|\\(\propto N\\) (> vector) |
@@ -1635,6 +1633,34 @@ Deque elements can be accessed:
 
 Use a deque when operations at the front are common and the number of elements 
 is high.
+
+> `std::deque` (double-ended queue) is an indexed sequence container that allows
+> fast insertion and deletion at both its beginning and its end. In addition,
+> insertion and deletion at either end of a deque never invalidates pointers
+> or references to the rest of the elements.
+
+> As opposed to std::vector, the elements of a deque are not stored contiguously:
+> typical implementations use a sequence of individually allocated fixed-size
+> arrays, with additional bookkeeping, which means indexed access to deque
+> must perform two pointer dereferences, compared to vector's indexed access
+> which performs only one.
+
+> The storage of a deque is automatically expanded and contracted as needed.
+> Expansion of a deque is cheaper than the expansion of a std::vector because 
+> it does not involve copying of the existing elements to a new memory location.
+> On the other hand, deques typically have large minimal memory cost; a
+> deque holding just one element has to allocate its full internal array
+> (e.g. 8 times the object size on 64-bit libstdc++; 16 times the object size
+> or 4096 bytes, whichever is larger, on 64-bit libc++).
+
+The complexity (efficiency) of common operations on deques is as follows:
+    Random access - constant O(1).
+    Insertion or removal of elements at the end or beginning - constant O(1).
+    Insertion or removal of elements - linear O(n). 
+
+How deque is implemented:
+[`stackoverflow`](https://stackoverflow.com/questions/6292332/what-really-is-a-deque-in-stl)
+
 
 An [`std::array<T, N>`](https://en.cppreference.com/w/cpp/container/array)
 cannot be extended.
@@ -2182,12 +2208,214 @@ versions of theses data structures).
 These classes are parametrised by 5 types:
 - `K` the type of the keys.
 - `V` the type of the values.
-- `H` the type of the hash function.
-- `C` the type of the comparator indicating if two keys are equal.
-- `A` the type of the .
+- `H` the type of the hash function; `default=std::hash<K>`
+- `C` the type of the comparator indicating if two keys are equal;
+  `default=std::equal_to<K>`
+- `A` the type of the element allocator;
+  `default=std::allocator<std::pair<const K, V>>`
 
 
-460
+The `operator[]` is only defined for an `unordered_map`; use
+`find`, `insert` and `equal_range` for an `unordered_multimap`.
+
+Constructors:
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+int main(){
+  std::unordered_map<std::string,int> a; // empty
+  a["item 1"] = 1;
+  a["item 2"] = 2;
+  a["item 3"] = 3;
+  for(const auto& k : a) std::cout << k.first << " " << k.second << std::endl;
+  // item 3 3
+  // item 2 2
+  // item 1 1
+
+  std::unordered_map<std::string,int> b(a);
+  for(const auto& k : b) std::cout << k.first << " " << k.second << std::endl;
+  // item 3 3
+  // item 2 2
+  // item 1 1
+
+  auto ib = a.begin(); 
+  ib++;
+  std::unordered_map<std::string,int> c(ib, a.end());
+  for(const auto& k : c) std::cout << k.first << " " << k.second << std::endl;
+  // item 1 1
+  // item 2 2
+
+  std::unordered_map<std::string, int> d = {{"nonsense 1", 1},{"nonsense 2", 2}};
+  for(const auto& k : d) std::cout << k.first << " " << k.second << std::endl;
+  // nonsense 2 2
+  // nonsense 1 1
+
+  return 0;
+}
+```
+
+The difference between `begin` and `cbegin` ? 
+[🔮](https://stackoverflow.com/a/31208681)
+
+> `begin` will return an `iterator` or a `const_iterator` depending on the
+> const-qualification of the object it is called on. `cbegin` will return a
+> `const_iterator` unconditionally. It's for flexibility. If you know you need
+> a `const_iterator`, call `cbegin`. If you know you need an `iterator`, call `begin`
+> and you'll get an error if it's not valid. If you don't care, call `begin`.
+
+Definining a 
+[`custom hash function`](https://stackoverflow.com/questions/15810620/unordered-map-with-custom-hashing-equal-functions-functions-dont-get-called)
+.
+
+If the `H` (hash function-like), `C` (equal comparator) or `A` (allocator) types
+are specified in the `unordered_map<...>` template parameters, provide
+the bucket_count as first parameter to the constructor, and instances of the 
+specified type to be used:
+```cpp
+// Option 3: Use lambdas
+// Note that the initial bucket count has to be passed to the constructor
+struct Goo { int val; };
+auto hash = [](const Goo &g){ return std::hash<int>{}(g.val); };
+auto comp = [](const Goo &l, const Goo &r){ return l.val == r.val; };
+std::unordered_map<Goo, double, decltype(hash), decltype(comp)> m8(10, hash, comp);
+```
+See
+[`unordered_map::unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map/unordered_map)
+constructor example on cppreference for more details.
+
+
+The main methods used to insert or add elements in an 
+[`unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map/) or
+[`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap/)
+are:
+- the 
+[`operator[k]`](https://en.cppreference.com/w/cpp/container/unordered_map/operator_at)
+which returns a reference to the element with key `k` or creates it if does not exist.
+- the 
+[`insert`](https://en.cppreference.com/w/cpp/container/unordered_map/insert)
+method which inserts an element (or elements) and returns a pair containing
+an iterator pointing to the inserted element and a boolean indicating whether or
+not the insertion succeded.
+- the 
+[`insert_or_assign`](https://en.cppreference.com/w/cpp/container/unordered_map/insert_or_assign)
+method which inserts an element or assigns it if it already exist.
+Still no idea what the difference is between `insert_or_assign` and `operator[]`.
+
+
+The main methods to access elements in an 
+[`unordered_map`](https://en.cppreference.com/w/cpp/container/unordered_map/) or
+[`unordered_multimap`](https://en.cppreference.com/w/cpp/container/unordered_multimap/)
+are:
+
+- [`at`](https://en.cppreference.com/w/cpp/container/unordered_map/at)
+  method; returns a reference to the element at the specified key
+  throws an 
+  [`std::out_of_range`](https://en.cppreference.com/w/cpp/error/out_of_range)
+  exception if element does not exist.
+- the 
+[`operator[k]`](https://en.cppreference.com/w/cpp/container/unordered_map/operator_at)
+which returns a reference to the element with key `k` or creates it if does not exist.
+- by dereferencing an iterator pointing to some `unordered_map` element. UB if invalid.
+- using a range based for loop.
+
+NO FRONT AND BACK METHODS : unordered, it's in the name.
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) (> map)|
+|element access time|Constant|
+|insertion and deletion EVERYWHERE|Constant|
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| YES ⚠️ |
+
+
+The
+[`set<K,C,A>`](https://en.cppreference.com/w/cpp/container/set) and 
+[`multiset<K,C,A>`](https://en.cppreference.com/w/cpp/container/multiset)
+are associative containers that contain sorted sets of objects of type K.
+Contrary to `set`, `multiset` allows duplicate keys.
+
+These generic classes are parametrised by 5 types:
+- `K` the type of the keys.
+- `C` the type of the comparator indicating if two keys are equal;
+  `default=std::less<K>`
+- `A` the type of the element allocator;
+  `default=std::allocator<K>`
+
+They are usually represented as 
+[`red-black trees`](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree).
+
+These two structures have an interface very similar to `map` and `multimap`.
+(except no Values associated with keys, 
+[`set::find`](https://en.cppreference.com/w/cpp/container/set/find)
+returns an iterator pointing to a key, while 
+[`map::find`](https://en.cppreference.com/w/cpp/container/map/find)
+return an iterator pointing to a `pair<key, value>`).
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) (> list)|
+|element access time|\\(\propto log_2(N)\\)|
+|insertion and deletion EVERYWHERE|Constant|
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| NO ✅️ |
+
+The
+[`unordered_set<K,C,A>`](https://en.cppreference.com/w/cpp/container/unordered_set) and 
+[`unordered_multiset<K,C,A>`](https://en.cppreference.com/w/cpp/container/unordered_multiset)
+are associative containers that contain sets of objects of type K.
+Contrary to `set`, `multiset` allows duplicate keys.
+
+These generic classes are parametrised by 5 types:
+- `K` the type of the keys.
+- `H` the type of the hash function; `default=std::hash<K>`
+- `C` the type of the comparator indicating if two keys are equal;
+  `default=std::equal_to<K>`
+- `A` the type of the element allocator;
+  `default=std::allocator<K>`
+
+Both are implemented with hash tables (contrast with RB-Trees for the ordered 
+versions of theses data structures).
+
+These two structures have an interface very similar to `unordered_map` and `unordered_multimap`.
+(except no Values associated with keys, 
+[`unordered_set::find`](https://en.cppreference.com/w/cpp/container/unordered_set/find)
+returns an iterator pointing to a key, while 
+[`unordered_map::find`](https://en.cppreference.com/w/cpp/container/unordered_map/find)
+return an iterator pointing to a `pair<key, value>`).
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\) (> map)|
+|element access time|Constant|
+|insertion and deletion EVERYWHERE|Constant|
+|reference and pointer invalidation on modification| NO ✅️ |
+|iterator invalidation on modification| YES ⚠️ |
+
+
+[`std::stack<T,Cont>`](https://en.cppreference.com/w/cpp/container/stack) is a LIFO
+(last-in, first-out) data structure.
+It is a generic class parametrized by two types:
+- `T` is the type of the stored elements.
+- `Cont` is the type of the container used to implement the stack.
+  (`default = std::deque<T>`)
+
+Notice that `std::stack` is not a container, rather it is a 
+[`container adaptor`](https://en.cppreference.com/w/cpp/container#Container_adaptors)
+.
+
+Use a container that provides efficient access, insertion and removal at the 
+back (`vector`, `list`, `string` and especially `deque`);
+
+Difference between `deque` and `list` implementations: 
+[`🔮`](https://stackoverflow.com/a/1436418)
+
+
+
+
+
 
 🔮
 
