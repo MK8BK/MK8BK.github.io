@@ -42,3 +42,7 @@ int majorityElement(int* nums, int numsSize) {
   return candidate;
 }
 ```
+
+[Kadane's Algorithm](https://en.wikipedia.org/wiki/Maximum_subarray_problem)
+for the maximum subarray problem.
+

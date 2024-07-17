@@ -2407,12 +2407,209 @@ Notice that `std::stack` is not a container, rather it is a
 .
 
 Use a container that provides efficient access, insertion and removal at the 
-back (`vector`, `list`, `string` and especially `deque`);
+back (`vector`, `list`, `string` and especially `deque`); it has to provide
+the `back`, `pushback` and `popback` methods.
 
 Difference between `deque` and `list` implementations: 
 [`🔮`](https://stackoverflow.com/a/1436418)
 
+There a three remarkable constructors for a `stack`:
+- with no params: just call the default constructor of the underlying container.
+- with a container instance.
+- by cloning another stack with the same type.
 
+Inserting elements to the top of the stack (*ie: back of the underlying container*)
+is done with the 
+[`push`](https://en.cppreference.com/w/cpp/container/stack/push)
+and
+[`emplace`](https://en.cppreference.com/w/cpp/container/stack/emplace) methods
+(call the `push_back` and `emplace_back` methods of the underlying container).
+
+Use the 
+[`top`](https://en.cppreference.com/w/cpp/container/stack/top) method to get a 
+reference to top of the stack. 
+
+Use the 
+[`pop`](https://en.cppreference.com/w/cpp/container/stack/pop) method to remove
+the top of the stack. (RETURNS void, calls the `pop_back` method of the underlying
+container).
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\)|
+|top element access time|Constant|
+|insertion and deletion at the top|Constant|
+|reference and pointer invalidation on modification| depends on the underlyning container |
+|iterator invalidation on modification| NO ITERATORS |
+
+
+[`std::queue<T,Cont>`](https://en.cppreference.com/w/cpp/container/queue) 
+class is a container adaptor that gives the functionality of a queue
+\- specifically, a FIFO (first-in, first-out) data structure.
+
+It is a generic class parametrized by two types:
+- `T` is the type of the stored elements.
+- `Cont` is the type of the container used to implement the queue.
+  (`default = std::deque<T>`)
+
+The class template acts as a wrapper to the underlying container -
+only a specific set of functions is provided. The queue pushes the elements on
+the back of the underlying container and pops them from the front.
+
+Often used to implement buffers.
+
+Use `list` or (default) `deque` as the underlying container: NOT `vector`.
+
+There a three remarkable constructors for a `queue`:
+- with no params: just call the default constructor of the underlying container.
+- with a container instance.
+- by cloning another queue with the same type.
+
+Use the 
+[`push`](https://en.cppreference.com/w/cpp/container/queue/push) 
+and 
+[`emplace`](https://en.cppreference.com/w/cpp/container/queue/emplace) 
+methods to add an element to the end of the queue.
+
+Use the 
+[`pop`](https://en.cppreference.com/w/cpp/container/queue/pop) 
+method to remove the first element in the queue.
+
+Use the 
+[`back`](https://en.cppreference.com/w/cpp/container/queue/back) 
+and 
+[`front`](https://en.cppreference.com/w/cpp/container/queue/front) 
+methods to access the last and first element in the queue respectively (reference).
+
+
+[`std::priority_queue<T,Cont,Comp>`](https://en.cppreference.com/w/cpp/container/priority_queue) 
+is a container adaptor that provides constant time lookup of the largest 
+(by default) element, at the expense of logarithmic insertion and extraction.
+
+A user-provided Compare can be supplied to change the ordering, e.g. using
+`std::greater<T>` would cause the smallest element to appear as the top().
+
+Working with a priority_queue is similar to managing a heap in some random 
+access container, with the benefit of not being able to accidentally 
+invalidate the heap. 
+
+The default container is `vector`, though any container providing fast back
+deletion/insertion and fast front access is adequate (`deque` also workds, 
+but more memory is consumed).
+
+There a three remarkable constructors for a `priority_queue`:
+- with no params: just call the default constructor of the underlying container.
+- with a container and comparator instances.
+- by cloning another priority_queue with the same type.
+
+The 
+[`push`](https://en.cppreference.com/w/cpp/container/priority_queue/push) 
+inserts element and sorts the underlying container.
+
+[`emplace`](https://en.cppreference.com/w/cpp/container/priority_queue/emplace) 
+constructs element in-place and sorts the underlying container.
+
+The
+[`pop`](https://en.cppreference.com/w/cpp/container/priority_queue/pop) 
+method to remove the top element from the priority_queue.
+
+The
+[`top`](https://en.cppreference.com/w/cpp/container/priority_queue/top) 
+returns a (const) reference to the top element in the priority queue.
+
+|operation|cost|
+|---|---|
+|memory|\\(\propto N\\)|
+|top element access time|Constant|
+|insertion and removal at the top|\\(\propto log(N)\\)|
+
+
+The class template
+[`std::span<T,Extent>`](https://en.cppreference.com/mwiki/index.php?title=cpp/container/span) 
+describes an object that can refer to a contiguous
+sequence of objects with the first element of the sequence at position zero.
+A span can either have a static extent, in which case the number of elements
+in the sequence is known at compile-time and encoded in the type, or a dynamic
+extent.
+
+For a span `s`, pointers, iterators, and references to elements of `s` are
+invalidated when an operation invalidates a pointer in the range
+`[s.data(), s.data() + s.size()]`.
+
+constructors:
+- from a another span
+- from a standard array whose size is known at compile time or an `array<T>`,
+  not arrays passed to functions (those are pointers).
+- from a pair of iterators
+- from an iterator and a number of elements
+
+element access:
+- iterators
+- `front` and `back` methods, which return references to the first and last
+  elements of the span.
+- `operator[]` returns a reference to an element at the given index, UB if the 
+  index is incompatible with the range. (there is no `at` method !!!).
+- `first(n)` which returns a span containing the first `n` elements of the span.
+- `last(n)` which returns a span containing the last `n` elements of the span.
+- `subspan(offset, count)` which returns a span containing `count` elements 
+  starting at position `offset` in the span.
+
+
+The class template 
+[`basic_string_view<CharT, Traits>`](https://en.cppreference.com/w/cpp/string/basic_string_view)
+describes an object that can refer to a constant contiguous sequence of 
+`CharT` with the first element of the sequence at position zero.
+
+For a basic_string_view str, pointers, iterators, and references to elements 
+of str are invalidated when an operation invalidates a pointer in the range 
+`[str.data(), str.data() + str.size())`. 
+
+constructors:
+- from another `string_view`, (cloning constructor).
+- from a C-style string.
+- from a C++ string.
+- from a pointer to a block of characters and a count.
+- from an interval of characters delimited by two iterators.
+
+element access:
+- iterators
+- `front` and `back` methods, which return const references to the first and last
+  characters of the string_view.
+- `operator[]` returns a const reference to a character at the given index,
+  UB if the index is incompatible with the range.
+- `at()` returns a const reference to the character at specified location pos.
+  Bounds checking is performed, exception of type `std::out_of_range` will be 
+  thrown on invalid access. 
+- `substring(offset, count)` which returns a string_view containing `count`
+  characters starting at position `offset` in the string_view.
+- `data()` Returns a pointer to the underlying character array. The pointer is
+  such that the range `[data(), data() + size())` is valid and the values in it
+  correspond to the values of the view. 
+
+other useful methods:
+- `remove_prefix(n)` moves the start of the view forward by `n` characters. The
+  behavior is undefined if `n` > `size()`.
+- `remove_suffix(n)` moves the end of the view back by `n` characters. The
+  behavior is undefined if `n` > `size()`.
+- `swap(v)` exchanges the view with that of `v`.
+- `operator=(view)` replaces the view with that of `view`.
+- `starts_with(prefix)` checks if the string view begins with the given prefix.
+- `ends_with(suffix)` checks if the string view ends with the given suffix.
+- `find(v, pos)` finds the first substring equal to the given character sequence.
+  Finds the first occurence of `v` in this view, starting at position `pos`.
+- `rfind(v, pos)` finds the last substring equal to the given character sequence.
+  Finds the last occurence of `v` in this view, starting at position `pos`.
+- the `==`, `!=`, `<`, `<=`, `>`, `>=` operators perform lexicographical
+  comparisons between two string views.
+  (can send a string view to a stream with `<<`).
+- use the `"blah"sv` to declare a string view literal.
+  (using namespace std::literals;).
+
+Favor using `string_view` over `string`. Substring extraction is done in linear
+time for `string` due to the copy. It is done in constant time for
+`string_view` because no copy is performed.
+
+The Ranges Library
 
 
 

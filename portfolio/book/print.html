@@ -105,12 +105,17 @@ and a blog.</p>
 </code></pre>
 <a class="header" href="print.html#scripting" id="scripting"><h1>scripting</h1></a>
 <a class="header" href="print.html#utilities" id="utilities"><h1>utilities</h1></a>
+<p>See this Short <a href="https://www.freecodecamp.org/news/learn-git-basics/">git</a> tutorial.</p>
+<p><code>-h</code> to see concise options for a git command.</p>
 <p>See this quick <a href="https://hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/">tmux</a>
 guide.</p>
 <pre><code class="language-bash">clang-format &lt;file.cpp&gt; -i # format file in place
 </code></pre>
 <p>copy file to clipboard</p>
 <pre><code class="language-bash">$ xclip -sel c &lt; input_file
+</code></pre>
+<pre><code class="language-bash"># set vim as default git editor
+$ git config --global core.editor &quot;vim&quot;
 </code></pre>
 <a class="header" href="print.html#c-notes" id="c-notes"><h1>C++ Notes</h1></a>
 <a class="header" href="print.html#gcc" id="gcc"><h1>gcc</h1></a>
@@ -2754,9 +2759,187 @@ It is a generic class parametrized by two types:</p>
 <a href="https://en.cppreference.com/w/cpp/container#Container_adaptors"><code>container adaptor</code></a>
 .</p>
 <p>Use a container that provides efficient access, insertion and removal at the
-back (<code>vector</code>, <code>list</code>, <code>string</code> and especially <code>deque</code>);</p>
+back (<code>vector</code>, <code>list</code>, <code>string</code> and especially <code>deque</code>); it has to provide
+the <code>back</code>, <code>pushback</code> and <code>popback</code> methods.</p>
 <p>Difference between <code>deque</code> and <code>list</code> implementations:
 <a href="https://stackoverflow.com/a/1436418"><code>🔮</code></a></p>
+<p>There a three remarkable constructors for a <code>stack</code>:</p>
+<ul>
+<li>with no params: just call the default constructor of the underlying container.</li>
+<li>with a container instance.</li>
+<li>by cloning another stack with the same type.</li>
+</ul>
+<p>Inserting elements to the top of the stack (<em>ie: back of the underlying container</em>)
+is done with the
+<a href="https://en.cppreference.com/w/cpp/container/stack/push"><code>push</code></a>
+and
+<a href="https://en.cppreference.com/w/cpp/container/stack/emplace"><code>emplace</code></a> methods
+(call the <code>push_back</code> and <code>emplace_back</code> methods of the underlying container).</p>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/stack/top"><code>top</code></a> method to get a
+reference to top of the stack.</p>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/stack/pop"><code>pop</code></a> method to remove
+the top of the stack. (RETURNS void, calls the <code>pop_back</code> method of the underlying
+container).</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\)</td></tr>
+<tr><td>top element access time</td><td>Constant</td></tr>
+<tr><td>insertion and deletion at the top</td><td>Constant</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td> depends on the underlyning container </td></tr>
+<tr><td>iterator invalidation on modification</td><td> NO ITERATORS </td></tr>
+</tbody></table>
+<p><a href="https://en.cppreference.com/w/cpp/container/queue"><code>std::queue&lt;T,Cont&gt;</code></a>
+class is a container adaptor that gives the functionality of a queue
+- specifically, a FIFO (first-in, first-out) data structure.</p>
+<p>It is a generic class parametrized by two types:</p>
+<ul>
+<li><code>T</code> is the type of the stored elements.</li>
+<li><code>Cont</code> is the type of the container used to implement the queue.
+(<code>default = std::deque&lt;T&gt;</code>)</li>
+</ul>
+<p>The class template acts as a wrapper to the underlying container -
+only a specific set of functions is provided. The queue pushes the elements on
+the back of the underlying container and pops them from the front.</p>
+<p>Often used to implement buffers.</p>
+<p>Use <code>list</code> or (default) <code>deque</code> as the underlying container: NOT <code>vector</code>.</p>
+<p>There a three remarkable constructors for a <code>queue</code>:</p>
+<ul>
+<li>with no params: just call the default constructor of the underlying container.</li>
+<li>with a container instance.</li>
+<li>by cloning another queue with the same type.</li>
+</ul>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/queue/push"><code>push</code></a>
+and
+<a href="https://en.cppreference.com/w/cpp/container/queue/emplace"><code>emplace</code></a>
+methods to add an element to the end of the queue.</p>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/queue/pop"><code>pop</code></a>
+method to remove the first element in the queue.</p>
+<p>Use the
+<a href="https://en.cppreference.com/w/cpp/container/queue/back"><code>back</code></a>
+and
+<a href="https://en.cppreference.com/w/cpp/container/queue/front"><code>front</code></a>
+methods to access the last and first element in the queue respectively (reference).</p>
+<p><a href="https://en.cppreference.com/w/cpp/container/priority_queue"><code>std::priority_queue&lt;T,Cont,Comp&gt;</code></a>
+is a container adaptor that provides constant time lookup of the largest
+(by default) element, at the expense of logarithmic insertion and extraction.</p>
+<p>A user-provided Compare can be supplied to change the ordering, e.g. using
+<code>std::greater&lt;T&gt;</code> would cause the smallest element to appear as the top().</p>
+<p>Working with a priority_queue is similar to managing a heap in some random
+access container, with the benefit of not being able to accidentally
+invalidate the heap.</p>
+<p>The default container is <code>vector</code>, though any container providing fast back
+deletion/insertion and fast front access is adequate (<code>deque</code> also workds,
+but more memory is consumed).</p>
+<p>There a three remarkable constructors for a <code>priority_queue</code>:</p>
+<ul>
+<li>with no params: just call the default constructor of the underlying container.</li>
+<li>with a container and comparator instances.</li>
+<li>by cloning another priority_queue with the same type.</li>
+</ul>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/priority_queue/push"><code>push</code></a>
+inserts element and sorts the underlying container.</p>
+<p><a href="https://en.cppreference.com/w/cpp/container/priority_queue/emplace"><code>emplace</code></a>
+constructs element in-place and sorts the underlying container.</p>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/priority_queue/pop"><code>pop</code></a>
+method to remove the top element from the priority_queue.</p>
+<p>The
+<a href="https://en.cppreference.com/w/cpp/container/priority_queue/top"><code>top</code></a>
+returns a (const) reference to the top element in the priority queue.</p>
+<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\)</td></tr>
+<tr><td>top element access time</td><td>Constant</td></tr>
+<tr><td>insertion and removal at the top</td><td>\(\propto log(N)\)</td></tr>
+</tbody></table>
+<p>The class template
+<a href="https://en.cppreference.com/mwiki/index.php?title=cpp/container/span"><code>std::span&lt;T,Extent&gt;</code></a>
+describes an object that can refer to a contiguous
+sequence of objects with the first element of the sequence at position zero.
+A span can either have a static extent, in which case the number of elements
+in the sequence is known at compile-time and encoded in the type, or a dynamic
+extent.</p>
+<p>For a span <code>s</code>, pointers, iterators, and references to elements of <code>s</code> are
+invalidated when an operation invalidates a pointer in the range
+<code>[s.data(), s.data() + s.size()]</code>.</p>
+<p>constructors:</p>
+<ul>
+<li>from a another span</li>
+<li>from a standard array whose size is known at compile time or an <code>array&lt;T&gt;</code>,
+not arrays passed to functions (those are pointers).</li>
+<li>from a pair of iterators</li>
+<li>from an iterator and a number of elements</li>
+</ul>
+<p>element access:</p>
+<ul>
+<li>iterators</li>
+<li><code>front</code> and <code>back</code> methods, which return references to the first and last
+elements of the span.</li>
+<li><code>operator[]</code> returns a reference to an element at the given index, UB if the
+index is incompatible with the range. (there is no <code>at</code> method !!!).</li>
+<li><code>first(n)</code> which returns a span containing the first <code>n</code> elements of the span.</li>
+<li><code>last(n)</code> which returns a span containing the last <code>n</code> elements of the span.</li>
+<li><code>subspan(offset, count)</code> which returns a span containing <code>count</code> elements
+starting at position <code>offset</code> in the span.</li>
+</ul>
+<p>The class template
+<a href="https://en.cppreference.com/w/cpp/string/basic_string_view"><code>basic_string_view&lt;CharT, Traits&gt;</code></a>
+describes an object that can refer to a constant contiguous sequence of
+<code>CharT</code> with the first element of the sequence at position zero.</p>
+<p>For a basic_string_view str, pointers, iterators, and references to elements
+of str are invalidated when an operation invalidates a pointer in the range
+<code>[str.data(), str.data() + str.size())</code>.</p>
+<p>constructors:</p>
+<ul>
+<li>from another <code>string_view</code>, (cloning constructor).</li>
+<li>from a C-style string.</li>
+<li>from a C++ string.</li>
+<li>from a pointer to a block of characters and a count.</li>
+<li>from an interval of characters delimited by two iterators.</li>
+</ul>
+<p>element access:</p>
+<ul>
+<li>iterators</li>
+<li><code>front</code> and <code>back</code> methods, which return const references to the first and last
+characters of the string_view.</li>
+<li><code>operator[]</code> returns a const reference to a character at the given index,
+UB if the index is incompatible with the range.</li>
+<li><code>at()</code> returns a const reference to the character at specified location pos.
+Bounds checking is performed, exception of type <code>std::out_of_range</code> will be
+thrown on invalid access.</li>
+<li><code>substring(offset, count)</code> which returns a string_view containing <code>count</code>
+characters starting at position <code>offset</code> in the string_view.</li>
+<li><code>data()</code> Returns a pointer to the underlying character array. The pointer is
+such that the range <code>[data(), data() + size())</code> is valid and the values in it
+correspond to the values of the view.</li>
+</ul>
+<p>other useful methods:</p>
+<ul>
+<li><code>remove_prefix(n)</code> moves the start of the view forward by <code>n</code> characters. The
+behavior is undefined if <code>n</code> &gt; <code>size()</code>.</li>
+<li><code>remove_suffix(n)</code> moves the end of the view back by <code>n</code> characters. The
+behavior is undefined if <code>n</code> &gt; <code>size()</code>.</li>
+<li><code>swap(v)</code> exchanges the view with that of <code>v</code>.</li>
+<li><code>operator=(view)</code> replaces the view with that of <code>view</code>.</li>
+<li><code>starts_with(prefix)</code> checks if the string view begins with the given prefix.</li>
+<li><code>ends_with(suffix)</code> checks if the string view ends with the given suffix.</li>
+<li><code>find(v, pos)</code> finds the first substring equal to the given character sequence.
+Finds the first occurence of <code>v</code> in this view, starting at position <code>pos</code>.</li>
+<li><code>rfind(v, pos)</code> finds the last substring equal to the given character sequence.
+Finds the last occurence of <code>v</code> in this view, starting at position <code>pos</code>.</li>
+<li>the <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code> operators perform lexicographical
+comparisons between two string views.
+(can send a string view to a stream with <code>&lt;&lt;</code>).</li>
+<li>use the <code>&quot;blah&quot;sv</code> to declare a string view literal.
+(using namespace std::literals;).</li>
+</ul>
+<p>Favor using <code>string_view</code> over <code>string</code>. Substring extraction is done in linear
+time for <code>string</code> due to the copy. It is done in constant time for
+<code>string_view</code> because no copy is performed.</p>
+<p>The Ranges Library</p>
 <p>🔮</p>
 <a class="header" href="print.html#algorithms--data-structures" id="algorithms--data-structures"><h1>Algorithms &amp; Data Structures</h1></a>
 <p><strong>The Boyer Moore algorithm for the majority element</strong></p>
@@ -2793,6 +2976,8 @@ int majorityElement(int* nums, int numsSize) {
   return candidate;
 }
 </code></pre>
+<p><a href="https://en.wikipedia.org/wiki/Maximum_subarray_problem">Kadane's Algorithm</a>
+for the maximum subarray problem.</p>
 <a class="header" href="print.html#linear-data-structures" id="linear-data-structures"><h1>Linear Data Structures</h1></a>
 <a class="header" href="print.html#sorting" id="sorting"><h1>Sorting</h1></a>
 <a class="header" href="print.html#searching" id="searching"><h1>Searching</h1></a>
