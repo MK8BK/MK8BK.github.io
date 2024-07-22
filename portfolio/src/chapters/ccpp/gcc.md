@@ -1,4 +1,6 @@
-# gcc
+# Tooling for C/C++ Development
+
+## GCC 
 
 | Extension | File Type |
 |---|---|
@@ -13,7 +15,7 @@
 | .a | Unix/Linux/MacOS static library |
 | .dylib | MacOS dynamic library |
 
-## C
+### C
 ```bash
 gcc -c x.c # compile c source file into x.o object file
 gcc -c x.c y.c # compile c source files into x.o and y.o object files
@@ -36,7 +38,7 @@ gcc -include stddef.h -E -dM - </dev/null | less
 valgrind --leak-check=yes ./program_name # if not in PATH and in working dir
 ```
 
-## C++
+### C++
 ```bash
 g++ -c x.cpp # compile cpp source file into x.o object file
 g++ -c x.cpp y.cpp # compile cpp source files into x.o and y.o object files
@@ -53,5 +55,33 @@ g++ -o prog main.cpp -std=c++2a # use c++ 20 with gcc, not fully implemented yet
 ```
 
 
-
 debugging tip: undefined reference to smthg \\(\rightarrow\\) `-o ALL.o files`
+
+## CMake
+```bash
+mkdir build
+touch CMakeLists.txt
+# write the build system: nvim CMakeLists.txt
+cmake . -B build && cmake --build build
+```
+
+
+```cmake
+# cmake starter (https://cliutils.gitlab.io/modern-cmake/modern-cmake.pdf)
+cmake_minimum_required(VERSION 3.7...3.29)
+if(${CMAKE_VERSION} VERSION_LESS 3.12)
+    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
+endif()
+project(name 
+    VERSION 0.1
+    LANGUAGES CXX
+    DESCRIPTION "epic project idea"
+)
+
+add_executable()
+
+```
+
+
+## Gdb
+## Valgrind

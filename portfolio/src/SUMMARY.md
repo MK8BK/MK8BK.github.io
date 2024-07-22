@@ -6,7 +6,7 @@
     - [scripting](chapters/linux/bash.md)
     - [utilities](chapters/linux/utils.md)
 - [C/C++ Notes](chapters/ccpp/intro.md)
-    - [gcc](chapters/ccpp/gcc.md)
+    - [Tooling](chapters/ccpp/gcc.md)
     - [C](chapters/ccpp/c.md)
     - [C++](chapters/ccpp/cpp.md)
 - [Algorithms & Data Structures](chapters/algs/intro.md)
