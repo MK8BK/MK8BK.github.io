@@ -1,120 +1,203 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="en" class="light" dir="ltr">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>C++ - The Guides</title>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+
+        <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
 
-        <base href="../../">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
-        <link rel="shortcut icon" href="favicon.png">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- Custom theme stylesheets -->
 
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
         <!-- MathJax -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
-    <body class="light">
-        <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="intro.html"><strong>1.</strong> Introduction</a></li><li><a href="chapters/linux/intro.html"><strong>2.</strong> Linux Command Line</a></li><li><ul class="section"><li><a href="chapters/linux/vim.html"><strong>2.1.</strong> vim &amp; neovim</a></li><li><a href="chapters/linux/bash.html"><strong>2.2.</strong> scripting</a></li><li><a href="chapters/linux/utils.html"><strong>2.3.</strong> utilities</a></li></ul></li><li><a href="chapters/ccpp/intro.html"><strong>3.</strong> C/C++ Notes</a></li><li><ul class="section"><li><a href="chapters/ccpp/gcc.html"><strong>3.1.</strong> Tooling</a></li><li><a href="chapters/ccpp/c.html"><strong>3.2.</strong> C</a></li><li><a href="chapters/ccpp/cpp.html" class="active"><strong>3.3.</strong> C++</a></li></ul></li><li><a href="chapters/algs/intro.html"><strong>4.</strong> Algorithms &amp; Data Structures</a></li><li><ul class="section"><li><a href="chapters/algs/lds.html"><strong>4.1.</strong> Linear Data Structures</a></li><li><a href="chapters/algs/sorting.html"><strong>4.2.</strong> Sorting</a></li><li><a href="chapters/algs/searching.html"><strong>4.3.</strong> Searching</a></li><li><a href="chapters/algs/trees.html"><strong>4.4.</strong> Trees</a></li><li><a href="chapters/algs/graphs.html"><strong>4.5.</strong> Graphs</a></li><li><a href="chapters/algs/dnc.html"><strong>4.6.</strong> Divide &amp; Conquer</a></li><li><a href="chapters/algs/greedy.html"><strong>4.7.</strong> Greedy Algorithms</a></li><li><a href="chapters/algs/dynprog.html"><strong>4.8.</strong> Dynamic Programming</a></li><li><a href="chapters/algs/algs_graphs.html"><strong>4.9.</strong> Graph Algorithms</a></li><li><a href="chapters/algs/linprog.html"><strong>4.10.</strong> Linear Programming</a></li><li><a href="chapters/algs/algs_string.html"><strong>4.11.</strong> String Algorithms</a></li></ul></li><li><a href="chapters/leetcode/main.html"><strong>5.</strong> LeetCode Catalog</a></li><li><a href="chapters/theorynpcomp/intro.html"><strong>6.</strong> Theory of NP-Completeness</a></li><li><ul class="section"><li><a href="chapters/theorynpcomp/theorynpcomp.html"><strong>6.1.</strong> The Theory of NP-Completeness</a></li><li><a href="chapters/theorynpcomp/proofnpcomp.html"><strong>6.2.</strong> Proving NP-Complete Results</a></li></ul></li><li><a href="chapters/ocaml/intro.html"><strong>7.</strong> OCaml Functional Programming</a></li><li><ul class="section"><li><a href="chapters/ocaml/n99exercises.html"><strong>7.1.</strong> 99 Excercises in OCaml</a></li><li><a href="chapters/ocaml/lambdacalc.html"><strong>7.2.</strong> Lambda Calcul</a></li></ul></li><li><a href="chapters/umath/intro.html"><strong>8.</strong> Maths de 1er cycle</a></li><li><ul class="section"><li><a href="chapters/umath/reduction.html"><strong>8.1.</strong> Reduction des Endomorphismes</a></li></ul></li><li><a href="chapters/about/whoami.html"><strong>9.</strong> About</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../chapters/linux/intro.html"><strong aria-hidden="true">2.</strong> Linux Command Line</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/linux/vim.html"><strong aria-hidden="true">2.1.</strong> vim & neovim</a></li><li class="chapter-item expanded "><a href="../../chapters/linux/bash.html"><strong aria-hidden="true">2.2.</strong> scripting</a></li><li class="chapter-item expanded "><a href="../../chapters/linux/utils.html"><strong aria-hidden="true">2.3.</strong> utilities</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/ccpp/intro.html"><strong aria-hidden="true">3.</strong> C/C++ Notes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/ccpp/gcc.html"><strong aria-hidden="true">3.1.</strong> Tooling</a></li><li class="chapter-item expanded "><a href="../../chapters/ccpp/c.html"><strong aria-hidden="true">3.2.</strong> C</a></li><li class="chapter-item expanded "><a href="../../chapters/ccpp/cpp.html" class="active"><strong aria-hidden="true">3.3.</strong> C++</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/algs/intro.html"><strong aria-hidden="true">4.</strong> Algorithms & Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/algs/lds.html"><strong aria-hidden="true">4.1.</strong> Linear Data Structures</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/sorting.html"><strong aria-hidden="true">4.2.</strong> Sorting</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/searching.html"><strong aria-hidden="true">4.3.</strong> Searching</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/trees.html"><strong aria-hidden="true">4.4.</strong> Trees</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/graphs.html"><strong aria-hidden="true">4.5.</strong> Graphs</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/dnc.html"><strong aria-hidden="true">4.6.</strong> Divide & Conquer</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/greedy.html"><strong aria-hidden="true">4.7.</strong> Greedy Algorithms</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/dynprog.html"><strong aria-hidden="true">4.8.</strong> Dynamic Programming</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/algs_graphs.html"><strong aria-hidden="true">4.9.</strong> Graph Algorithms</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/linprog.html"><strong aria-hidden="true">4.10.</strong> Linear Programming</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/algs_string.html"><strong aria-hidden="true">4.11.</strong> String Algorithms</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/leetcode/main.html"><strong aria-hidden="true">5.</strong> LeetCode Catalog</a></li><li class="chapter-item expanded "><a href="../../chapters/theorynpcomp/intro.html"><strong aria-hidden="true">6.</strong> Theory of NP-Completeness</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/theorynpcomp/theorynpcomp.html"><strong aria-hidden="true">6.1.</strong> The Theory of NP-Completeness</a></li><li class="chapter-item expanded "><a href="../../chapters/theorynpcomp/proofnpcomp.html"><strong aria-hidden="true">6.2.</strong> Proving NP-Complete Results</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/ocaml/intro.html"><strong aria-hidden="true">7.</strong> OCaml Functional Programming</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/ocaml/n99exercises.html"><strong aria-hidden="true">7.1.</strong> 99 Excercises in OCaml</a></li><li class="chapter-item expanded "><a href="../../chapters/ocaml/lambdacalc.html"><strong aria-hidden="true">7.2.</strong> Lambda Calcul</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/umath/intro.html"><strong aria-hidden="true">8.</strong> Maths de 1er cycle</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/umath/reduction.html"><strong aria-hidden="true">8.1.</strong> Reduction des Endomorphismes</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/about/whoami.html"><strong aria-hidden="true">9.</strong> About</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
-                
-                <div id="menu-bar" class="menu-bar">
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">The Guides</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
-                        </a>
+
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <a class="header" href="chapters/ccpp/cpp.html#c" id="c"><h1>C++</h1></a>
+                    <main>
+                        <h1 id="c"><a class="header" href="#c">C++</a></h1>
 <p>In C++, a true <code>bool</code> type is available with only <code>true</code> and <code>false</code> values.</p>
 <p>In C, <code>'x'</code> and <code>'\n'</code> are of type <code>int</code>. In C++, they are of type <code>char</code>.</p>
 <p>Can decorate <code>1000000</code> as <code>1'000'000</code>.</p>
-<table><thead><tr><th> C header file </th><th> C++ header file </th></tr></thead><tbody>
-<tr><td> <code>assert.h</code> </td><td> <code>cassert</code> </td></tr>
-<tr><td> <code>ctype.h</code> </td><td> <code>cctype</code> </td></tr>
-<tr><td> <code>errno.h</code> </td><td> <code>cerrno</code> </td></tr>
-<tr><td> <code>float.h</code> </td><td> <code>cfloat</code> </td></tr>
-<tr><td> <code>limits.h</code> </td><td> <code>climits</code> </td></tr>
-<tr><td> <code>math.h</code> </td><td> <code>cmath</code> </td></tr>
-<tr><td> <code>stdarg.h</code> </td><td> <code>cstdarg</code> </td></tr>
-<tr><td> <code>stddef.h</code> </td><td> <code>cstddef</code> </td></tr>
-<tr><td> <code>stdint.h</code> </td><td> <code>cstdint</code> </td></tr>
-<tr><td> <code>stdio.h</code> </td><td> <code>cstdio</code> </td></tr>
-<tr><td> <code>stdlib.h</code> </td><td> <code>cstdlib</code> </td></tr>
-<tr><td> <code>string.h</code> </td><td> <code>cstring</code> </td></tr>
-<tr><td> <code>time.h</code> </td><td> <code>ctime</code> </td></tr>
+<div class="table-wrapper"><table><thead><tr><th>C header file</th><th>C++ header file</th></tr></thead><tbody>
+<tr><td><code>assert.h</code></td><td><code>cassert</code></td></tr>
+<tr><td><code>ctype.h</code></td><td><code>cctype</code></td></tr>
+<tr><td><code>errno.h</code></td><td><code>cerrno</code></td></tr>
+<tr><td><code>float.h</code></td><td><code>cfloat</code></td></tr>
+<tr><td><code>limits.h</code></td><td><code>climits</code></td></tr>
+<tr><td><code>math.h</code></td><td><code>cmath</code></td></tr>
+<tr><td><code>stdarg.h</code></td><td><code>cstdarg</code></td></tr>
+<tr><td><code>stddef.h</code></td><td><code>cstddef</code></td></tr>
+<tr><td><code>stdint.h</code></td><td><code>cstdint</code></td></tr>
+<tr><td><code>stdio.h</code></td><td><code>cstdio</code></td></tr>
+<tr><td><code>stdlib.h</code></td><td><code>cstdlib</code></td></tr>
+<tr><td><code>string.h</code></td><td><code>cstring</code></td></tr>
+<tr><td><code>time.h</code></td><td><code>ctime</code></td></tr>
 </tbody></table>
+</div>
 <p>Use C function in C++, if function is a common library function or was compiled
 by a c compiler.</p>
 <pre><code class="language-c">// in.c
 #include &lt;stdio.h&gt;
 
 void my_printer(char *s){
-  printf(&quot;%s\n&quot;, s);
+  printf("%s\n", s);
 }
 </code></pre>
 <p>compile with</p>
@@ -123,9 +206,9 @@ void my_printer(char *s){
 <pre><code class="language-cpp">// extern.cpp
 #include &lt;iostream&gt;
 
-extern &quot;C&quot; double sin(double);
+extern "C" double sin(double);
 
-extern &quot;C&quot;
+extern "C"
 {
   double cos(double);
   double tan(double);
@@ -173,7 +256,7 @@ namespace</em>)</p>
 <pre><code class="language-cpp">#include &lt;cstdio&gt;
 
 int main(){
-    ::printf(&quot;bruh\n&quot;);
+    ::printf("bruh\n");
     return 0;
 }
 </code></pre>
@@ -218,7 +301,7 @@ other compilation unit</em>).</p>
 <pre><code class="language-cpp">double&amp; r1; // NOOOOO
 extern double&amp; r2; // OK, make sure it's defined elsewhere
 </code></pre>
-<p>&quot;References behave like constant pointers who are automatically dereferenced&quot;</p>
+<p>"References behave like constant pointers who are automatically dereferenced"</p>
 <pre><code class="language-cpp">auto i = ... ; // let the compiler deduce the appropriate type
 decltype(expr) j = ... ; // declare the variable j as having the same type as expr
 </code></pre>
@@ -235,13 +318,13 @@ dynamic_cast&lt;new_type&gt;(expr); // stoopid oop nonsense
 </code></pre>
 <p>A function whose result is declared to be constexr can be evaluated at compile
 time if its arguments are const, constexpr or litterals.</p>
-<p><img src="media/constexpr_func.png" width=600/></p>
+<img src="media/constexpr_func.png" width=600/>
 <p><code>consteval</code> - specifies that a function is an immediate function, that is,
 every call to the function must produce a compile-time constant.</p>
-<p><img src="media/consteval.png" width=600/></p>
+<img src="media/consteval.png" width=600/>
 <p>Conditionally compile with <code>if constexpr(expr)</code> where <code>expr</code> is an expression
 known at compile time.</p>
-<pre><code class="language-cpp">static_assert(expr, &quot;message&quot;); // expr must be evaluated at compile time
+<pre><code class="language-cpp">static_assert(expr, "message"); // expr must be evaluated at compile time
 </code></pre>
 <pre><code class="language-cpp">double a[30];
 for(double x : a)
@@ -466,19 +549,19 @@ public:
 };
 
 void Y::do_smthg(){
-  cout &lt;&lt; &quot;y do\n&quot;;
+  cout &lt;&lt; "y do\n";
 }
 
 void Y::do_smthg_else(){
-  cout &lt;&lt; &quot;y do\n&quot;;
+  cout &lt;&lt; "y do\n";
 }
 
 void X::do_smthg(){
-  cout &lt;&lt; &quot;x do\n&quot;;
+  cout &lt;&lt; "x do\n";
 }
 
 void X::do_smthg_else(){
-  cout &lt;&lt; &quot;x do\n&quot;;
+  cout &lt;&lt; "x do\n";
 }
 
 int main(){
@@ -613,11 +696,11 @@ if superclass), its block is executed. The other <code>catch</code> blocks are a
 , even when the parameters match. ORDEEEER!</p>
 <p>Throwing an exception should never cause a memory leak, use RAII.</p>
 <p>IOS INBREEDING</p>
-<p><img src="media/family1.png" width=300 height=200/>
+<img src="media/family1.png" width=300 height=200/>
 <img src="media/family2.png" width=300 height=200/>
 <img src="media/family3.png" width=300 height=200/>
 <img src="media/family4.png" width=300 height=200/>
-<img src="media/iostream_fam.png" width=600 /></p>
+<img src="media/iostream_fam.png" width=600 />
 <p><code>std::cout</code>, <code>std::cerr</code> and <code>std::clog</code> are all instances of <code>std::ostream</code>,
 <em>ie:</em> <code>std::basic_ostream&lt;char&gt;</code>.</p>
 <p><code>std::cin</code> is an instance of <code>std::istream</code>,
@@ -693,10 +776,10 @@ basic_ios.
 <pre><code class="language-cpp">#include &lt;fstream&gt;
 #include &lt;iostream&gt;
 int main(){
-  std::ifstream dat(&quot;test.dat&quot;, std::ios_base::in | std::ios_base::binary);
-  std::cout &lt;&lt; &quot;ifstream rdbuffer is open? &quot; &lt;&lt; dat.rdbuf()-&gt;is_open() &lt;&lt; std::endl;
+  std::ifstream dat("test.dat", std::ios_base::in | std::ios_base::binary);
+  std::cout &lt;&lt; "ifstream rdbuffer is open? " &lt;&lt; dat.rdbuf()-&gt;is_open() &lt;&lt; std::endl;
   dat.rdbuf()-&gt;close();
-  std::cout &lt;&lt; &quot;ifstream rdbuffer is open? &quot; &lt;&lt; dat.rdbuf()-&gt;is_open() &lt;&lt; std::endl;
+  std::cout &lt;&lt; "ifstream rdbuffer is open? " &lt;&lt; dat.rdbuf()-&gt;is_open() &lt;&lt; std::endl;
   return 0;
 }
 </code></pre>
@@ -714,7 +797,7 @@ Used to ckeck if a file opened for reading exists.</p>
 <p><a href="https://stackoverflow.com/questions/4872361/why-are-there-two-different-getline-functions-if-indeed-there-are"><code>stackoverflow</code></a></p>
 <blockquote>
 <p>The global getline() function works with C++ std::string objects.
-The istream::getline() methods work with &quot;classic&quot; C strings (pointers to char).</p>
+The istream::getline() methods work with "classic" C strings (pointers to char).</p>
 </blockquote>
 <p>Use <a href="https://en.cppreference.com/w/cpp/io/basic_istringstream"><code>istringstream</code></a>
 to convert a string into an objet whose class supports the <code>&gt;&gt;</code> operator.</p>
@@ -723,19 +806,19 @@ returns a copy of the underlying string.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
 #include &lt;sstream&gt;
 int main(){
-  std::string s1 = &quot;1 2&quot;;
+  std::string s1 = "1 2";
   std::istringstream is(s1);
 
   // obtain string in the input string stream
   std::cout &lt;&lt; is.str() &lt;&lt; std::endl; // prints: 1 2
 
   // change string in the input string stream
-  std::string s2 = &quot;3 4&quot;;
+  std::string s2 = "3 4";
   is.str(s2);
 
   int a, b;
   is &gt;&gt; a &gt;&gt; b; // read input string stream
-  std::cout &lt;&lt; &quot;a=&quot; &lt;&lt; a &lt;&lt; &quot; b=&quot; &lt;&lt; b &lt;&lt; std::endl; // prints: a=3 b=4
+  std::cout &lt;&lt; "a=" &lt;&lt; a &lt;&lt; " b=" &lt;&lt; b &lt;&lt; std::endl; // prints: a=3 b=4
   return 0;
 }
 </code></pre>
@@ -785,14 +868,14 @@ comes is overloaded:</p>
 template &lt;typename T&gt;
 std::string toString(const T&amp; x){
   std::ostringstream os(std::ios_base::app); // append to file
-  std::string buf = &quot;*&quot;; // arbitrary prefix to show the effect of append mode
+  std::string buf = "*"; // arbitrary prefix to show the effect of append mode
   os.str(buf);
   os &lt;&lt; x;
   return os.str();
 }
 int main(){
   std::string pi_str = toString(std::acos(-1.0));
-  std::cout &lt;&lt; &quot;PI=&quot; &lt;&lt; pi_str &lt;&lt; std::endl; // PI=*3.14159
+  std::cout &lt;&lt; "PI=" &lt;&lt; pi_str &lt;&lt; std::endl; // PI=*3.14159
   return 0;
 }
 </code></pre>
@@ -806,36 +889,36 @@ int main() {
   bool v = true;
 
   // boolalpha , noboolalpha
-  std::cout &lt;&lt; std::boolalpha &lt;&lt; v &lt;&lt; &quot; &quot; &lt;&lt; std::noboolalpha &lt;&lt; v &lt;&lt; std::endl;
+  std::cout &lt;&lt; std::boolalpha &lt;&lt; v &lt;&lt; " " &lt;&lt; std::noboolalpha &lt;&lt; v &lt;&lt; std::endl;
   v = false; // print: true 1
-  std::cout &lt;&lt; std::boolalpha &lt;&lt; v &lt;&lt; &quot; &quot; &lt;&lt; std::noboolalpha &lt;&lt; v
+  std::cout &lt;&lt; std::boolalpha &lt;&lt; v &lt;&lt; " " &lt;&lt; std::noboolalpha &lt;&lt; v
             &lt;&lt; std::endl; // print: false 0
 
   // showbase, noshowbase, dec, hex, oct
   std::cout &lt;&lt; std::showbase;
-  std::cout &lt;&lt; std::dec &lt;&lt; 15 &lt;&lt; &quot; &quot; &lt;&lt; std::hex &lt;&lt; 15 &lt;&lt; std::oct &lt;&lt; &quot; &quot; &lt;&lt; 15
+  std::cout &lt;&lt; std::dec &lt;&lt; 15 &lt;&lt; " " &lt;&lt; std::hex &lt;&lt; 15 &lt;&lt; std::oct &lt;&lt; " " &lt;&lt; 15
             &lt;&lt; std::endl; // prints: 15 0xf 017
   std::cout &lt;&lt; std::noshowbase;
-  std::cout &lt;&lt; std::dec &lt;&lt; 15 &lt;&lt; &quot; &quot; &lt;&lt; std::hex &lt;&lt; 15 &lt;&lt; std::oct &lt;&lt; &quot; &quot; &lt;&lt; 15
+  std::cout &lt;&lt; std::dec &lt;&lt; 15 &lt;&lt; " " &lt;&lt; std::hex &lt;&lt; 15 &lt;&lt; std::oct &lt;&lt; " " &lt;&lt; 15
             &lt;&lt; std::endl; // prints: 15 f 17
 
   // showpoint, noshowpoint
   double d = 33.0, q = 33.1;
-  std::cout &lt;&lt; std::showpoint &lt;&lt; d &lt;&lt; &quot; &quot; &lt;&lt; std::noshowpoint &lt;&lt; d &lt;&lt; &quot; &quot; &lt;&lt; q
+  std::cout &lt;&lt; std::showpoint &lt;&lt; d &lt;&lt; " " &lt;&lt; std::noshowpoint &lt;&lt; d &lt;&lt; " " &lt;&lt; q
             &lt;&lt; std::endl; // prints: 33.0000 33 33.1
 
   // showpos, noshowpos
   double pi = 3.14159;
-  std::cout &lt;&lt; std::showpos &lt;&lt; pi &lt;&lt; &quot; &quot; &lt;&lt; 0.0 &lt;&lt; &quot; &quot; &lt;&lt; std::noshowpos &lt;&lt; pi
+  std::cout &lt;&lt; std::showpos &lt;&lt; pi &lt;&lt; " " &lt;&lt; 0.0 &lt;&lt; " " &lt;&lt; std::noshowpos &lt;&lt; pi
             &lt;&lt; std::endl; // prints: +3.14159 +0 3.14159
 
   // skipws, noskipws
   char c1, c2, c3;
-  std::cout &lt;&lt; &quot;type&gt;&quot;;
+  std::cout &lt;&lt; "type&gt;";
   std::cin &gt;&gt; std::skipws &gt;&gt; c1 &gt;&gt; std::noskipws &gt;&gt; c2 &gt;&gt;
       c3; // type: &lt;space&gt; A &lt;space&gt; B
-  std::cout &lt;&lt; std::hex &lt;&lt; std::showbase &lt;&lt; static_cast&lt;int&gt;(c1) &lt;&lt; &quot; &quot;
-            &lt;&lt; static_cast&lt;int&gt;(c2) &lt;&lt; &quot; &quot; &lt;&lt; static_cast&lt;int&gt;(c3)
+  std::cout &lt;&lt; std::hex &lt;&lt; std::showbase &lt;&lt; static_cast&lt;int&gt;(c1) &lt;&lt; " "
+            &lt;&lt; static_cast&lt;int&gt;(c2) &lt;&lt; " " &lt;&lt; static_cast&lt;int&gt;(c3)
             &lt;&lt; std::endl; // prints: 0x41 0x20 0x42
 
   // scientific, fixed, defaultfloat, hexfloat
@@ -849,9 +932,9 @@ int main() {
   double y = 300.1234;
   int k = -559038737;
   std::cout &lt;&lt; std::scientific &lt;&lt; std::hex;
-  std::cout &lt;&lt; std::uppercase &lt;&lt; y &lt;&lt; &quot; &quot; &lt;&lt; k
+  std::cout &lt;&lt; std::uppercase &lt;&lt; y &lt;&lt; " " &lt;&lt; k
             &lt;&lt; std::endl; // prints: 3.001234E+02 0XDEADBEEF
-  std::cout &lt;&lt; std::nouppercase &lt;&lt; y &lt;&lt; &quot; &quot; &lt;&lt; k
+  std::cout &lt;&lt; std::nouppercase &lt;&lt; y &lt;&lt; " " &lt;&lt; k
             &lt;&lt; std::endl; // prints: 3.001234e+02 0xdeadbeef
 
   // std::setfill, std::left, std::right and std::internal
@@ -865,19 +948,19 @@ int main() {
 
   // std::ws
   char c4, c5;
-  std::cout &lt;&lt; &quot;type&gt;&quot;;
+  std::cout &lt;&lt; "type&gt;";
   std::cin &gt;&gt; std::skipws &gt;&gt; c4 &gt;&gt; std::noskipws &gt;&gt; std::ws &gt;&gt;
       c5; // type: &lt;space&gt; A &lt;space&gt; B
-  std::cout &lt;&lt; std::hex &lt;&lt; std::showbase &lt;&lt; static_cast&lt;int&gt;(c4) &lt;&lt; &quot; &quot;
+  std::cout &lt;&lt; std::hex &lt;&lt; std::showbase &lt;&lt; static_cast&lt;int&gt;(c4) &lt;&lt; " "
             &lt;&lt; static_cast&lt;int&gt;(c5) &lt;&lt; std::endl; // prints: 0x41 0x42
 
   // std::ends
   std::ostringstream os;
-  os &lt;&lt; &quot;AAA&quot; &lt;&lt; std::ends &lt;&lt; &quot;BBB&quot; &lt;&lt; std::ends &lt;&lt; &quot;CCC&quot; &lt;&lt; std::ends
+  os &lt;&lt; "AAA" &lt;&lt; std::ends &lt;&lt; "BBB" &lt;&lt; std::ends &lt;&lt; "CCC" &lt;&lt; std::ends
      &lt;&lt; std::flush; // make c style strings
   std::string s = os.str();
   for (auto c : s)
-    std::cout &lt;&lt; std::hex &lt;&lt; std::showbase &lt;&lt; static_cast&lt;int&gt;(c) &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; std::hex &lt;&lt; std::showbase &lt;&lt; static_cast&lt;int&gt;(c) &lt;&lt; " ";
   // prints: 0x41 0x41 0x41 0 0x42 0x42 0x42 0 0x43 0x43 0x43 0
   std::cout &lt;&lt; std::endl;
 
@@ -939,14 +1022,14 @@ such as the ones found in csv, json or xml.</p>
 #include &lt;iostream&gt;
 
 int main(){
-  std::string s, q = &quot;c++ is fabulous&quot;;
+  std::string s, q = "c++ is fabulous";
 
   std::stringstream flow;
   flow &lt;&lt; q;
   flow &gt;&gt; s;
   std::cout &lt;&lt; s &lt;&lt; std::endl; // prints: c++
 
-  std::stringstream qflow; // implicit &quot;
+  std::stringstream qflow; // implicit "
   qflow &lt;&lt; std::quoted(q);
   qflow &gt;&gt; std::quoted(s);
   std::cout &lt;&lt; s &lt;&lt; std::endl; // prints: c++ is fabulous
@@ -983,11 +1066,11 @@ manip(flow);
 
 template&lt;typename C, typename T&gt;
 std::basic_ostream&lt;C,T&gt;&amp; compilation_date(std::basic_ostream&lt;C,T&gt;&amp; os){
-  return os &lt;&lt; __DATE__ &lt;&lt; &quot; &quot; &lt;&lt; __TIME__ &lt;&lt; std::flush;
+  return os &lt;&lt; __DATE__ &lt;&lt; " " &lt;&lt; __TIME__ &lt;&lt; std::flush;
 }
 
 int main(){
-  std::cout &lt;&lt; &quot;Version : &quot; &lt;&lt; compilation_date;
+  std::cout &lt;&lt; "Version : " &lt;&lt; compilation_date;
   std::endl(std::cout); // equivalent to
   std::cout &lt;&lt; std::endl;
   return 0;
@@ -1001,9 +1084,9 @@ std::cout &lt;&lt; (8&gt;&gt;2) &lt;&lt; std::endl; // equivalent to 8 / 2^2
 <ul>
 <li>the return type is automatically is automagically deduced by the compiler.</li>
 </ul>
-<pre><code class="language-cpp">auto f = [](const char *s=&quot; default\n&quot;){std::cout &lt;&lt; 42 &lt;&lt; s &lt;&lt; std::endl;};
+<pre><code class="language-cpp">auto f = [](const char *s=" default\n"){std::cout &lt;&lt; 42 &lt;&lt; s &lt;&lt; std::endl;};
 f(); // prints: 42 default
-f(&quot; not default&quot;); // prints: 42 not default
+f(" not default"); // prints: 42 not default
 [](int n){std::cout &lt;&lt; n &lt;&lt; std::endl;}(32); // prints: 32
 </code></pre>
 <p>Use <code>decltype(name)</code> to get the type of a lambda function named <code>name</code> (often
@@ -1028,7 +1111,7 @@ std::cout &lt;&lt; maxi(1, 0) &lt;&lt; std::endl; // prints: 1
 std::cout &lt;&lt; maxi('a', 'c') &lt;&lt; std::endl; // prints: c
 std::cout &lt;&lt; maxi(1, 3.14) &lt;&lt; std::endl; // does not compile
 // maxi would have to return either a or b of type int or double -- incompatible
-// &quot; Inconsistent types 'double' and 'int'
+// " Inconsistent types 'double' and 'int'
 </code></pre>
 <p>to force a lambda to return a type:</p>
 <pre><code class="language-cpp">auto maxi = [](auto a, auto b) -&gt; decltype(a) {
@@ -1110,9 +1193,9 @@ wrapper for example).</li>
 
 int main() {
   int x = 32, y = 3;
-  std::cout &lt;&lt; &quot;x=&quot; &lt;&lt; x &lt;&lt; &quot; y=&quot; &lt;&lt; y &lt;&lt; std::endl; // prints: x=32 y=3
+  std::cout &lt;&lt; "x=" &lt;&lt; x &lt;&lt; " y=" &lt;&lt; y &lt;&lt; std::endl; // prints: x=32 y=3
   [&amp;a = x, b = y]() { a = b;}();
-  std::cout &lt;&lt; &quot;x=&quot; &lt;&lt; x &lt;&lt; &quot; y=&quot; &lt;&lt; y &lt;&lt; std::endl; // prints: x=3 y=3
+  std::cout &lt;&lt; "x=" &lt;&lt; x &lt;&lt; " y=" &lt;&lt; y &lt;&lt; std::endl; // prints: x=3 y=3
   return 0;
 }
 </code></pre>
@@ -1138,7 +1221,7 @@ int main() {
   // performs products, prints: 40320
   int r3 = reduce(v, nv, 0, [](int a, int b) { return a ^ b; });
   // performs consecutive xor's (checksum), prints: 8
-  std::cout &lt;&lt; r1 &lt;&lt; &quot; &quot; &lt;&lt; r2 &lt;&lt; &quot; &quot; &lt;&lt; r3 &lt;&lt; std::endl;
+  std::cout &lt;&lt; r1 &lt;&lt; " " &lt;&lt; r2 &lt;&lt; " " &lt;&lt; r3 &lt;&lt; std::endl;
   return 0;
 }
 </code></pre>
@@ -1204,10 +1287,10 @@ template &lt;typename C&gt; void displayAll(C &amp;c) {
   typename C::iterator it; // specify explicitly that C::iterator is a type, and
                            // declare it to be of that type
   for (it = c.begin(); it != c.end(); it++)
-    std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; *it &lt;&lt; " ";
   // // or in C++11 onward:
   // for(auto it = c.begin(); it!=c.end(); it++)
-  //   std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+  //   std::cout &lt;&lt; *it &lt;&lt; " ";
   std::cout &lt;&lt; std::endl;
 }
 
@@ -1225,18 +1308,18 @@ not <code>&lt;c.end()</code>.</p>
 <a href="https://en.cppreference.com/w/cpp/iterator/basic_const_iterator"><code>const_iterator</code></a></p>
 <pre><code class="language-cpp">template &lt;typename C&gt; void displayAll(const C &amp;c) {
   for(auto it = c.begin(); it!=c.end(); it++) // it is a const_iterator
-    std::cout &lt;&lt; *it &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; *it &lt;&lt; " ";
   std::cout &lt;&lt; std::endl;
 }
 </code></pre>
-<table><thead><tr><th> Iterator form </th><th> Description </th></tr></thead><tbody>
-<tr><td> input iterator </td><td> Read only, forward moving </td></tr>
-<tr><td> output iterator </td><td> Write only, forward moving </td></tr>
-<tr><td> forward iterator </td><td> Both read and write, forward moving </td></tr>
-<tr><td> bidirectional iterator </td><td> Read and write, forward and backward moving </td></tr>
-<tr><td> random access iterator </td><td> Read and write, Red and write, random access </td></tr>
+<div class="table-wrapper"><table><thead><tr><th>Iterator form</th><th>Description</th></tr></thead><tbody>
+<tr><td>input iterator</td><td>Read only, forward moving</td></tr>
+<tr><td>output iterator</td><td>Write only, forward moving</td></tr>
+<tr><td>forward iterator</td><td>Both read and write, forward moving</td></tr>
+<tr><td>bidirectional iterator</td><td>Read and write, forward and backward moving</td></tr>
+<tr><td>random access iterator</td><td>Read and write, Red and write, random access</td></tr>
 </tbody></table>
-<p><img src="media/iterator_examples.png" width=400 /></p>
+</div><img src="media/iterator_examples.png" width=400 />
 <p>There are three principal types of iterators:</p>
 <ul>
 <li>Iterators that move forward (
@@ -1296,17 +1379,17 @@ class X {
 public:
   X(double x, char c = 'c') : x_(x), c_(c) {}
   friend std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, const X &amp;x) {
-    return os &lt;&lt; x.c_ &lt;&lt; &quot;:&quot; &lt;&lt; x.x_;
+    return os &lt;&lt; x.c_ &lt;&lt; ":" &lt;&lt; x.x_;
   }
 };
 
 template &lt;typename T&gt;
 std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, std::vector&lt;T&gt; v) {
-  os &lt;&lt; &quot;{&quot;;
+  os &lt;&lt; "{";
   for (auto val = v.begin(); val != v.end(); val++) {
-    os &lt;&lt; *val &lt;&lt; &quot;,&quot;;
+    os &lt;&lt; *val &lt;&lt; ",";
   }
-  return os &lt;&lt; &quot;}&quot;;
+  return os &lt;&lt; "}";
 }
 
 int main() {
@@ -1380,21 +1463,21 @@ default value.</p>
 auto p = &amp;v[0];
 auto pmax = p+v.size();
 for(; p!=pmax; p++)
-  std::cout &lt;&lt; *p &lt;&lt; &quot; &quot;; // prints: 1 2 3 4 5
+  std::cout &lt;&lt; *p &lt;&lt; " "; // prints: 1 2 3 4 5
 </code></pre>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
-<tr><td>memory</td><td>\(\propto N\) </td></tr>
-<tr><td>insertion at the front</td><td>\(\propto N\) </td></tr>
-<tr><td>insertion at the back</td><td> Constant (and cheap)</td></tr>
-<tr><td>insertion at position \(p\)</td><td> \(\propto (N-p)\)</td></tr>
-<tr><td>deletion at the front</td><td>\(\propto N\) </td></tr>
-<tr><td>deletion at the back</td><td> Constant (and cheap)</td></tr>
-<tr><td>deletion at position \(p\)</td><td> \(\propto (N-p)\)</td></tr>
-<tr><td>access via index</td><td> Constant (and very cheap)</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> YES ⚠️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\)</td></tr>
+<tr><td>insertion at the front</td><td>\(\propto N\)</td></tr>
+<tr><td>insertion at the back</td><td>Constant (and cheap)</td></tr>
+<tr><td>insertion at position \(p\)</td><td>\(\propto (N-p)\)</td></tr>
+<tr><td>deletion at the front</td><td>\(\propto N\)</td></tr>
+<tr><td>deletion at the back</td><td>Constant (and cheap)</td></tr>
+<tr><td>deletion at position \(p\)</td><td>\(\propto (N-p)\)</td></tr>
+<tr><td>access via index</td><td>Constant (and very cheap)</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>YES ⚠️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>YES ⚠️</td></tr>
 </tbody></table>
- <!-- DEQUE -->
+</div> <!-- DEQUE -->
 <p><a href="https://en.cppreference.com/w/cpp/container/deque"><code>std::deque</code></a>
 is double-ended
 queue. Insertions and deletions at the front and back are constant time.</p>
@@ -1430,21 +1513,21 @@ std::back_insert_iterator&lt;std::deque&lt;int&gt;&gt; i(di);
 *i++ = 100;
 *i++ = 299;
 for (const auto &amp;val : di)
-  std::cout &lt;&lt; val &lt;&lt; &quot; &quot;; // prints: 100 299
+  std::cout &lt;&lt; val &lt;&lt; " "; // prints: 100 299
 std::cout &lt;&lt; std::endl;
 
 std::front_insert_iterator&lt;std::deque&lt;int&gt;&gt; fi(di); 
 *fi++ = 0;
 *fi++ = 1;
 for (const auto &amp;val : di)
-  std::cout &lt;&lt; val &lt;&lt; &quot; &quot;; // prints: 1 0 100 299
+  std::cout &lt;&lt; val &lt;&lt; " "; // prints: 1 0 100 299
 std::cout &lt;&lt; std::endl;
 
 std::insert_iterator&lt;std::deque&lt;int&gt;&gt; ii(di, di.begin()+2);
 *ii++ = -1;
 *ii++ = -2;
 for (const auto &amp;val : di)
-  std::cout &lt;&lt; val &lt;&lt; &quot; &quot;; // prints: 1 0 -1 -2 100 299
+  std::cout &lt;&lt; val &lt;&lt; " "; // prints: 1 0 -1 -2 100 299
 std::cout &lt;&lt; std::endl;
 </code></pre>
 <p>Deque elements can be accessed:</p>
@@ -1463,18 +1546,19 @@ exception if incompatible index.</li>
 <a href="https://en.cppreference.com/w/cpp/container/deque/back"><code>back</code></a> methods
 which return references to the first and last element in the deque.</li>
 </ul>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
-<tr><td>memory</td><td>\(\propto N\) (&gt; vector) </td></tr>
-<tr><td>insertion at the front</td><td>Constant (and cheap) </td></tr>
-<tr><td>insertion at the back</td><td> Constant (and cheap)</td></tr>
-<tr><td>insertion at position \(p\)</td><td> \(\propto N\)</td></tr>
-<tr><td>deletion at the front</td><td> Constant (and cheap)</td></tr>
-<tr><td>deletion at the back</td><td> Constant (and cheap)</td></tr>
-<tr><td>deletion at position \(p\)</td><td> \(\propto N\)</td></tr>
-<tr><td>access via index</td><td> Constant (&gt;vector)</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<tr><td>memory</td><td>\(\propto N\) (&gt; vector)</td></tr>
+<tr><td>insertion at the front</td><td>Constant (and cheap)</td></tr>
+<tr><td>insertion at the back</td><td>Constant (and cheap)</td></tr>
+<tr><td>insertion at position \(p\)</td><td>\(\propto N\)</td></tr>
+<tr><td>deletion at the front</td><td>Constant (and cheap)</td></tr>
+<tr><td>deletion at the back</td><td>Constant (and cheap)</td></tr>
+<tr><td>deletion at position \(p\)</td><td>\(\propto N\)</td></tr>
+<tr><td>access via index</td><td>Constant (&gt;vector)</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>YES ⚠️</td></tr>
 </tbody></table>
+</div>
 <p>Use a deque when operations at the front are common and the number of elements
 is high.</p>
 <blockquote>
@@ -1509,20 +1593,20 @@ Insertion or removal of elements - linear O(n).</p>
 cannot be extended.</p>
 <p>Useful constructors:</p>
 <pre><code class="language-cpp">std::array&lt;int,5&gt; a0;
-for(const auto&amp; x:a0) std::cout &lt;&lt; x &lt;&lt; &quot; &quot;; 
+for(const auto&amp; x:a0) std::cout &lt;&lt; x &lt;&lt; " "; 
 // prints: whatever was stored there before, garbage
 std::cout &lt;&lt; std::endl;
 
 std::array&lt;int,5&gt; a1 = {1,2,3,4};
 // std::array&lt;int,5&gt; a1({1,2,3,4}); // equivalent
-for(const auto&amp; x:a1) std::cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+for(const auto&amp; x:a1) std::cout &lt;&lt; x &lt;&lt; " ";
 // prints: 1 2 3 4 0
 std::cout &lt;&lt; std::endl;
 
 // std::array&lt;int, 5&gt; a2 = {1,2,3,4,5,6}; // compilation error
 
 std::array&lt;int, 5&gt; c(a1); // cloning constructor
-for(const auto&amp; x:c) std::cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+for(const auto&amp; x:c) std::cout &lt;&lt; x &lt;&lt; " ";
 // prints: 1 2 3 4 0
 std::cout &lt;&lt; std::endl;
 </code></pre>
@@ -1554,13 +1638,14 @@ in that case).</li>
 to a pointer to its first element; for a function to receive an <code>std::array&lt;T, N&gt;</code>
 use a formal parameter of type <code>std::array&lt;T, N&gt;</code> or <code>std::array&lt;T,N&gt;&amp;</code> but never
 <code>T*</code>.</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\)</td></tr>
 <tr><td>insertions and deletions</td><td>NO ES POSIBLE!</td></tr>
-<tr><td>access via index</td><td> Constant </td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>access via index</td><td>Constant</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>NO ✅️</td></tr>
 </tbody></table>
+</div>
 <p>The <code>std::array&lt;T,N&gt;</code> container is NEVER REALLOCATED.</p>
 <p>Use an <code>array</code> if you want to use C style arrays with an OO interface.</p>
 <p><code>std::array::size()</code> is <code>constexpr</code>. Two arrays of different sizes don't even
@@ -1572,26 +1657,27 @@ have the same type (bcoz template param <code>N</code> is the size).</p>
 <li><code>A</code> is the allocater type for type <code>C</code></li>
 </ul>
 <p>classes defined in <code>&lt;string&gt;</code>:</p>
-<table><thead><tr><th>name</th><th>definition</th><th>encoding</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>definition</th><th>encoding</th></tr></thead><tbody>
 <tr><td>string</td><td>basic_string<char></td><td>ASCII</td></tr>
 <tr><td>wstring</td><td>basic_string&lt;wchar_t&gt;</td><td>unicode 16 or 32</td></tr>
 <tr><td>u16string</td><td>basic_string&lt;char16_t&gt;</td><td>unicode 16</td></tr>
 <tr><td>u32string</td><td>basic_string&lt;char32_t&gt;</td><td>unicode 32</td></tr>
 </tbody></table>
+</div>
 <p>characters in the string class are stored contiguously.</p>
 <p>some useful constructors of <code>std::string</code></p>
 <pre><code class="language-cpp">std::string s1;
-std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s1 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // []
-std::string s2 = &quot;abcdf fjd&quot;;
-std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s2 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [abcdf fjd]
+std::cout &lt;&lt; "[" &lt;&lt; s1 &lt;&lt; "]" &lt;&lt; std::endl; // []
+std::string s2 = "abcdf fjd";
+std::cout &lt;&lt; "[" &lt;&lt; s2 &lt;&lt; "]" &lt;&lt; std::endl; // [abcdf fjd]
 std::string s3 = s2;
-std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s3 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [abcdf fjd]
+std::cout &lt;&lt; "[" &lt;&lt; s3 &lt;&lt; "]" &lt;&lt; std::endl; // [abcdf fjd]
 std::string s4(s2, 4, 3);
-std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s4 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [f f]
+std::cout &lt;&lt; "[" &lt;&lt; s4 &lt;&lt; "]" &lt;&lt; std::endl; // [f f]
 std::string s5 = {'a', 'e', 'i', 'o', 'u', 'y'};
-std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s5 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [aeiouy]
+std::cout &lt;&lt; "[" &lt;&lt; s5 &lt;&lt; "]" &lt;&lt; std::endl; // [aeiouy]
 std::string s6(6, '-');
-std::cout &lt;&lt; &quot;[&quot; &lt;&lt; s6 &lt;&lt; &quot;]&quot; &lt;&lt; std::endl; // [------]
+std::cout &lt;&lt; "[" &lt;&lt; s6 &lt;&lt; "]" &lt;&lt; std::endl; // [------]
 </code></pre>
 <p>String characters can be accessed:</p>
 <ul>
@@ -1614,18 +1700,19 @@ which return references to the first and last characters in the string.</li>
 which: returns a pointer to a null-terminated character array with data
 equivalent to those stored in the string (<em>ie:</em> an equivalent C style string).</li>
 </ul>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\)</td></tr>
 <tr><td>insertions and deletions at the end</td><td>Constant</td></tr>
 <tr><td>insertions and deletions at the beginning</td><td>\(\propto N\)</td></tr>
 <tr><td>insertions and deletions at the position \(p\)</td><td>\(\propto (N-p)\)</td></tr>
-<tr><td>access via index</td><td> Constant </td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> YES ⚠️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> YES ⚠️</td></tr>
+<tr><td>access via index</td><td>Constant</td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>YES ⚠️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>YES ⚠️</td></tr>
 </tbody></table>
-<p><code>void f(const string&amp;);</code> accepts the parameter <code>&quot;c style string&quot;</code>, convesion
-by constructor: <code>f (string(&quot;c style string&quot;))</code>. To get a <code>string</code> instance
-directly, use the suffix <code>s</code> after the <code>&quot;</code>. <code>f(&quot;real string instance&quot;s)</code>,
+</div>
+<p><code>void f(const string&amp;);</code> accepts the parameter <code>"c style string"</code>, convesion
+by constructor: <code>f (string("c style string"))</code>. To get a <code>string</code> instance
+directly, use the suffix <code>s</code> after the <code>"</code>. <code>f("real string instance"s)</code>,
 this way no data needs to be copied.</p>
 <p><a href="https://en.cppreference.com/w/cpp/container/list"><code>list&lt;T,A&gt;</code></a> and
 <a href="https://en.cppreference.com/w/cpp/container/forward_list"><code>forward_list&lt;T,A&gt;</code></a>
@@ -1638,9 +1725,9 @@ They are both parametrised by:</p>
 ).</li>
 </ul>
 <p>typical implementation of a list (doubly linked list):</p>
-<p><img src="media/list.png" width=400/></p>
+<img src="media/list.png" width=400/>
 <p>typical implementation of a forward_list (linked list):</p>
-<p><img src="media/forward_list.png" width=400/></p>
+<img src="media/forward_list.png" width=400/>
 <p>The implementations are non intrusive: the stored elements don't need to store
 pointers to ther successors and predecessors.</p>
 <pre><code class="language-cpp">#include &lt;iostream&gt;
@@ -1650,14 +1737,14 @@ pointers to ther successors and predecessors.</p>
 template &lt;typename T&gt; void printList(const std::list&lt;T&gt; &amp;l) {
   std::cout &lt;&lt; '[';
   for (const T &amp;e : l)
-    std::cout &lt;&lt; e &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; e &lt;&lt; " ";
   std::cout &lt;&lt; ']' &lt;&lt; std::endl;
 }
 
 int main() {
   std::list&lt;int&gt; li1;
   printList(li1); // prints: []
-  std::list&lt;std::string&gt; li2 = {&quot;first&quot;, &quot;second&quot;};
+  std::list&lt;std::string&gt; li2 = {"first", "second"};
   printList(li2); // prints: [first second ]
   std::list&lt;std::string&gt; li3 = li2;
   printList(li3); // prints: [first second ]
@@ -1772,26 +1859,27 @@ Invalidates only the iterators and references to the removed elements.</li>
 int main() {
   std::list&lt;int&gt; l({2, 3, 4, 4, 3, 4, 4, 4, 5, 6, 1, 1, 1, 1, 2});
   for (const auto &amp;val : l)
-    std::cout &lt;&lt; val &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; val &lt;&lt; " ";
   std::cout &lt;&lt; std::endl;
   // prints: 2 3 4 4 3 4 4 4 5 6 1 1 1 1 2
 
   l.unique();
 
   for (const auto &amp;val : l)
-    std::cout &lt;&lt; val &lt;&lt; &quot; &quot;;
+    std::cout &lt;&lt; val &lt;&lt; " ";
   std::cout &lt;&lt; std::endl;
   // prints: 2 3 4 3 4 5 6 1 2
 
   return 0;
 }
 </code></pre>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\) (&gt; vector)</td></tr>
 <tr><td>insertion and deletion at each point</td><td>constant</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>NO ✅️</td></tr>
 </tbody></table>
+</div>
 <p>Use <code>list</code> and <code>forward_list</code> if the insertion and deletion operations not to
 the front and back of the container are frequent.</p>
 <p>The
@@ -1819,13 +1907,13 @@ using namespace std::literals;
 
 int main() {
   // using an initializer_list&lt;pair&lt;const K, V&gt;&gt;
-  std::map&lt;int, std::string&gt; dep = {{2, &quot;item 2&quot;s},
-                                    {1, &quot;item 1&quot;s},
-                                    {3, &quot;item 3&quot;s},
-                                    {4, &quot;item 4&quot;s},
-                                    {5, &quot;item 5&quot;s}};
+  std::map&lt;int, std::string&gt; dep = {{2, "item 2"s},
+                                    {1, "item 1"s},
+                                    {3, "item 3"s},
+                                    {4, "item 4"s},
+                                    {5, "item 5"s}};
   for (const auto &amp;d : dep)
-    std::cout &lt;&lt; d.second &lt;&lt; &quot;-&gt;&quot; &lt;&lt; d.first &lt;&lt; std::endl;
+    std::cout &lt;&lt; d.second &lt;&lt; "-&gt;" &lt;&lt; d.first &lt;&lt; std::endl;
   std::cout &lt;&lt; dep[4] &lt;&lt; std::endl;
 
   // prints:
@@ -1888,14 +1976,14 @@ the element in-place in the map, saves the cost of a copy.</li>
 using namespace std::literals;
 
 int main() {
-  std::vector&lt;std::pair&lt;std::string, int&gt;&gt; nonsense({{&quot;first item&quot;s, 1},
-                                                     {&quot;second item&quot;s, 2},
-                                                     {&quot;third item&quot;s, 3},
-                                                     {&quot;fourth item&quot;s, 4}});
+  std::vector&lt;std::pair&lt;std::string, int&gt;&gt; nonsense({{"first item"s, 1},
+                                                     {"second item"s, 2},
+                                                     {"third item"s, 3},
+                                                     {"fourth item"s, 4}});
 // use override (7) for map insert
   std::map&lt;std::string, int&gt; copnonsense(nonsense.begin(), nonsense.end());
   for (const auto &amp;val : copnonsense)
-    std::cout &lt;&lt; val.first &lt;&lt; &quot;:&quot; &lt;&lt; val.second &lt;&lt; std::endl;
+    std::cout &lt;&lt; val.first &lt;&lt; ":" &lt;&lt; val.second &lt;&lt; std::endl;
   //  prints:
   //    first item:1
   //    fourth item:4
@@ -1960,7 +2048,7 @@ int main(){
   auto range = dict.equal_range(2);
  
   for (auto i = range.first; i != range.second; ++i)
-    std::cout &lt;&lt; i-&gt;first &lt;&lt; &quot;: &quot; &lt;&lt; i-&gt;second &lt;&lt; '\n';
+    std::cout &lt;&lt; i-&gt;first &lt;&lt; ": " &lt;&lt; i-&gt;second &lt;&lt; '\n';
   // prints:
   //   2: B
   //   2: C
@@ -1970,13 +2058,14 @@ int main(){
 <p>why does <code>map</code> also have an <code>equal_range</code> method if there can be no duplicate keys
 ? <a href="https://stackoverflow.com/a/53521124"><code>bcoz 🔮</code></a> (consistency and generic
 usage of containers).</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\) (&gt; list)</td></tr>
 <tr><td>element access time</td><td>\(\propto log_2(N)\)</td></tr>
 <tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>NO ✅️</td></tr>
 </tbody></table>
+</div>
 <p>Careful with the memory consumption of map. If associative access is required
 but <code>log_2(N)</code> is too inefficient (lots of reads), favor an <code>unordered_map</code>.
 Also, <code>map</code> and <code>multimap</code> are unusable if no strict order relation can be
@@ -2011,16 +2100,16 @@ versions of theses data structures).</p>
 
 int main(){
   std::unordered_map&lt;std::string,int&gt; a; // empty
-  a[&quot;item 1&quot;] = 1;
-  a[&quot;item 2&quot;] = 2;
-  a[&quot;item 3&quot;] = 3;
-  for(const auto&amp; k : a) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  a["item 1"] = 1;
+  a["item 2"] = 2;
+  a["item 3"] = 3;
+  for(const auto&amp; k : a) std::cout &lt;&lt; k.first &lt;&lt; " " &lt;&lt; k.second &lt;&lt; std::endl;
   // item 3 3
   // item 2 2
   // item 1 1
 
   std::unordered_map&lt;std::string,int&gt; b(a);
-  for(const auto&amp; k : b) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  for(const auto&amp; k : b) std::cout &lt;&lt; k.first &lt;&lt; " " &lt;&lt; k.second &lt;&lt; std::endl;
   // item 3 3
   // item 2 2
   // item 1 1
@@ -2028,12 +2117,12 @@ int main(){
   auto ib = a.begin(); 
   ib++;
   std::unordered_map&lt;std::string,int&gt; c(ib, a.end());
-  for(const auto&amp; k : c) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  for(const auto&amp; k : c) std::cout &lt;&lt; k.first &lt;&lt; " " &lt;&lt; k.second &lt;&lt; std::endl;
   // item 1 1
   // item 2 2
 
-  std::unordered_map&lt;std::string, int&gt; d = {{&quot;nonsense 1&quot;, 1},{&quot;nonsense 2&quot;, 2}};
-  for(const auto&amp; k : d) std::cout &lt;&lt; k.first &lt;&lt; &quot; &quot; &lt;&lt; k.second &lt;&lt; std::endl;
+  std::unordered_map&lt;std::string, int&gt; d = {{"nonsense 1", 1},{"nonsense 2", 2}};
+  for(const auto&amp; k : d) std::cout &lt;&lt; k.first &lt;&lt; " " &lt;&lt; k.second &lt;&lt; std::endl;
   // nonsense 2 2
   // nonsense 1 1
 
@@ -2101,13 +2190,14 @@ which returns a reference to the element with key <code>k</code> or creates it i
 <li>using a range based for loop.</li>
 </ul>
 <p>NO FRONT AND BACK METHODS : unordered, it's in the name.</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\) (&gt; map)</td></tr>
 <tr><td>element access time</td><td>Constant</td></tr>
 <tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>YES ⚠️</td></tr>
 </tbody></table>
+</div>
 <p>The
 <a href="https://en.cppreference.com/w/cpp/container/set"><code>set&lt;K,C,A&gt;</code></a> and
 <a href="https://en.cppreference.com/w/cpp/container/multiset"><code>multiset&lt;K,C,A&gt;</code></a>
@@ -2129,13 +2219,14 @@ Contrary to <code>set</code>, <code>multiset</code> allows duplicate keys.</p>
 returns an iterator pointing to a key, while
 <a href="https://en.cppreference.com/w/cpp/container/map/find"><code>map::find</code></a>
 return an iterator pointing to a <code>pair&lt;key, value&gt;</code>).</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\) (&gt; list)</td></tr>
 <tr><td>element access time</td><td>\(\propto log_2(N)\)</td></tr>
 <tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> NO ✅️ </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>NO ✅️</td></tr>
 </tbody></table>
+</div>
 <p>The
 <a href="https://en.cppreference.com/w/cpp/container/unordered_set"><code>unordered_set&lt;K,C,A&gt;</code></a> and
 <a href="https://en.cppreference.com/w/cpp/container/unordered_multiset"><code>unordered_multiset&lt;K,C,A&gt;</code></a>
@@ -2158,13 +2249,14 @@ versions of theses data structures).</p>
 returns an iterator pointing to a key, while
 <a href="https://en.cppreference.com/w/cpp/container/unordered_map/find"><code>unordered_map::find</code></a>
 return an iterator pointing to a <code>pair&lt;key, value&gt;</code>).</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\) (&gt; map)</td></tr>
 <tr><td>element access time</td><td>Constant</td></tr>
 <tr><td>insertion and deletion EVERYWHERE</td><td>Constant</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> NO ✅️ </td></tr>
-<tr><td>iterator invalidation on modification</td><td> YES ⚠️ </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>NO ✅️</td></tr>
+<tr><td>iterator invalidation on modification</td><td>YES ⚠️</td></tr>
 </tbody></table>
+</div>
 <p><a href="https://en.cppreference.com/w/cpp/container/stack"><code>std::stack&lt;T,Cont&gt;</code></a> is a LIFO
 (last-in, first-out) data structure.
 It is a generic class parametrized by two types:</p>
@@ -2200,13 +2292,14 @@ reference to top of the stack.</p>
 <a href="https://en.cppreference.com/w/cpp/container/stack/pop"><code>pop</code></a> method to remove
 the top of the stack. (RETURNS void, calls the <code>pop_back</code> method of the underlying
 container).</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\)</td></tr>
 <tr><td>top element access time</td><td>Constant</td></tr>
 <tr><td>insertion and deletion at the top</td><td>Constant</td></tr>
-<tr><td>reference and pointer invalidation on modification</td><td> depends on the underlyning container </td></tr>
-<tr><td>iterator invalidation on modification</td><td> NO ITERATORS </td></tr>
+<tr><td>reference and pointer invalidation on modification</td><td>depends on the underlyning container</td></tr>
+<tr><td>iterator invalidation on modification</td><td>NO ITERATORS</td></tr>
 </tbody></table>
+</div>
 <p><a href="https://en.cppreference.com/w/cpp/container/queue"><code>std::queue&lt;T,Cont&gt;</code></a>
 class is a container adaptor that gives the functionality of a queue
 - specifically, a FIFO (first-in, first-out) data structure.</p>
@@ -2268,11 +2361,12 @@ method to remove the top element from the priority_queue.</p>
 <p>The
 <a href="https://en.cppreference.com/w/cpp/container/priority_queue/top"><code>top</code></a>
 returns a (const) reference to the top element in the priority queue.</p>
-<table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>operation</th><th>cost</th></tr></thead><tbody>
 <tr><td>memory</td><td>\(\propto N\)</td></tr>
 <tr><td>top element access time</td><td>Constant</td></tr>
 <tr><td>insertion and removal at the top</td><td>\(\propto log(N)\)</td></tr>
 </tbody></table>
+</div>
 <p>The class template
 <a href="https://en.cppreference.com/mwiki/index.php?title=cpp/container/span"><code>std::span&lt;T,Extent&gt;</code></a>
 describes an object that can refer to a contiguous
@@ -2351,84 +2445,92 @@ Finds the last occurence of <code>v</code> in this view, starting at position <c
 <li>the <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, <code>&gt;=</code> operators perform lexicographical
 comparisons between two string views.
 (can send a string view to a stream with <code>&lt;&lt;</code>).</li>
-<li>use the <code>&quot;blah&quot;sv</code> to declare a string view literal.
+<li>use the <code>"blah"sv</code> to declare a string view literal.
 (using namespace std::literals;).</li>
 </ul>
 <p>Favor using <code>string_view</code> over <code>string</code>. Substring extraction is done in linear
 time for <code>string</code> due to the copy. It is done in constant time for
 <code>string_view</code> because no copy is performed.</p>
-<p>The Ranges Library</p>
+<p>The Ranges Library (C++20)</p>
+<p>A
+<a href="https://en.cppreference.com/w/cpp/ranges"><code>Range</code></a>
+is any iterable collection of data. It must provide an begin and end
+iterator. There are multiple range categories (C++20 concepts),
+some of which are listed below:</p>
+<ul>
+<li><code>ranges::range</code>: collection providing a begin and end iterator.</li>
+<li><code>ranges::sized_range</code>: collection whose size can be determined in constant time.</li>
+<li><code>ranges::input_range</code>: collection iterable through an input_iterator.</li>
+<li><code>ranges::output_range</code>: collection iterable through an output_iterator.</li>
+<li><code>ranges::forward_range</code>: collection iterable through a forward_iterator.</li>
+<li><code>ranges::bidirectional_range</code>: collection iterable through a bidirectional_iterator.</li>
+<li><code>ranges::random_access_range</code>: collection iterable through a random_access_iterator.</li>
+<li><code>ranges::viewable_range</code>: collection that can be converted to a view
+(through <code>views::all</code>).</li>
+</ul>
+<p>Views are iterable entities that can access a range's data and process it.
+They are lazy evaluated at iteration. Some common C++ views are listed below:</p>
+<ul>
+<li><code>std::views::filter</code>: filters elements that satisfy a predicate.</li>
+<li><code>std::views::transform</code>: applies a function on all elements (functional style map).</li>
+<li><code>std::views::all</code>: returns all elements.</li>
+<li><code>std::views::take</code>: returns N first elements.</li>
+<li><code>std::views::drop</code>: return all but the N first elements.</li>
+<li><code>std::views::take_while</code>: returns all elements until a specified predicate is no longer
+satisfied.</li>
+<li><code>std::views::join</code>: return all but the N first elements.</li>
+</ul>
 <p>🔮</p>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/ccpp/c.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/algs/intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="chapters/ccpp/c.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="chapters/algs/intro.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="chapters/ccpp/c.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/ccpp/c.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-            
-                <a href="chapters/algs/intro.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+                    <a rel="next prefetch" href="../../chapters/algs/intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
 
-        <!-- Local fallback for Font Awesome -->
+
+
         <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+            window.playground_copyable = true;
         </script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-    <script type="text/javascript">
-        var socket = new WebSocket("ws://localhost:3001");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                socket.close();
-                location.reload(true); // force reload from server (not from cache)
-            }
-        };
 
-        window.onbeforeunload = function() {
-            socket.close();
-        }
-    </script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../js/highlightjs-line-numbers.js"></script>
 
 
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-        <script type="text/javascript" src="highlightjs-line-numbers.js"></script>
-        
-
+    </div>
     </body>
 </html>

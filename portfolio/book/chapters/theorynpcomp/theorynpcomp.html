@@ -1,99 +1,181 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="en" class="light" dir="ltr">
     <head>
+        <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>The Theory of NP-Completeness - The Guides</title>
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+
+        <!-- Custom HTML head -->
+        
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
 
-        <base href="../../">
+        <link rel="icon" href="../../favicon.svg">
+        <link rel="shortcut icon" href="../../favicon.png">
+        <link rel="stylesheet" href="../../css/variables.css">
+        <link rel="stylesheet" href="../../css/general.css">
+        <link rel="stylesheet" href="../../css/chrome.css">
 
-        <link rel="stylesheet" href="book.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../../fonts/fonts.css">
 
-        <link rel="shortcut icon" href="favicon.png">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../../highlight.css">
+        <link rel="stylesheet" href="../../tomorrow-night.css">
+        <link rel="stylesheet" href="../../ayu-highlight.css">
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- Custom theme stylesheets -->
 
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
-
-        <!-- Custom theme -->
-        
-
-        
         <!-- MathJax -->
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        
-
-        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
-        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
-        <script>
-            if (typeof Clipboard == 'undefined') {
-                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch JQuery from CDN but have a local fallback -->
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script>
-            if (typeof jQuery == 'undefined') {
-                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
-            }
-        </script>
-
-        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
-        <script src="store.js"></script>
-
+        <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     </head>
-    <body class="light">
-        <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
-            var theme = store.get('mdbook-theme');
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            $('body').removeClass().addClass(theme);
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
-            var sidebar = store.get('mdbook-sidebar');
-            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
-            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
-        <div id="sidebar" class="sidebar">
-            <ul class="chapter"><li><a href="intro.html"><strong>1.</strong> Introduction</a></li><li><a href="chapters/linux/intro.html"><strong>2.</strong> Linux Command Line</a></li><li><ul class="section"><li><a href="chapters/linux/vim.html"><strong>2.1.</strong> vim &amp; neovim</a></li><li><a href="chapters/linux/bash.html"><strong>2.2.</strong> scripting</a></li><li><a href="chapters/linux/utils.html"><strong>2.3.</strong> utilities</a></li></ul></li><li><a href="chapters/ccpp/intro.html"><strong>3.</strong> C/C++ Notes</a></li><li><ul class="section"><li><a href="chapters/ccpp/gcc.html"><strong>3.1.</strong> Tooling</a></li><li><a href="chapters/ccpp/c.html"><strong>3.2.</strong> C</a></li><li><a href="chapters/ccpp/cpp.html"><strong>3.3.</strong> C++</a></li></ul></li><li><a href="chapters/algs/intro.html"><strong>4.</strong> Algorithms &amp; Data Structures</a></li><li><ul class="section"><li><a href="chapters/algs/lds.html"><strong>4.1.</strong> Linear Data Structures</a></li><li><a href="chapters/algs/sorting.html"><strong>4.2.</strong> Sorting</a></li><li><a href="chapters/algs/searching.html"><strong>4.3.</strong> Searching</a></li><li><a href="chapters/algs/trees.html"><strong>4.4.</strong> Trees</a></li><li><a href="chapters/algs/graphs.html"><strong>4.5.</strong> Graphs</a></li><li><a href="chapters/algs/dnc.html"><strong>4.6.</strong> Divide &amp; Conquer</a></li><li><a href="chapters/algs/greedy.html"><strong>4.7.</strong> Greedy Algorithms</a></li><li><a href="chapters/algs/dynprog.html"><strong>4.8.</strong> Dynamic Programming</a></li><li><a href="chapters/algs/algs_graphs.html"><strong>4.9.</strong> Graph Algorithms</a></li><li><a href="chapters/algs/linprog.html"><strong>4.10.</strong> Linear Programming</a></li><li><a href="chapters/algs/algs_string.html"><strong>4.11.</strong> String Algorithms</a></li></ul></li><li><a href="chapters/leetcode/main.html"><strong>5.</strong> LeetCode Catalog</a></li><li><a href="chapters/theorynpcomp/intro.html"><strong>6.</strong> Theory of NP-Completeness</a></li><li><ul class="section"><li><a href="chapters/theorynpcomp/theorynpcomp.html" class="active"><strong>6.1.</strong> The Theory of NP-Completeness</a></li><li><a href="chapters/theorynpcomp/proofnpcomp.html"><strong>6.2.</strong> Proving NP-Complete Results</a></li></ul></li><li><a href="chapters/ocaml/intro.html"><strong>7.</strong> OCaml Functional Programming</a></li><li><ul class="section"><li><a href="chapters/ocaml/n99exercises.html"><strong>7.1.</strong> 99 Excercises in OCaml</a></li><li><a href="chapters/ocaml/lambdacalc.html"><strong>7.2.</strong> Lambda Calcul</a></li></ul></li><li><a href="chapters/umath/intro.html"><strong>8.</strong> Maths de 1er cycle</a></li><li><ul class="section"><li><a href="chapters/umath/reduction.html"><strong>8.1.</strong> Reduction des Endomorphismes</a></li></ul></li><li><a href="chapters/about/whoami.html"><strong>9.</strong> About</a></li></ul>
-        </div>
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../../intro.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../../chapters/linux/intro.html"><strong aria-hidden="true">2.</strong> Linux Command Line</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/linux/vim.html"><strong aria-hidden="true">2.1.</strong> vim & neovim</a></li><li class="chapter-item expanded "><a href="../../chapters/linux/bash.html"><strong aria-hidden="true">2.2.</strong> scripting</a></li><li class="chapter-item expanded "><a href="../../chapters/linux/utils.html"><strong aria-hidden="true">2.3.</strong> utilities</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/ccpp/intro.html"><strong aria-hidden="true">3.</strong> C/C++ Notes</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/ccpp/gcc.html"><strong aria-hidden="true">3.1.</strong> Tooling</a></li><li class="chapter-item expanded "><a href="../../chapters/ccpp/c.html"><strong aria-hidden="true">3.2.</strong> C</a></li><li class="chapter-item expanded "><a href="../../chapters/ccpp/cpp.html"><strong aria-hidden="true">3.3.</strong> C++</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/algs/intro.html"><strong aria-hidden="true">4.</strong> Algorithms & Data Structures</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/algs/lds.html"><strong aria-hidden="true">4.1.</strong> Linear Data Structures</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/sorting.html"><strong aria-hidden="true">4.2.</strong> Sorting</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/searching.html"><strong aria-hidden="true">4.3.</strong> Searching</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/trees.html"><strong aria-hidden="true">4.4.</strong> Trees</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/graphs.html"><strong aria-hidden="true">4.5.</strong> Graphs</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/dnc.html"><strong aria-hidden="true">4.6.</strong> Divide & Conquer</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/greedy.html"><strong aria-hidden="true">4.7.</strong> Greedy Algorithms</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/dynprog.html"><strong aria-hidden="true">4.8.</strong> Dynamic Programming</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/algs_graphs.html"><strong aria-hidden="true">4.9.</strong> Graph Algorithms</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/linprog.html"><strong aria-hidden="true">4.10.</strong> Linear Programming</a></li><li class="chapter-item expanded "><a href="../../chapters/algs/algs_string.html"><strong aria-hidden="true">4.11.</strong> String Algorithms</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/leetcode/main.html"><strong aria-hidden="true">5.</strong> LeetCode Catalog</a></li><li class="chapter-item expanded "><a href="../../chapters/theorynpcomp/intro.html"><strong aria-hidden="true">6.</strong> Theory of NP-Completeness</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/theorynpcomp/theorynpcomp.html" class="active"><strong aria-hidden="true">6.1.</strong> The Theory of NP-Completeness</a></li><li class="chapter-item expanded "><a href="../../chapters/theorynpcomp/proofnpcomp.html"><strong aria-hidden="true">6.2.</strong> Proving NP-Complete Results</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/ocaml/intro.html"><strong aria-hidden="true">7.</strong> OCaml Functional Programming</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/ocaml/n99exercises.html"><strong aria-hidden="true">7.1.</strong> 99 Excercises in OCaml</a></li><li class="chapter-item expanded "><a href="../../chapters/ocaml/lambdacalc.html"><strong aria-hidden="true">7.2.</strong> Lambda Calcul</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/umath/intro.html"><strong aria-hidden="true">8.</strong> Maths de 1er cycle</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../chapters/umath/reduction.html"><strong aria-hidden="true">8.1.</strong> Reduction des Endomorphismes</a></li></ol></li><li class="chapter-item expanded "><a href="../../chapters/about/whoami.html"><strong aria-hidden="true">9.</strong> About</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
 
         <div id="page-wrapper" class="page-wrapper">
 
-            <div class="page" tabindex="-1">
-                
-                <div id="menu-bar" class="menu-bar">
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <i id="sidebar-toggle" class="fa fa-bars" title="Toggle sidebar"></i>
-                        <i id="theme-toggle" class="fa fa-paint-brush" title="Change theme"></i>
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
                     </div>
 
                     <h1 class="menu-title">The Guides</h1>
 
                     <div class="right-buttons">
-                        <a href="print.html">
-                            <i id="print-button" class="fa fa-print" title="Print this book"></i>
-                        </a>
+
                     </div>
                 </div>
 
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
                 <div id="content" class="content">
-                    <a class="header" href="chapters/theorynpcomp/theorynpcomp.html#the-theory-of-np-completeness" id="the-theory-of-np-completeness"><h1>The Theory of NP-Completeness</h1></a>
-<a class="header" href="chapters/theorynpcomp/theorynpcomp.html#decision-problems-languages-and-encoding-schemes" id="decision-problems-languages-and-encoding-schemes"><h2>Decision Problems, Languages and Encoding Schemes</h2></a>
+                    <main>
+                        <h1 id="the-theory-of-np-completeness"><a class="header" href="#the-theory-of-np-completeness">The Theory of NP-Completeness</a></h1>
+<h2 id="decision-problems-languages-and-encoding-schemes"><a class="header" href="#decision-problems-languages-and-encoding-schemes">Decision Problems, Languages and Encoding Schemes</a></h2>
 <p>The theory of \(NP\)-completeness is designed to be applied only to decision
 problems.</p>
-<p>A Decision problem is a problem with only two possible solutions: &quot;yes&quot; and &quot;no&quot;.</p>
+<p>A Decision problem is a problem with only two possible solutions: "yes" and "no".</p>
 <p><strong>Definition</strong>
 A decision problem \(\Pi\) consists of a set \(D_\Pi\) of instances and a
 subset \(Y_\Pi \subseteq D_\Pi\) of <em>yes</em>-instances.</p>
@@ -104,7 +186,7 @@ using a set of various components (graphs, functions, numbers, sets) and a
 by substiting particular objects of the specified types for all
 the generic components.</p>
 <p>An instance belongs to \(Y_\Pi\) iff the answer to the stated question,
-when particularized to that instance, is <em>&quot;yes&quot;</em>.</p>
+when particularized to that instance, is <em>"yes"</em>.</p>
 <p><strong>Examples</strong></p>
 <ul>
 <li>
@@ -118,10 +200,10 @@ a subset \(V'\subseteq V_1\) and a subset \(E'\subseteq E_1\) such that
 </li>
 <li>
 <p><strong>Traveling Salesman</strong></p>
-<p><em>Instance</em>: A finite set \(C=\{c_1, ..., c_m\}\) of &quot;cities&quot;, a &quot;distance&quot;
+<p><em>Instance</em>: A finite set \(C=\{c_1, ..., c_m\}\) of "cities", a "distance"
 \(d(c_i, c_j)\in\mathbb{Z}^+\) for each pair of cities \(c_i, c_j \in C\)
 , and a bound \(B\in\mathbb{Z}^+\).</p>
-<p><em>Question</em>: Is there a &quot;tour&quot; of all the cities in \(C\) having total
+<p><em>Question</em>: Is there a "tour" of all the cities in \(C\) having total
 length no more than \(B\), that is an ordering
 \(&lt; c_{\pi(1)}, ..., c_{\pi(m)} &gt;\) of \(C\) such that</p>
 <p>\[(\sum_{i=1}^{m-1}{d(c_{\pi(i)}, c_{\pi(i+1)})}) + d(c_{\pi(m)}, c_{\pi(1)}) \leq B ?\]</p>
@@ -137,7 +219,7 @@ of \(\Sigma^* \), we say that \(L\) is a <strong>language</strong> over the <str
 <p><strong>Examples</strong></p>
 <ul>
 <li>If \(\Sigma=\{0, 1\}\) then \(\Sigma^* \) consists of the empty string
-&quot;\(\epsilon\)&quot;, the strings \(0, 1, 00, 01, 11, 000, 001\) and all other
+"\(\epsilon\)", the strings \(0, 1, 00, 01, 11, 000, 001\) and all other
 finite strings of \(1\)'s and \(0\)'s.</li>
 <li>\(\{01, 001, 111, 1101010\}\) is a language over \(\{0, 1\}\), as is
 the set of all binary representations of integers that are perfect squares,
@@ -152,8 +234,8 @@ alphabet \(\Sigma\).</p>
 \(\Sigma^* \) intro three classes of strings:</p>
 <ul>
 <li>those that are not encodings of instances of \(\Pi\).</li>
-<li>those that encode instances of \(\Pi\) for which the answer is &quot;<em>no</em>&quot;.</li>
-<li>those that encode instances of \(\Pi\) for which the answer is &quot;<em>yes</em>&quot;.</li>
+<li>those that encode instances of \(\Pi\) for which the answer is "<em>no</em>".</li>
+<li>those that encode instances of \(\Pi\) for which the answer is "<em>yes</em>".</li>
 </ul>
 <p><strong>Definition</strong></p>
 <p>Assuming that \(\Sigma\) is the alphabet used by \(e\),
@@ -166,20 +248,20 @@ is\ the\ encoding\ under\ e\ of\ an \ instance\ I\in Y_{\Pi}\}.
 <p><strong>Lemma</strong>
 If a result holds for the language \(L[\Pi, e]\), then it holds for the
 problem \(\Pi\) under the encoding scheme \(e\).</p>
-<p>Assuming the encodings we employ are &quot;reasonable&quot; most properties are
+<p>Assuming the encodings we employ are "reasonable" most properties are
 encoding-independant.</p>
 <p>We assume that every decision problem \(\Pi\) has an associated
 encoding-independant function \(Length: D_\Pi \rightarrow\mathbb{N}\),
-which is &quot;polynomially related&quot; to the input lengths we would we would obtain
+which is "polynomially related" to the input lengths we would we would obtain
 from a reasonable encoding scheme.</p>
 <p><strong>A Standard Encoding Scheme</strong></p>
 <p>The alphabet used is \(\Psi=\{ 0 , 1 , - , [ , ] , ( , ) , , \} \).</p>
 <p>We define <strong>structured strings</strong> recursively:</p>
 <ol>
 <li>An integer \(k\) is represented by a string of \(0\)'s and \(1\)'s
-preceded by a minus sign &quot;\(-\)&quot; if \(k\) is negative.</li>
+preceded by a minus sign "\(-\)" if \(k\) is negative.</li>
 <li>If \(x\) is a structured string representing the integer \(k\), then
-\([x]\) is a structured string that can be used as a &quot;name&quot;. (for examples:
+\([x]\) is a structured string that can be used as a "name". (for examples:
 a vertex in a graph, a set element, a city in the traveling salesman problem).</li>
 <li>If \(x_1, \dots, x_m\) are structured strings representing the objects
 \(X_1, ..., X_m\), then \((x_1, ..., x_m)\) is a structured string
@@ -211,7 +293,7 @@ a same object without being strictly the same.</p>
 to the standard encoding scheme, in the sense that there exist polynomial time
 algorithms for converting an encoding of an instance back and forth between
 the two encoding schemes.</p>
-<a class="header" href="chapters/theorynpcomp/theorynpcomp.html#deterministic-turing-machines-and-the-class-p" id="deterministic-turing-machines-and-the-class-p"><h2>Deterministic Turing Machines and the Class P</h2></a>
+<h2 id="deterministic-turing-machines-and-the-class-p"><a class="header" href="#deterministic-turing-machines-and-the-class-p">Deterministic Turing Machines and the Class P</a></h2>
 <p><strong>Definition</strong></p>
 <p>A <strong>Deterministic One-Tape Turing Machine</strong> (DTM) is a model of computation
 which consists of a <em>finite state control</em>, a <em>read-write head</em> and a two-way
@@ -238,8 +320,8 @@ square \(1\).</p>
 <p>At each step:</p>
 <ul>
 <li>If the current state \(q\) is either \(q_Y\) or \(q_N\), then the
-computation has ended, with the answer being &quot;\(yes\)&quot; if \(q=q_Y\)
-or &quot;\(no\)&quot; if \(q=q_N\).</li>
+computation has ended, with the answer being "\(yes\)" if \(q=q_Y\)
+or "\(no\)" if \(q=q_N\).</li>
 <li>Else we have \(q\in \mathcal{Q}\backslash \{q_Y, q_N\}\) and there is a symbol
 \(s\) in the tape square being scanned. The value of the <em>transition
 function</em> can be computed:
@@ -326,22 +408,22 @@ P = \{L: there \ exists \ a \ polynomial \ time \ DTM \ program \\
 program that solves \(\Pi\) under the encoding \(e\).</p>
 <p>If a decision problem \(\Pi\in P\) then its complementary problem is
 also in \(P\), this is not necessarily the case for a problem in \(NP\).</p>
-<a class="header" href="chapters/theorynpcomp/theorynpcomp.html#nondeterminstic-computation-and-the-class-np" id="nondeterminstic-computation-and-the-class-np"><h2>Nondeterminstic Computation and the class NP</h2></a>
+<h2 id="nondeterminstic-computation-and-the-class-np"><a class="header" href="#nondeterminstic-computation-and-the-class-np">Nondeterminstic Computation and the class NP</a></h2>
 <p>The class \(NP\) is intended to isolate the notion of polynomial time
-&quot;verifiability&quot;, which does not imply polynomial time solvability.</p>
+"verifiability", which does not imply polynomial time solvability.</p>
 <p>A <strong>nondeterministic algorithm</strong> is composed of two separate stages, the first
 being a <em>guessing stage</em> and the second a <em>checking stage</em>.
 Given a problem instance \(I\), the first stage <em>guesses</em> a structure \(S\).
 \(I\) and \(S\) are then passed as inputs to the checking stage, which
 performs deterministic computations to verify if the structure \(S\)
-proves that the answer to \(I\) is &quot;yes&quot;.</p>
+proves that the answer to \(I\) is "yes".</p>
 <p>A nondeterministic algorithm <em>solves</em> a decision problem \(\Pi\) iff :</p>
 <ol>
 <li>If \(I\in Y_{\Pi}\), then there exists some structure \(S\) that, when
-guessed for input \(I\), will lead the checking stage to respond &quot;yes&quot; for
+guessed for input \(I\), will lead the checking stage to respond "yes" for
 \(I\) and \(S\).</li>
 <li>If \(I\notin Y_{\Pi}\), then there exists some structure \(S\) that, when
-guessed for input \(I\), will lead the checking stage to respond &quot;yes&quot; for
+guessed for input \(I\), will lead the checking stage to respond "yes" for
 \(I\) and \(S\).</li>
 </ol>
 <p><strong>Definitions</strong></p>
@@ -424,78 +506,58 @@ NP = \{L: there \ is \ a \ polynomial \ time \ NDTM \ program
 <p>A decision problem \(\Pi\) will be said to belong to \(NP\) under encoding
 scheme \(e\) if the language \(L[\Pi, e]\in NP\)</p>
 <p><strong>Heuristic</strong> We identify \(NP\) with the class of all decision problems
-&quot;solvable&quot; by polynomial time nondeterministic algorithms.</p>
-<a class="header" href="chapters/theorynpcomp/theorynpcomp.html#the-relationship-between-p-and-np" id="the-relationship-between-p-and-np"><h2>The Relationship between P and NP</h2></a>
+"solvable" by polynomial time nondeterministic algorithms.</p>
+<h2 id="the-relationship-between-p-and-np"><a class="header" href="#the-relationship-between-p-and-np">The Relationship between P and NP</a></h2>
 
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../../chapters/theorynpcomp/intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../../chapters/theorynpcomp/proofnpcomp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
                 </div>
-
-                <!-- Mobile navigation buttons -->
-                
-                    <a rel="prev" href="chapters/theorynpcomp/intro.html" class="mobile-nav-chapters previous" title="Previous chapter">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                
-
-                
-                    <a rel="next" href="chapters/theorynpcomp/proofnpcomp.html" class="mobile-nav-chapters next" title="Next chapter">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                
-
             </div>
 
-            
-                <a href="chapters/theorynpcomp/intro.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-            
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../../chapters/theorynpcomp/intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
 
-            
-                <a href="chapters/theorynpcomp/proofnpcomp.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            
+                    <a rel="next prefetch" href="../../chapters/theorynpcomp/proofnpcomp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
 
         </div>
 
 
-        <!-- Local fallback for Font Awesome -->
+
+
         <script>
-            if ($(".fa").css("font-family") !== "FontAwesome") {
-                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
-            }
+            window.playground_copyable = true;
         </script>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        
-    <script type="text/javascript">
-        var socket = new WebSocket("ws://localhost:3001");
-        socket.onmessage = function (event) {
-            if (event.data === "reload") {
-                socket.close();
-                location.reload(true); // force reload from server (not from cache)
-            }
-        };
 
-        window.onbeforeunload = function() {
-            socket.close();
-        }
-    </script>
+        <script src="../../elasticlunr.min.js"></script>
+        <script src="../../mark.min.js"></script>
+        <script src="../../searcher.js"></script>
+
+        <script src="../../clipboard.min.js"></script>
+        <script src="../../highlight.js"></script>
+        <script src="../../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../../js/highlightjs-line-numbers.js"></script>
 
 
-        
-
-        
-
-        
-
-        <script src="highlight.js"></script>
-        <script src="book.js"></script>
-
-        <!-- Custom JS script -->
-        
-        <script type="text/javascript" src="highlightjs-line-numbers.js"></script>
-        
-
+    </div>
     </body>
 </html>

@@ -2609,7 +2609,33 @@ Favor using `string_view` over `string`. Substring extraction is done in linear
 time for `string` due to the copy. It is done in constant time for
 `string_view` because no copy is performed.
 
-The Ranges Library
+The Ranges Library (C++20)
+
+A
+[`Range`](https://en.cppreference.com/w/cpp/ranges)
+is any iterable collection of data. It must provide an begin and end
+iterator. There are multiple range categories (C++20 concepts),
+some of which are listed below:
+- `ranges::range`: collection providing a begin and end iterator.
+- `ranges::sized_range`: collection whose size can be determined in constant time.
+- `ranges::input_range`: collection iterable through an input_iterator.
+- `ranges::output_range`: collection iterable through an output_iterator.
+- `ranges::forward_range`: collection iterable through a forward_iterator.
+- `ranges::bidirectional_range`: collection iterable through a bidirectional_iterator.
+- `ranges::random_access_range`: collection iterable through a random_access_iterator.
+- `ranges::viewable_range`: collection that can be converted to a view
+  (through `views::all`).
+
+Views are iterable entities that can access a range's data and process it.
+They are lazy evaluated at iteration. Some common C++ views are listed below:
+- `std::views::filter`: filters elements that satisfy a predicate.
+- `std::views::transform`: applies a function on all elements (functional style map).
+- `std::views::all`: returns all elements.
+- `std::views::take`: returns N first elements.
+- `std::views::drop`: return all but the N first elements.
+- `std::views::take_while`: returns all elements until a specified predicate is no longer
+  satisfied.
+- `std::views::join`: return all but the N first elements.
 
 
 

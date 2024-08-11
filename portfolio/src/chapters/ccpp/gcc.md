@@ -57,6 +57,9 @@ g++ -o prog main.cpp -std=c++2a # use c++ 20 with gcc, not fully implemented yet
 
 debugging tip: undefined reference to smthg \\(\rightarrow\\) `-o ALL.o files`
 
+How to define a template class in a .h file and implement it in a .cpp file
+[🔮](https://www.codeproject.com/Articles/48575/How-to-Define-a-Template-Class-in-a-h-File-and-Imp).
+
 ## CMake
 ```bash
 mkdir build
@@ -84,4 +87,6 @@ add_executable()
 
 
 ## Gdb
+
+
 ## Valgrind
