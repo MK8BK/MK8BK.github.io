@@ -2471,14 +2471,105 @@ some of which are listed below:</p>
 <p>Views are iterable entities that can access a range's data and process it.
 They are lazy evaluated at iteration. Some common C++ views are listed below:</p>
 <ul>
-<li><code>std::views::filter</code>: filters elements that satisfy a predicate.</li>
-<li><code>std::views::transform</code>: applies a function on all elements (functional style map).</li>
-<li><code>std::views::all</code>: returns all elements.</li>
-<li><code>std::views::take</code>: returns N first elements.</li>
-<li><code>std::views::drop</code>: return all but the N first elements.</li>
-<li><code>std::views::take_while</code>: returns all elements until a specified predicate is no longer
+<li><code>std::ranges::views::filter</code>: filters elements that satisfy a predicate.</li>
+<li><code>std::ranges::views::transform</code>: applies a function on all elements (functional style map).</li>
+<li><code>std::ranges::views::all</code>: returns all elements.</li>
+<li><code>std::ranges::views::take</code>: returns N first elements.</li>
+<li><code>std::ranges::views::drop</code>: return all but the N first elements.</li>
+<li><code>std::ranges::views::take_while</code>: returns all elements until a specified predicate is no longer
 satisfied.</li>
-<li><code>std::views::join</code>: return all but the N first elements.</li>
+<li><code>std::ranges::views::join</code>: view consisting of the sequence obtained from flattening a view of ranges.
+(Eg: vector&lt;vector<int>&gt; -&gt; flat sequence)</li>
+<li><code>std::ranges::views::counted</code>: return n elements starting at iterator i.</li>
+<li><code>std::ranges::views::reverse</code>: iterate through elements in reverse order.</li>
+<li><code>std::ranges::views::elements</code>: accepts a view of tuple-like values, issues a
+view consisting of the Nth element of each tuple.</li>
+<li><code>std::ranges::views::keys</code>: accepts a view of tuple-like values, issues a
+view consisting of the 1st element of each tuple.</li>
+<li><code>std::ranges::views::values</code>: accepts a view of tuple-like values, issues a
+view consisting of the second element of each tuple.</li>
+</ul>
+<p>Views can be composed, left to right with the overloaded <code>operator|</code>.</p>
+<pre><code class="language-cpp">std::vector&lt;int&gt; v = {1,2,3,4,5,6,7,8};
+auto oddSquaredDrop2 = v | std::views::filter([](int n){return n%2!=0;})
+                         | std::views::drop(2)
+                         | std::views::transform([](int n){return n*n;});
+for(int i : oddSquaredDrop2) // prints: 25\n49
+  std::cout &lt;&lt; i &lt;&lt; std::endl;
+</code></pre>
+<p>Some views produce data themselves: these are the so-called range-factories.</p>
+<ul>
+<li><code>std::ranges::istream_view</code>: range factory that generates a sequence of
+elements by repeatedly calling <code>operator&gt;&gt;</code>.</li>
+<li><code>std::ranges::iota</code>: range factory that generates a sequence of elements by
+repeatedly incrementing an initial value. Can be either bounded or unbounded
+(infinite).</li>
+</ul>
+<pre><code class="language-cpp">/** text.txt:
+this a serious corporate document that
+needs to conform to very serious
+guidelines 
+*/
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;ranges&gt;
+int main(){
+  std::ifstream s("text.txt");
+  auto all = std::ranges::istream_view&lt;std::string&gt;(s)
+            |std::ranges::views::transform([](std::string s){return "goofy_"+s;});
+  for(auto x : all)
+    std::cout &lt;&lt; x &lt;&lt; ' ';
+  std::cout &lt;&lt; std::endl;
+  return 0;
+}
+/** prints:
+goofy_this goofy_a goofy_serious goofy_corporate goofy_document goofy_that goofy_needs goofy_to goofy_conform goofy_to goofy_very goofy_serious goofy_guidelines 
+*/
+</code></pre>
+<p><strong>Algorithms</strong></p>
+<p>Iterators types:</p>
+<ul>
+<li>Contiguous Iterators.</li>
+<li>Random Access Iterators.</li>
+<li>Bidirectional Iterators.</li>
+<li>Forward Iterators.</li>
+<li>Input Iterators.</li>
+<li>Output Iterators.</li>
+</ul>
+<p>Adapter Iterators:</p>
+<ul>
+<li>Reverse Iterators.</li>
+<li>Move Iterators.</li>
+<li>Back Inserter Iterators.</li>
+<li>Front Inserter Iterators.</li>
+</ul>
+<p>Consult <a href="cppreference.com">cppreference</a> for details on iterator types, either as named
+requirements or precise classes.</p>
+<p>List of useful algorithms; again, consult <a href="cppreference.com">cppreference</a> for
+up-to-date descriptions.</p>
+<p>Non modifying algorithms:</p>
+<ul>
+<li><code>all_of</code> (input/forward iterators):
+check if all elements satisfy the supplied predicate.</li>
+<li><code>any_of</code> (input/forward iterators):
+check if any elements satisfy the supplied predicate.</li>
+<li><code>none_of</code> (input/forward iterators):
+check if no elements satisfy the supplied predicate.</li>
+<li><code>for_each</code> (input/forward iterators):
+apply function to all elements.</li>
+<li><code>for_each_n</code> (input/forward iterators):
+apply function to the first n elements.</li>
+<li><code>count</code> (input/forward iterators):
+count the number of elements equal to the supplied element.</li>
+<li><code>count_if</code> (input/forward iterators):
+count the number of elements that satisfy the supplied predicate.</li>
+<li><code>mismatch</code> (input/forward iterators):
+return pair of iterators to the first mismatched (unequal) elements in the supplied ranges.</li>
+<li><code>find</code> (input/forward iterators):
+return iterator pointing to the first element in the range equal to the supplied element.</li>
+<li><code>find_if</code> (input/forward iterators):
+return iterator pointing to the first element in the range that satisfies the supplied predicate.</li>
+<li><code>find_if_not</code> (input/forward iterators)</li>
 </ul>
 <p>🔮</p>
 
@@ -2511,6 +2602,22 @@ satisfied.</li>
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

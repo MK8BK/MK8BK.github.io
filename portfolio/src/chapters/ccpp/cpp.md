@@ -2628,17 +2628,111 @@ some of which are listed below:
 
 Views are iterable entities that can access a range's data and process it.
 They are lazy evaluated at iteration. Some common C++ views are listed below:
-- `std::views::filter`: filters elements that satisfy a predicate.
-- `std::views::transform`: applies a function on all elements (functional style map).
-- `std::views::all`: returns all elements.
-- `std::views::take`: returns N first elements.
-- `std::views::drop`: return all but the N first elements.
-- `std::views::take_while`: returns all elements until a specified predicate is no longer
+- `std::ranges::views::filter`: filters elements that satisfy a predicate.
+- `std::ranges::views::transform`: applies a function on all elements (functional style map).
+- `std::ranges::views::all`: returns all elements.
+- `std::ranges::views::take`: returns N first elements.
+- `std::ranges::views::drop`: return all but the N first elements.
+- `std::ranges::views::take_while`: returns all elements until a specified predicate is no longer
   satisfied.
-- `std::views::join`: return all but the N first elements.
+- `std::ranges::views::join`: view consisting of the sequence obtained from flattening a view of ranges.
+  (Eg: vector<vector<int>> -> flat sequence)
+- `std::ranges::views::counted`: return n elements starting at iterator i.
+- `std::ranges::views::reverse`: iterate through elements in reverse order.
+- `std::ranges::views::elements`: accepts a view of tuple-like values, issues a
+  view consisting of the Nth element of each tuple.
+- `std::ranges::views::keys`: accepts a view of tuple-like values, issues a
+  view consisting of the 1st element of each tuple.
+- `std::ranges::views::values`: accepts a view of tuple-like values, issues a
+  view consisting of the second element of each tuple.
+
+Views can be composed, left to right with the overloaded `operator|`.
+
+```cpp
+std::vector<int> v = {1,2,3,4,5,6,7,8};
+auto oddSquaredDrop2 = v | std::views::filter([](int n){return n%2!=0;})
+                         | std::views::drop(2)
+                         | std::views::transform([](int n){return n*n;});
+for(int i : oddSquaredDrop2) // prints: 25\n49
+  std::cout << i << std::endl;
+```
+
+Some views produce data themselves: these are the so-called range-factories.
+- `std::ranges::istream_view`: range factory that generates a sequence of
+  elements by repeatedly calling `operator>>`.
+- `std::ranges::iota`: range factory that generates a sequence of elements by
+  repeatedly incrementing an initial value. Can be either bounded or unbounded
+  (infinite).
+
+```cpp
+/** text.txt:
+this a serious corporate document that
+needs to conform to very serious
+guidelines 
+*/
+#include <iostream>
+#include <fstream>
+#include <ranges>
+int main(){
+  std::ifstream s("text.txt");
+  auto all = std::ranges::istream_view<std::string>(s)
+            |std::ranges::views::transform([](std::string s){return "goofy_"+s;});
+  for(auto x : all)
+    std::cout << x << ' ';
+  std::cout << std::endl;
+  return 0;
+}
+/** prints:
+goofy_this goofy_a goofy_serious goofy_corporate goofy_document goofy_that goofy_needs goofy_to goofy_conform goofy_to goofy_very goofy_serious goofy_guidelines 
+*/
+```
+
+**Algorithms**
+
+Iterators types:
+- Contiguous Iterators.
+- Random Access Iterators.
+- Bidirectional Iterators.
+- Forward Iterators.
+- Input Iterators.
+- Output Iterators.
+
+Adapter Iterators:
+- Reverse Iterators.
+- Move Iterators.
+- Back Inserter Iterators.
+- Front Inserter Iterators.
+
+Consult [cppreference](cppreference.com) for details on iterator types, either as named
+requirements or precise classes.
+
+List of useful algorithms; again, consult [cppreference](cppreference.com) for
+up-to-date descriptions.
 
 
-
+Non modifying algorithms:
+- `all_of` (input/forward iterators):
+  check if all elements satisfy the supplied predicate.
+- `any_of` (input/forward iterators):
+  check if any elements satisfy the supplied predicate.
+- `none_of` (input/forward iterators):
+  check if no elements satisfy the supplied predicate.
+- `for_each` (input/forward iterators):
+  apply function to all elements.
+- `for_each_n` (input/forward iterators):
+  apply function to the first n elements.
+- `count` (input/forward iterators):
+  count the number of elements equal to the supplied element.
+- `count_if` (input/forward iterators):
+  count the number of elements that satisfy the supplied predicate.
+- `mismatch` (input/forward iterators):
+  return pair of iterators to the first mismatched (unequal) elements in the supplied ranges.
+- `find` (input/forward iterators):
+  return iterator pointing to the first element in the range equal to the supplied element.
+- `find_if` (input/forward iterators):
+  return iterator pointing to the first element in the range that satisfies the supplied predicate.
+- `find_if_not` (input/forward iterators):
+  return iterator pointing to the first element in the range that does not satisfies the supplied predicate.
 
 🔮
 
